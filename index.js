@@ -6,8 +6,9 @@ app.get("/about/spain-births",(req,res)=>{
 	fs.readFile('spain-births.json','utf-8',(err,content)=>{
 		console.log("Data read");
 		births=JSON.parse(content);
-		res.write('<html><body>It will display data about spanish births, by regions and years,<br /> making difference between men and women, showing the total number in the last column, as following: <br />');
-		res.write("Data:<ul>");
+		res.write('<html><body><h3>Spanish births </h3><br />');
+		res.write('It will display data about spanish births, by regions and years. <br />Making difference between men and women, showing the total number of births in the last column, as following: <br />');		
+		res.write("Data example:<ul>");
 		res.write("<li>region, year => men, women, total birth</li>")
 		births.forEach((birth) =>{
 			res.write("<li>"+birth.region+", "+birth.year+" => "+birth.men+", "+birth.women+", "+birth.totalbirth+"</li>");
