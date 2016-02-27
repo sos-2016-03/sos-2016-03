@@ -49,7 +49,7 @@ app.get('/about',(req,res) => {
 		res.write("<html><body>Group members:<ul>");
 
 		members.forEach((member) =>{
-			res.write("<li>"+member.name+" => <a href=https://sos-2016-03.herokuapp.com/about/"+member.source+">"+member.source"</a></li>");
+			res.write("<li>"+member.name+" => <a href=https://sos-2016-03.herokuapp.com/about/"+member.source+">"+member.source+"</a></li>");
 		});
 		res.write("</ul>Our sources of information are aimed for analyzing the relationship between the number of births<br />over the years in the regions of Spain, along with the number of deaths<br /> due to different types of disease and population growth in our country .</body></html>");
 		res.end();
