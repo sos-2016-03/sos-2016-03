@@ -17,4 +17,5 @@ app.get("/",(req,res)=>{
 		res.end();
 	});
 });
+app.get("/about/mort-sickness");
 app.listen(process.end.PORT);
