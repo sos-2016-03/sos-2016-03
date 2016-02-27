@@ -19,6 +19,22 @@ app.get("/about/spain-births",(req,res)=>{
 	
 });
 
+app.get("/about/population-growth",(req,res)=>{
+	fs.readFile('population-growth.json','utf8',(err,content)=>{
+		console.log("Data read");
+		pops=JSON.parse(content);
+		res.write('<html><body>This page shows data about population growth in Spain in the lastest years. <br /> Data are classified acoording to differents values.<br />');
+		res.write("Data:<ul>");
+		res.write("<li>region, year => men, women, total population</li>")
+		pops.forEach((pop) =>{
+			res.write("<li>"+pop.region+", "+pop.year+" => "+pop.men+", "+pop.women+", "+pop.totalpopulation+"</li>");
+		});
+		res.write("</body></html>");
+		res.end();
+	});
+	
+});
+
 app.get('/about',(req,res) => {
 	fs.readFile('members.json','utf8',(err,content) => {
 		console.log("Data read");
