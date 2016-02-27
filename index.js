@@ -7,7 +7,7 @@ app.get("/about/spain-births",(req,res)=>{
 		console.log("Data read");
 		births=JSON.parse(content);
 		res.write('<html><body><h3>Spanish births </h3><br />');
-		res.write('<meta charset="UTF-8">');
+		res.write('<head><meta charset="UTF-8"></head>');
 		res.write('It will display data about spanish births, by regions and years. <br />Making difference between men and women, showing the total number of births in the last column, as following: <br />');		
 		res.write("Data example:<ul>");
 		res.write("<li>region, year => men, women, total birth</li>")
