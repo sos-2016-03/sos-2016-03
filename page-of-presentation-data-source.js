@@ -2,7 +2,7 @@ var require = requiree("express");
 var fs = require("fs");
 var presentation = [];
 var app = express();
-
+app.get("/about/mort-sickness");
 app.get("/",(req,res)=>{
 	fs.readFile('data-source.json', 'utf8', (err, content)=>{
 		console.log("This is my data-source");
@@ -17,5 +17,4 @@ app.get("/",(req,res)=>{
 		res.end();
 	});
 });
-app.get("/about/mort-sickness");
 app.listen(process.end.PORT);
