@@ -6,6 +6,7 @@ app.get("/about/spain-births",(req,res)=>{
 	fs.readFile('spain-births.json','utf-8',(err,content)=>{
 		console.log("Data read");
 		births=JSON.parse(content);
+		res.writeHead(200, {"Content-Type": "text/html;charset=UTF-8"});
 		res.write('<html><body><h3>Spanish births </h3><br />');
 		res.write('It will display data about spanish births, by regions and years. <br />Making difference between men and women, showing the total number of births in the last column, as following: <br />');		
 		res.write("Data example:<ul>");
@@ -23,6 +24,7 @@ app.get("/about/population-growth",(req,res)=>{
 	fs.readFile('population-growth.json','utf-8',(err,content)=>{
 		console.log("Data read");
 		pops=JSON.parse(content);
+		res.writeHead(200, {"Content-Type": "text/html;charset=UTF-8"});		
 		res.write('<html><h2>Population growth</h2>');
 		res.write('<body>This page shows data about population growth in Spain in the lastest years. <br /> Data are classified acording to differents parameters, such as: <br /><ul>');
 		res.write('<li>Region</li>');
