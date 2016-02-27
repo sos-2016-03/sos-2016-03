@@ -1,13 +1,12 @@
 var express=require("express");
 var fs=require("fs");
-var members=[];
 var app=express();
 
 app.get("/about/spain-births",(req,res)=>{
 	fs.readFile('spain-births.json','utf-8',(err,content)=>{
 		console.log("Data read");
 		births=JSON.parse(content);
-		res.write('<html><body>It will display data from spanish births, by regions and years,<br /> making difference between men and women, showing the total number in the last column.<br />');
+		res.write('<html><body>It will display data about spanish births, by regions and years,<br /> making difference between men and women, showing the total number in the last column, as following: <br />');
 		res.write("Data:<ul>");
 		res.write("<li>region, year => men, women, total birth</li>")
 		births.forEach((birth) =>{
