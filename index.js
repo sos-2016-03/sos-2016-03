@@ -47,7 +47,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 		console.log("This is my data source");
 		sic = JSON.parse(content);
 		res.write('<html><h1>Mort sickness</h1>');
-		res.write('<body>My data source is about mortality sexually transmited disease. For example:');
+		res.write('<body>My data source is about mortality sexually transmited disease. For example:</br>');
 		sic.forEach((sick) =>{
 			res.write("<li>" + sick.region + " " +sick.sickness + " " + sick.year + " " + sick.mortalityinmen  + " " + sick.mortalityinwomen + " "
 				  + sick.totalmortality + "</li>");
