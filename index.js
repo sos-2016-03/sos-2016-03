@@ -42,6 +42,22 @@ app.get("/about/population-growth",(req,res)=>{
 	
 });
 
+app.get("/about/mort-sickness",(req,res)=>{
+	fs.readFile('mort-sickness.json', 'utf8', (err, content)=>{
+		console.log("This is my data source");
+		sic = JSON.parse(content);
+		res.write('<html><h1>Mort sickness</h1>');
+		res.write('<body>My data source is about mortality sexually transmited disease');
+		sic.forEach((sickness)=>{
+			res.write(" - ", + sickness.region + "  " + sickness.sickness + "  " + sickness.year + "  " 
+				+ sickness.mortalityinmen  + "  " + sickness.mortalityinwomen + "  "
+				  + sickness.totalmortality);
+		});
+		res.write("</body></html>");
+		res.end();
+	});
+});
+
 app.get('/about',(req,res) => {
 	fs.readFile('members.json','utf-8',(err,content) => {
 		console.log("Data read");
