@@ -58,6 +58,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 			res.write("<li>" + sick.region + "  " + sick.sickness + "  " + sick.year + "  " 
 				+ sick.mortalityinmen  + "  " + sick.mortalityinwomen + "  "
 				  + sick.totalmortality + "</li>");
+		});
 		write("</body></html>");
 		res.end();
 	});
