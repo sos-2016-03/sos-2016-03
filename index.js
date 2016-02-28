@@ -61,12 +61,13 @@ app.get('/about',(req,res) => {
 	fs.readFile('members.json','utf-8',(err,content) => {
 		console.log("Data read");
 		members=JSON.parse(content);
-		res.write("<html><body>Group members:<ul>");
+		res.write("<html><body><h3>Group members:</h3><ul>");
 
 		members.forEach((member) =>{
 			res.write("<li>"+member.name+" => <a href=https://sos-2016-03.herokuapp.com/about/"+member.source+">"+member.source+"</a></li>");
 		});
-		res.write("</ul>Our sources of information are aimed for analyzing the relationship between the number of births<br />over the years in the regions of Spain, along with the number of deaths<br /> due to different types of disease and population growth in our country .</body></html>");
+		res.write("<h3>Project theme:</h3>");
+		res.write("</ul><p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
 		res.end();
 	});
 });
