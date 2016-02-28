@@ -48,6 +48,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 		sic = JSON.parse(content);
 		res.write('<html><h1>Mort sickness</h1>');
 		res.write('<body>My data source is about mortality sexually transmited disease');
+<<<<<<< HEAD
 		res.write('<li>Region</li>');
 		res.write('<li>sickness</li>');
 		res.write('<li>year</li>');
@@ -58,6 +59,10 @@ app.get("/about/mort-sickness",(req,res)=>{
 			res.write("<li>" + sick.region + "  " + sick.sickness + "  " + sick.year + "  " 
 				+ sick.mortalityinmen  + "  " + sick.mortalityinwomen + "  "
 				  + sick.totalmortality + "</li>");
+=======
+		sic.forEach((sickness)=>{
+			res.write(" - " + sickness.region + "  " + sickness.sickness + "  " + sickness.year + "  " + sickness.mortalityinmen  + "  " + sickness.mortalityinwomen + "  " + sickness.totalmortality);
+>>>>>>> 02f7f5d2fcdae30971bbe2e3546db4003d8d4934
 		});
 		res.write("</body></html>");
 		res.end();
