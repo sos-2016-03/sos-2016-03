@@ -67,8 +67,8 @@ app.get('/about',(req,res) => {
 		members.forEach((member) =>{
 			res.write("<li>"+member.name+" => <a href=https://sos-2016-03.herokuapp.com/about/"+member.source+">"+member.source+"</a></li>");
 		});
-		res.write("<h3>Project theme:</h3>");
-		res.write("</ul><p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
+		res.write("</ul><h3>Project theme:</h3>");
+		res.write("<p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
 		res.end();
 	});
 });
