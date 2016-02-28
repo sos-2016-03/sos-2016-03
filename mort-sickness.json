@@ -1,5 +1,5 @@
-[{"region":"Andalucía", "sickness":"Sífilis", "year":"2009",	"mortality-men":"0,06", "mortality-women":"0", "total-mortality":"0,02"},
-{"region":"Galicia", "sickness":"Clamidia", "year":"2012",	"mortality-men":"0", "mortality-women":"0", "total-mortality":"0"},
-{"region":"País Vasco", "sickness":"VIH", "year":"2013",	"mortality-men":"2,39", "mortality-women":"0,32", "total-mortality":"1,35"},
-{"region":"Madrid", "sickness":"Gonorrea", "year":"2010",	"mortality-men":"0", "mortality-women":"0", "total-mortality":"0"},
-{"region":"Cataluña", "sickness":"Herpres simple", "year":"2011",	"mortality-men":"0,04", "mortality-women":"0,02", "total-mortality":"0,04"}]
+[{"region": "Andalucía", "sickness": "Sífilis", "year": "2009",	"mortalityinmen": "0,06", "mortalityinwomen": "0", "totalmortality": "0,02"},
+{"region": "Galicia", "sickness": "Clamidia", "year": "2012",	"mortalityinmen": "0", "mortalityinwomen": "0", "totalmortality": "0"},
+{"region": "País Vasco", "sickness": "VIH", "year": "2013",	"mortalityinmen": "2,39", "mortalityinwomen": "0,32", "totalmortality": "1,35"},
+{"region": "Madrid", "sickness": "Gonorrea", "year": "2010",	"mortalityinmen": "0", "mortalityinwomen": "0", "totalmortality": "0"},
+{"region": "Cataluña", "sickness": "Herpres simple", "year": "2011",	"mortalityinmen": "0,04", "mortalityinwomen": "0,02", "totalmortality": "0,04"}]
