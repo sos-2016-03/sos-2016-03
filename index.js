@@ -2,23 +2,6 @@ var express=require("express");
 var fs=require("fs");
 var app=express();
 
-app.get("/about/spain-births",(req,res)=>{
-	fs.readFile('spain-births.json','utf-8',(err,content)=>{
-		console.log("Data read");
-		births=JSON.parse(content);
-		res.write('<html><body><h3>Spanish births </h3>');
-		res.write("<p style='text-align: justify;'>It will display data about spanish births, by regions and years. Making difference between men and women, showing the total number of births in the last column, as following: </p>");		
-		res.write("Data example:<ul>");
-		res.write("<li>region, year => men, women, total birth</li>")
-		births.forEach((birth) =>{
-			res.write("<li>"+birth.region+", "+birth.year+" => "+birth.men+", "+birth.women+", "+birth.totalbirth+"</li>");
-		});
-		res.write("</body></html>");
-		res.end();
-	});
-	
-});
-
 app.get("/about/population-growth",(req,res)=>{
 	fs.readFile('population-growth.json','utf-8',(err,content)=>{
 		console.log("Data read");
@@ -58,19 +41,8 @@ app.get("/about/mort-sickness",(req,res)=>{
 	});
 });
 
-app.get('/about',(req,res) => {
-	fs.readFile('members.json','utf-8',(err,content) => {
-		console.log("Data read");
-		members=JSON.parse(content);
-		res.write("<html><body><h3>Group members:</h3><ul>");
+app.use('/',express.static(__dirname + '/public'));
+app.use('/about',express.static(__dirname + '/about'));
 
-		members.forEach((member) =>{
-			res.write("<li>"+member.name+" => <a href=https://sos-2016-03.herokuapp.com/about/"+member.source+">"+member.source+"</a></li>");
-		});
-		res.write("</ul><h3>Project theme:</h3>");
-		res.write("<p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
-		res.end();
-	});
-});
 app.listen(process.env.PORT || 11000);
 
