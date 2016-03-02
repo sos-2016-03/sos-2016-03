@@ -1,15 +1,18 @@
 body{
 	background: #F2F2F2;
-	width:70%;
-	margin-left: 15%;
+	width:80%;
+	margin-left: 10%;
 	font-size:18px;
 }
 table{
-	width: 100%;
+	-moz-border-radius: 10px; /* Firefox */
+	-webkit-border-radius: 10px; /* Google Chrome y Safari */
+	border-radius: 10px;
 }
-table, th, td{
+table, tr, td{
 	border:1px solid #848484;
 	font-size:20px;
+	
 }
 tr{
 	text-align: center;
@@ -20,6 +23,15 @@ tr{
 	-webkit-border-radius: 10px; /* Google Chrome y Safari */
 	border-radius: 10px;	
 	padding:20px;
-	height: 40%;
+	height: 25%;
 	background-color:#D8D8D8;
+}
+.list-group{
+	float:left;
+	width: 50%;
+}
+.theme{
+	float:left;
+	width: 50%;
+	margin-top:-17px;
 }
