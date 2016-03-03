@@ -1,7 +1,7 @@
 var express=require("express");
 var fs=require("fs");
 var app=express();
-
+/*
 app.get("/about/population-growth",(req,res)=>{
 	fs.readFile('population-growth.json','utf-8',(err,content)=>{
 		console.log("Data read");
@@ -23,7 +23,7 @@ app.get("/about/population-growth",(req,res)=>{
 		res.end();
 	});
 	
-});
+});*/
 
 app.get("/about/mort-sickness",(req,res)=>{
 	fs.readFile('mort-sickness.json', 'utf8', (err, content)=>{
