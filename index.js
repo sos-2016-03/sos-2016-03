@@ -11,19 +11,18 @@ app.get("/about/mort-sickness",(req,res)=>{
 		res.write('<body>My data source is about mortality sexually transmited disease. For example:</br>');
 		res.write("<li>region, year, mortality-in-men, mortality-in-women, total-mortality</li>")
 		sic.forEach((sick) =>{
-			res.write("<li>" + sick.region + " " +sick.sickness + " " + sick.year + " " + sick.mortalityinmen  + " " + sick.mortalityinwomen + " "
-				  + sick.totalmortality + "</li>");
+			res.write("<li>" + sick.region + " " +sick.sickness + " " + sick.year + " " + sick.mortalityinmen  + " " + sick.mortalityinwomen + " "+ sick.totalmortality + "</li>");
 		});
 		res.write("</body></html>");
 		res.end();
 	});
 });
 
-app.get"/about",(req,res)=>{
+app.get("/about/",(req,res)=>{
 	fs.readFile('members.json','utf8',(err,content)=>{
 		members=JSON.parse(content);
+  		res.write("<html><body><h3>Group members:</h3><ul>");		
   		members.forEach((member) =>{
-  			res.write("<html><body><h3>Group members:</h3><ul>");
  			res.write("<li>"+member.name+" => <a href=/about/"+member.source+">"+member.source+"</a></li>");
  		});
 		res.write("</ul><h3>Project theme:</h3>");
