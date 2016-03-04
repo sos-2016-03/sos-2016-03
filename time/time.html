@@ -6,7 +6,7 @@
 	<script type="text/javascript">
 	var express = require("express");
 	var app = express();
-	app.use("/time",express.static(__dirname + '/html'));
+	app.use("/",express.static(__dirname + '/time'));
 
 	var port = (process.env.PORT || 5000);
 		app.get("/",(req,res)=>{
