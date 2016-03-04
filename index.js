@@ -79,7 +79,7 @@ app.get('/about/',(req,res) =>{
 
 app.use('/',express.static(__dirname + '/public'));
 app.use('/about',express.static(__dirname + '/about'));
-app.use('/time',express.static(__dirname + '/time'));
+app.use('/time',express.static(__dirname + 'time.js'));
 
 
 app.listen(process.env.PORT || 11000);
