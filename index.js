@@ -19,6 +19,7 @@ app.get("/about/population-growth",(req,res)=>{
  		pops.forEach((pop) =>{
  			res.write("<li>"+pop.region+", "+pop.year+" => "+pop.men+", "+pop.women+", "+pop.totalpopulation+"</li>");
  		});
+ 		res.write("</ul><a href='/about/'>« Previous</a>");
  		res.write("</body></html>");
  		res.end();
  	});
@@ -36,6 +37,7 @@ app.get("/about/spain-births",(req,res)=>{
  		births.forEach((birth) =>{
  			res.write("<li>"+birth.region+", "+birth.year+" => "+birth.men+", "+birth.women+", "+birth.totalbirth+"</li>");
  		});
+ 		res.write("</ul><a href='/about/'>« Previous</a>");
  		res.write("</body></html>");
  		res.end();
  	});
@@ -52,6 +54,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 		sic.forEach((sick) =>{
 			res.write("<li>" + sick.region + " " +sick.sickness + " " + sick.year + " " + sick.mortalityinmen  + " " + sick.mortalityinwomen + " "+ sick.totalmortality + "</li>");
 		});
+		res.write("</ul><a href='/about/'>« Previous</a>");
 		res.write("</body></html>");
 		res.end();
 	});
@@ -66,6 +69,7 @@ app.get('/about/',(req,res) =>{
  		});
 		res.write("</ul><h3>Project theme:</h3>");
 		res.write("<p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
+ 		res.write("<a href='/'>« Previous</a>");
  		res.end();
  	});
  });
