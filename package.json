@@ -1,0 +1,23 @@
+{
+  "name": "sos-2016-03",
+  "version": "0.2.8",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sos-2016-03/sos-2016-03.git"
+  },
+  "author": "Alberto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sos-2016-03/sos-2016-03/issues"
+  },
+  "homepage": "https://github.com/sos-2016-03/sos-2016-03#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
