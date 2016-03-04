@@ -1,9 +1,4 @@
-<html>
-<body>
-	<head>
-		<h1>Fecha y hora actual</h1>
-	</head>
-	<script type="text/javascript">
+
 	var express = require("express");
 	var app = express();
 	app.use("/time",express.static(__dirname + '/time'));
@@ -14,7 +9,4 @@
 			res.write("It is: " + now);
 			res.end();
 });
-		app.listen(port)
-	</script>
-</body>
-</html>
+		app.listen(port);
