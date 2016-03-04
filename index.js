@@ -75,6 +75,8 @@ app.get('/about/',(req,res) =>{
 
 app.use('/',express.static(__dirname + '/public'));
 app.use('/about',express.static(__dirname + '/about'));
+app.use('/time',express.static(__dirname + '/time'));
+
 
 app.listen(process.env.PORT || 11000);
 
