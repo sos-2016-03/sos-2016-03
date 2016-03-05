@@ -50,9 +50,9 @@ app.get("/about/mort-sickness",(req,res)=>{
 		sic = JSON.parse(content);
 		res.write('<html><h1>Mort sickness</h1>');
 		res.write('<body>My data source is about mortality sexually transmited disease. For example:</br>');
-		res.write("<table rules="all" cellpadding="5">region, sickness, year, mortality-in-men, mortality-in-women, total-mortality</br>");
+		res.write("<li>region, sickness, year, mortality-in-men, mortality-in-women, total-mortality</li></br>");
 		sic.forEach((sick) =>{
-			res.write('<tr>'+ '<td>'+sick.region+'</td>' + '<td>'+sick.sickness+'</td>' +'<td>'+sick.year+'</td>'+ '<td>'+sick.mortalityinmen+'</td>' + '<td>'+sick.mortalityinwomen+'</td>' + '<td>'+sick.totalmortality+'</td>' + '</tr>' +'</table>'+'</br>');
+			res.write('<table rules="all" cellpadding="5">'+ '<tr>'+ '<td>'+sick.region+'</td>' + '<td>'+sick.sickness+'</td>' +'<td>'+sick.year+'</td>'+ '<td>'+sick.mortalityinmen+'</td>' + '<td>'+sick.mortalityinwomen+'</td>' + '<td>'+sick.totalmortality+'</td>' + '</tr>' +'</table>'+'</br>');
 		});
 		res.write("</ul><a href='/about/'>« Previous</a>");
 		res.write("</body></html>");
