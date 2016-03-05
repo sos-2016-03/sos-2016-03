@@ -45,15 +45,17 @@ app.get("/about/spain-births",(req,res)=>{
  });
 
 app.get("/about/mort-sickness",(req,res)=>{
-	fs.readFile('mort-sickness.json', 'utf8', (err, content)=>{
+	fs.readFile('mort-sickness.json', 'utf-8', (err, content)=>{
 		console.log("This is my data source");
 		sic = JSON.parse(content);
 		res.write('<html><h1>Mort sickness</h1>');
-		res.write('<body>My data source is about mortality sexually transmited disease. For example:</br>');
-		res.write("<li>region, sickness, year, mortality-in-men, mortality-in-women, total-mortality</li></br>");
+		res.write('<body>My data source is about mortality sexually transmited disease. For example:');
+		res.write("<table rules=all cellpadding=5>");
+		res.write("<tr><td>region</td><td>sickness</td><td>year</td><td>mortality-in-men</td><td>mortality-in-women</td><td>total-mortality</td></tr></br>");
 		sic.forEach((sick) =>{
-			res.write('<table rules="all" cellpadding="5">'+ '<tr>'+ '<td>'+sick.region+'</td>' + '<td>'+sick.sickness+'</td>' +'<td>'+sick.year+'</td>'+ '<td>'+sick.mortalityinmen+'</td>' + '<td>'+sick.mortalityinwomen+'</td>' + '<td>'+sick.totalmortality+'</td>' + '</tr>' +'</table>'+'</br>');
+			res.write('<tr>'+ '<td>'+sick.region+'</td>' + '<td>'+sick.sickness+'</td>' +'<td>'+sick.year+'</td>'+ '<td>'+sick.mortalityinmen+'</td>' + '<td>'+sick.mortalityinwomen+'</td>' + '<td>'+sick.totalmortality+'</td>' + '</tr>' +'</br>');
 		});
+		res.write('</table>');
 		res.write("</ul><a href='/about/'>« Previous</a>");
 		res.write("</body></html>");
 		res.end();
