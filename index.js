@@ -2,6 +2,7 @@ var express=require("express");
 var fs=require("fs");
 var app=express();
 
+
 app.get("/about/population-growth",(req,res)=>{
  	fs.readFile('population-growth.json','utf-8',(err,content)=>{
  		console.log("Data read");
@@ -96,11 +97,11 @@ app.get("/time",(req,res)=>{
 	var month=now.getMonth();
 	var day=now.getDay();
 	if(hour<12){
-		res.write("<h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2>");
+		res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+", "+months[month]+", "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}else{
-		res.write("<h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2>");
+		res.write("<html><body><h2>Good afternoon, today is "+days[day]+", "+day+", "+months[month]+", "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}
-	res.write("<a href='/'>« Previous</a>");
+	res.write("<a href='/'>« Previous</a></body></html>");
 	res.end();
 });
 
