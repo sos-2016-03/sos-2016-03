@@ -95,6 +95,7 @@ app.get("/time",(req,res)=>{
 	}else{
 		res.write("<h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2>");
 	}
+	res.write("<a href='/'>« Previous</a>");
 	res.end();
 });
 
