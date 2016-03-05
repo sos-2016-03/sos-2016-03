@@ -36,7 +36,7 @@ app.get("/about/spain-births",(req,res)=>{
  		res.write("Data example:<ul>");
  		res.write("<table rules='all' cellpadding='5'><tr bgcolor='#81BEF7'><td>region</td><td>year</td><td>men</td><td>women</td><td>total birth</td></tr>");
  		births.forEach((birth) =>{
- 			res.write("<tr><td>"+birth.region+"</td><td>"+birth.year+"</td><td>"+birth.men+"</td><td>"+birth.women+"</td><td>"+birth.totalbirth+"</td></tr>");
+ 			res.write("<tr bgcolor='#FFFFFF'><td>"+birth.region+"</td><td>"+birth.year+"</td><td>"+birth.men+"</td><td>"+birth.women+"</td><td>"+birth.totalbirth+"</td></tr>");
  		});
  		res.write("</table></div><br /><a href='/about/'>« Previous</a>");
  		res.write("</body></html>");
@@ -68,7 +68,7 @@ app.get('/about/',(req,res) =>{
   		res.write("<h3><table border='1' rules='all' cellpadding='5'>Group members:</h3><ul>");	
   		res.write("<tr bgcolor='#81BEF7'><td>Group member</td><td>Data</td>");	
   		members.forEach((member) =>{
- 			res.write("<tr><td>"+member.name+"</td><td><a href=/about/"+member.source+">"+member.source+"</a></td></tr>");
+ 			res.write("<tr bgcolor='#FFFFFF'><td>"+member.name+"</td><td><a href=/about/"+member.source+">"+member.source+"</a></td></tr>");
  		});
 		res.write("</table><h3>Project theme:</h3>");
 		res.write("<p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
