@@ -97,9 +97,9 @@ app.get("/time",(req,res)=>{
 	var month=now.getMonth();
 	var day=now.getDay();
 	if(hour<12){
-		res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+", "+months[month]+", "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}else{
-		res.write("<html><body><h2>Good afternoon, today is "+days[day]+", "+day+", "+months[month]+", "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		res.write("<html><body><h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}
 	res.write("<a href='/'>« Previous</a></body></html>");
 	res.end();
