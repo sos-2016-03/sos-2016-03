@@ -6,5 +6,3 @@ app.get("/time",(req,res)=>{
 	res.write("It is: " + now);
 	res.end();
 });
-
-app.listen(process.env.PORT);
