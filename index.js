@@ -52,7 +52,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 		res.write('<body>My data source is about mortality sexually transmited disease. For example:</br>');
 		res.write("<li>region, year, mortality-in-men, mortality-in-women, total-mortality</li>");
 		sic.forEach((sick) =>{
-			res.write("<table>"  "<tr>"  "<td>"sick.region"</td>"  "<td>"sick.sickness"</td>" "<td>"sick.year"</td>" "<td>"sick.mortalityinmen"</td>"  "<td>"sick.mortalityinwomen"</td>"  "<td>"sick.totalmortality"</td>"  "</tr>" "</table>");
+			res.write('<table>' '<tr>'  '<td>'sick.region'</td>'  '<td>'sick.sickness'</td>' '<td>'sick.year'</td>' '<td>'sick.mortalityinmen'</td>'  '<td>'sick.mortalityinwomen'</td>'  '<td>'sick.totalmortality'</td>'  '</tr>' '</table>');
 		});
 		res.write("</ul><a href='/about/'>« Previous</a>");
 		res.write("</body></html>");
