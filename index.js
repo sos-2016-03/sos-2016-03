@@ -30,14 +30,15 @@ app.get("/about/spain-births",(req,res)=>{
   	fs.readFile('spain-births.json','utf-8',(err,content)=>{
  		console.log("Data read");
  		births=JSON.parse(content);
-		res.write('<html><body><h3>Spanish births </h3>');
- 		res.write("<p style='text-align: justify;'>It will display data about spanish births, by regions and years. Making difference between men and women, showing the total number of births in the last column, as following: </p>");		
+ 		res.write("<html><body><link rel='stylesheet' type='text/css' href='../stylesheets/spain-births.css' />");
+		res.write('<h3>Spanish births </h3>');
+ 		res.write("<div class='main'><p style='text-align: justify;'>It will display data about spanish births, by regions and years. Making difference between men and women, showing the total number of births in the last column, as following: </p>");		
  		res.write("Data example:<ul>");
- 		res.write("<li>region, year => men, women, total birth</li>");
+ 		res.write("<table rules='all' cellpadding='5'><tr bgcolor='#81BEF7'><td>region</td><td>year</td><td>men</td><td>women</td><td>total birth</td></tr>");
  		births.forEach((birth) =>{
- 			res.write("<li>"+birth.region+", "+birth.year+" => "+birth.men+", "+birth.women+", "+birth.totalbirth+"</li>");
+ 			res.write("<tr><td>"+birth.region+"</td><td>"+birth.year+"</td><td>"+birth.men+"</td><td>"+birth.women+"</td><td>"+birth.totalbirth+"</td></tr>");
  		});
- 		res.write("</ul><a href='/about/'>« Previous</a>");
+ 		res.write("</table></div><br /><a href='/about/'>« Previous</a>");
  		res.write("</body></html>");
  		res.end();
  	});
@@ -63,11 +64,13 @@ app.get("/about/mort-sickness",(req,res)=>{
 app.get('/about/',(req,res) =>{
 	fs.readFile('members.json','utf8',(err,content) =>{
 		members=JSON.parse(content);
-  		res.write("<html><body><h3>Group members:</h3><ul>");		
+		res.write("<html><body><link rel='stylesheet' type='text/css' href='../stylesheets/about.css' />");
+  		res.write("<h3><table border='1' rules='all' cellpadding='5'>Group members:</h3><ul>");	
+  		res.write("<tr bgcolor='#81BEF7'><td>Group member</td><td>Data</td>");	
   		members.forEach((member) =>{
- 			res.write("<li>"+member.name+" => <a href=/about/"+member.source+">"+member.source+"</a></li>");
+ 			res.write("<tr><td>"+member.name+"</td><td><a href=/about/"+member.source+">"+member.source+"</a></td></tr>");
  		});
-		res.write("</ul><h3>Project theme:</h3>");
+		res.write("</table><h3>Project theme:</h3>");
 		res.write("<p style='text-align: justify;'>Our sources of information are aimed for analyzing the relationship between the number of births over the years in the regions of Spain, along with the number of deaths due to different types of disease and population growth in our country.</p></body></html>");
  		res.write("<a href='/'>« Previous</a>");
  		res.end();
