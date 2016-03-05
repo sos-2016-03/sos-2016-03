@@ -76,8 +76,25 @@ app.get('/about/',(req,res) =>{
 
 
 app.get("/time",(req,res)=>{
+	var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+	var months=[
+  		"January", "February", "March",
+		  "April", "May", "June", "July",
+		  "August", "September", "October",
+		  "November", "December"
+		  ];
 	var now = new Date();
-	res.write("It is: " + now);
+	var hour=now.getHours();
+	var min=now.getMinutes();
+	var sec=now.getSeconds();
+	var year=now.getFullYear();
+	var month=now.getMonth();
+	var day=now.getDay();
+	if(hour<12){
+		res.write("<h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2>");
+	}else{
+		res.write("<h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2>");
+	}
 	res.end();
 });
 
