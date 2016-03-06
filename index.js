@@ -64,7 +64,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 	});
 });
 
-/*app.get('/about/',(req,res) =>{
+app.get('/about/',(req,res) =>{
 	fs.readFile('members.json','utf-8',(err,content) =>{
 		members=JSON.parse(content);
 		res.write("<html><body><link rel='stylesheet' type='text/css' href='../stylesheets/about.css' />");
@@ -78,7 +78,7 @@ app.get("/about/mort-sickness",(req,res)=>{
  		res.write("<a href='/'>« Previous</a>");
  		res.end();
  	});
- });*/
+ });
 
 
 app.get("/time",(req,res)=>{
