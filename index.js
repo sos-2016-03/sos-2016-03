@@ -90,7 +90,7 @@ app.get("/time",(req,res)=>{
 		  "November", "December"
 		  ];
 	var now = new Date();
-	var hour=now.getHours();
+	var hour=now.getHours()+1;
 	var min=now.getMinutes();
 	var sec=now.getSeconds();
 	var year=now.getFullYear();
