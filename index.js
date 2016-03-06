@@ -65,7 +65,7 @@ app.get("/about/mort-sickness",(req,res)=>{
 });
 
 app.get('/about/',(req,res) =>{
-	fs.readFile('members.json','utf8',(err,content) =>{
+	fs.readFile('members.json','utf-8',(err,content) =>{
 		members=JSON.parse(content);
 		res.write("<html><body><link rel='stylesheet' type='text/css' href='../stylesheets/about.css' />");
   		res.write("<h3><table border='1' rules='all' cellpadding='5'>Group members:</h3><ul>");	
