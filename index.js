@@ -82,7 +82,7 @@ app.get('/about/',(req,res) =>{
 
 
 app.get("/time",(req,res)=>{
-	var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+	var days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 	var months=[
   		"January", "February", "March",
 		  "April", "May", "June", "July",
@@ -95,11 +95,25 @@ app.get("/time",(req,res)=>{
 	var sec=now.getSeconds();
 	var year=now.getFullYear();
 	var month=now.getMonth();
-	var day=now.getDay();
+	var day=now.getDate();
 	if(hour<12){
-		res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		if(sec<10){
+			res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
+		}else{
+			res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		}
+	}else if(hour<20){
+		if(sec<10){
+			res.write("<html><body><h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
+		}else{
+			res.write("<html><body><h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		}
 	}else{
-		res.write("<html><body><h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		if(sec<10){
+			res.write("<html><body><h2>Good night, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
+		}else{
+			res.write("<html><body><h2>Good night, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		}
 	}
 	res.write("<a href='/about.html'>« Previous</a></body></html>");
 	res.end();
