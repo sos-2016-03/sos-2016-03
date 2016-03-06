@@ -31,7 +31,8 @@ app.get("/about/spain-births",(req,res)=>{
   	fs.readFile('spain-births.json','utf-8',(err,content)=>{
  		console.log("Data read");
  		births=JSON.parse(content);
- 		res.write("<html><body><link rel='stylesheet' type='text/css' href='../stylesheets/spain-births.css' />");
+ 		res.write("<html><head><title>Group 03 - Spanish births</title>");
+ 		res.write("<link rel='stylesheet' type='text/css' href='../stylesheets/spain-births.css' /></head><body>");
 		res.write('<h3>Spanish births </h3>');
  		res.write("<div class='main'><p style='text-align: justify;'>It will display data about spanish births, by regions and years. Making difference between men and women, showing the total number of births in the last column, as following: </p>");		
  		res.write("Data example:<ul>");
@@ -67,7 +68,8 @@ app.get("/about/mort-sickness",(req,res)=>{
 app.get('/about/',(req,res) =>{
 	fs.readFile('members.json','utf-8',(err,content) =>{
 		members=JSON.parse(content);
-		res.write("<html><body><link rel='stylesheet' type='text/css' href='../stylesheets/about.css' />");
+		res.write("<html><head><title>Group 03 - About</title>");
+		res.write("<link rel='stylesheet' type='text/css' href='../stylesheets/about.css' /></head><body>");
   		res.write("<h3><table border='1' rules='all' cellpadding='5'>Group members:</h3><ul>");	
   		res.write("<tr bgcolor='#81BEF7'><td>Group member</td><td>Data</td>");	
   		members.forEach((member) =>{
@@ -96,23 +98,24 @@ app.get("/time",(req,res)=>{
 	var year=now.getFullYear();
 	var month=now.getMonth();
 	var day=now.getDate();
+	res.write("<html><head><title>Group 03 - My time</title><body>");
 	if(hour<12){
 		if(sec<10){
-			res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
+			res.write("<h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
 		}else{
-			res.write("<html><body><h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+			res.write("<h2>Good morning, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 		}
 	}else if(hour<20){
 		if(sec<10){
-			res.write("<html><body><h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
+			res.write("<h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
 		}else{
-			res.write("<html><body><h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+			res.write("<h2>Good afternoon, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 		}
 	}else{
 		if(sec<10){
-			res.write("<html><body><h2>Good night, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
+			res.write("<h2>Good night, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":0"+sec+"</h2><br />");
 		}else{
-			res.write("<html><body><h2>Good night, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+			res.write("<h2>Good night, today is "+days[day]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 		}
 	}
 	res.write("<a href='/about.html'>« Previous</a></body></html>");
