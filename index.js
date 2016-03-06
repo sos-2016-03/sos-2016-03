@@ -111,5 +111,5 @@ app.use('/',express.static(__dirname + '/public'));
 app.use('/about',express.static(__dirname + '/about'));
 
 
-app.listen(process.env.PORT || 11000);
+app.listen(process.env.PORT || 7000);
 
