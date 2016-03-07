@@ -20,15 +20,15 @@ app.get("/time",(req,res)=>{
     sec = (sec < 10 ? "0" : "") + sec;
 	var year=date.getFullYear();
 	var month=date.getMonth();
-	var day=date.getDay();
-	var weekday=date.getDate();
+	var weekday=date.getDay();
+	var day=date.getDate();
 	res.write("<html><head><title>Group 03 - My time</title><body>");
 	if(hour<12){
-		res.write("<h2>Good morning, today is "+days[day]+" "+weekday+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		res.write("<h2>Good morning, today is "+days[weekday]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}else if(hour<20){
-		res.write("<h2>Good afternoon, today is "+days[day]+" "+weekday+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		res.write("<h2>Good afternoon, today is "+days[weekday]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}else{
-		res.write("<h2>Good night, today is "+days[day]+" "+weekday+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
+		res.write("<h2>Good night, today is "+days[weekday]+" "+day+" "+months[month]+" "+year+" and it is "+hour+":"+min+":"+sec+"</h2><br />");
 	}
 	res.write("<a href='/about/'>« Previous</a></body></html>");
 	res.end();
