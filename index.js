@@ -38,6 +38,10 @@ app.get("/time",(req,res)=>{
 
 app.use('/',express.static(__dirname + '/public'));
 app.use('/about',express.static(__dirname + '/about'));
+app.use('/about/spain-births',express.static(__dirname + '/about/spain-births'));
+app.use('/about/population-growth',express.static(__dirname + '/about/spain-births'));
+app.use('/about/mort-sickness',express.static(__dirname + '/about/mort-sickness'));
+
 
 app.listen(process.env.PORT || 11000);
 
