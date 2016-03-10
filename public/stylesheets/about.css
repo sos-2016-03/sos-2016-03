@@ -1,13 +1,14 @@
 body{
 	background: #F2F2F2;
-	width:80%;
-	margin-left: 10%;
+	width:85%;
+	margin-left: 7%;
 	font-size:18px;
 }
 table{
 	-moz-border-radius: 10px; /* Firefox */
 	-webkit-border-radius: 10px; /* Google Chrome y Safari */
 	border-radius: 10px;
+	width: 95%;
 }
 table, tr, td{
 	border:1px solid #848484;
@@ -28,10 +29,10 @@ tr{
 }
 .list-group{
 	float:left;
-	width: 50%;
+	width: 60%;
 }
 .theme{
 	float:left;
-	width: 50%;
+	width: 40%;
 	margin-top:-17px;
 }
