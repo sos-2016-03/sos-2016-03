@@ -2,6 +2,8 @@ var express=require("express");
 var fs=require("fs");
 var app=express();
 
+var bodyParser=require("body-parser");
+
 
 app.get("/time",(req,res)=>{
 	var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -32,6 +34,15 @@ app.get("/time",(req,res)=>{
 	}
 	res.write("<a href='/about/'>« Previous</a></body></html>");
 	res.end();
+});
+
+app.use(bodyParser.json());
+
+app.post("/music",function(req,res){
+	res.sendStatus(200);
+	console.log("New POST");
+	console.log("Object received: " + JSON.stringify(req.body));
+	music.push(req.body);
 });
 
 
