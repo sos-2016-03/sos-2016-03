@@ -197,10 +197,10 @@ app.get("/api/sandbox/f1teams",(req,res)=>{
 	res.end();
 });
 
-app.use('/',express.static(__dirname + '/public'));
 
 //Recurso con método que crea 2 equipos en la lista
 app.get("/api-test/f1teams/loadInitialData",(req,res)=>{
+  teams=[];
   fs.readFile('f1teams.json','utf8',(err,content) => {
     f1teams=JSON.parse(content);
     f1teams.forEach((team) =>{
