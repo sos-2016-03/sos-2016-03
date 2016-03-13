@@ -3,13 +3,10 @@ var fs=require("fs");
 var app=express();
 var bodyParser=require("body-parser");
 
-<<<<<<< HEAD
-=======
 var port = (process.env.PORT || 11000);
 
 
 
->>>>>>> 49c6195848841edfc499b5d1e543be31a49c2d07
 app.get("/time",(req,res)=>{
 	var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 	var months=[
