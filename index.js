@@ -1,7 +1,6 @@
 var express=require("express");
 var fs=require("fs");
 var app=express();
-
 var bodyParser=require("body-parser");
 
 var port = (process.env.PORT || 11000);
@@ -149,6 +148,133 @@ app.get("/api-test/tennisplayers/loadInitialData", (req,res)=>{
 });
 
 //--------------------------------------------------------------------------------------------
+
+var teams=[];
+
+//API Alberto
+//Métodos GET
+//Devuelve un recurso individual
+app.get("/api/sandbox/f1teams/:name",(req,res)=>{
+    var name = req.params.name;
+    var team = [];
+    console.log("New GET of resource "+name);
+    for(i=0;i<teams.length;i++){
+      	if(teams[i].name == name){
+        	team.push(teams[i]);
+        	break;
+      	}
+    }
+    if(team.length!=0){
+        res.write("<html>");
+        res.write("<head><title>Group 03 - Alberto's API</title>");
+        res.write("<link rel='stylesheet' type='text/css' href='../../../stylesheets/api.css' /></head><body>");
+        res.write("<h3>Your query:</h3>");
+        res.write("<table border='1' rules='all' cellpadding='5'>");
+        res.write("<tr bgcolor='#81BEF7'><td>Team</td><td>Location</td><td>Chassis</td><td>Engine</td></tr>");
+  		  team.forEach((aux)=>{
+          res.write("<tr bgcolor='#FFFFFF'><td>"+aux.name+"</td><td>"+aux.location+"</td><td>"+aux.chassis+"</td><td>"+aux.engine+"</td></tr>");
+  		  });
+  		  res.write("</table></body></html>");
+    }else{
+    	 res.sendStatus(404);
+    }
+    res.end();
+});
+
+//Devuelve la lista de recursos
+app.get("/api/sandbox/f1teams",(req,res)=>{
+  res.write("<html>");
+  res.write("<head><title>Group 03 - Alberto's API</title>");
+  res.write("<link rel='stylesheet' type='text/css' href='../../stylesheets/api.css' /></head><body>"); 
+  res.write("<h3>2016 FIA Formula One World Championship Teams</h3>"); 
+  res.write("<table border='1' rules='all' cellpadding='5'>");
+  res.write("<tr bgcolor='#81BEF7'><td>Team</td><td>Location</td><td>Chassis</td><td>Engine</td></tr>");
+	teams.forEach((team)=>{
+		  res.write("<tr bgcolor='#FFFFFF'><td>"+team.name+"</td><td>"+team.location+"</td><td>"+team.chassis+"</td><td>"+team.engine+"</td></tr>");
+	});
+	res.write("</table><br />");
+  res.write("<a href='/api-test/f1teams/loadInitialData'>Load Initial Data</a></body></html>");
+	res.end();
+});
+
+app.use('/',express.static(__dirname + '/public'));
+
+//Recurso con método que crea 2 equipos en la lista
+app.get("/api-test/f1teams/loadInitialData",(req,res)=>{
+  fs.readFile('f1teams.json','utf8',(err,content) => {
+    f1teams=JSON.parse(content);
+    f1teams.forEach((team) =>{
+      teams.push(team);
+    });
+  });
+  res.sendStatus(200);
+});
+
+//Métodos POST
+//Método que añade un nuevo equipo
+app.post("/api/sandbox/f1teams",(req,res)=>{
+  var team=req.body;
+	teams.push(team);
+	console.log("New POST of resourse "+team.name);
+	res.sendStatus(200);
+});
+
+//Método inválido
+app.post("/api/sandbox/f1teams/:name",(req,res)=>{
+	res.sendStatus(405);
+});
+
+//Métodos DELETE
+//Borra toda la lista
+app.delete("/api/sandbox/f1teams",(req,res)=>{
+	console.log("New DELETE of resources");
+	teams=[];
+	res.sendStatus(200);
+});
+
+//Borra un recurso individual
+app.delete("/api/sandbox/f1teams/:name",(req,res)=>{
+	var name=req.params.name;
+	var cont=0;
+    for(i=0;i<teams.length;i++){
+      	if(teams[i].name == name){
+        	teams.splice(i);
+        	cont=1;
+        }
+    }
+    if(cont==1){
+    	 res.sendStatus(200);
+    }else{
+    	 res.sendStatus(404);
+    }
+});
+
+//Métodos PUT
+//Método inválido
+app.put("/api/sandbox/f1teams/",(req,res)=>{
+	res.sendStatus(405);
+});
+
+//Actualiza un elemento de array o en su caso devuelve 404
+app.put("/api/sandbox/f1teams/:name",(req,res)=>{
+    var name = req.params.name;
+    var nameUpdated = req.body;
+    var cont = 0;
+    for(i=0;i<teams.length;i++){
+      	if(teams[i].name == name){
+        	teams[i]=nameUpdated;
+        	cont=1;
+        	break;
+      	}
+    }
+	if(cont==1){
+		res.sendStatus(200);
+	}else{
+		res.sendStatus(404);
+	}
+});
+
+//----------------------------------------------------------------------------//
 
 app.use('/',express.static(__dirname + '/public'));
 
