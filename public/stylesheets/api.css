@@ -18,21 +18,3 @@ table, tr, td{
 tr{
 	text-align: center;
 }
-.main{
-	border:1px solid #848484;
-	-moz-border-radius: 10px; /* Firefox */
-	-webkit-border-radius: 10px; /* Google Chrome y Safari */
-	border-radius: 10px;	
-	padding:20px;
-	height: 30%;
-	background-color:#D8D8D8;
-}
-.list-group{
-	float:left;
-	width: 60%;
-}
-.theme{
-	float:left;
-	width: 40%;
-	margin-top:-17px;
-}
