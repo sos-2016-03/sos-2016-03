@@ -363,7 +363,7 @@ app.put("/api/sandbox/music/:name", (req,res)=>{
 app.get("/api-test/music/loadInitialData", (req,res)=>{
 	musics=[{"name ": "Frio", "author ": "Maria Parrado"},
 	{"name ": "Te dejo en libertad", "author ": "Ha-Ash"}]
-	res.send(musics);
+	res.send(200);
 	console.log("This songs are my initial data");
 });
 
