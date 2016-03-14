@@ -313,7 +313,7 @@ app.get("/api/sandbox/music/:name", (req,res)=>{
 app.delete("/api/sandbox/music",(req,res)=>{
 	for(var i=0; i<musics.length; i++){
 		musics.splice(i);
-		res.send(200);
+		res.sendStatus(200);
 	}
 	console.log("Delete songs list");
 });
@@ -363,7 +363,7 @@ app.put("/api/sandbox/music/:name", (req,res)=>{
 app.get("/api-test/music/loadInitialData", (req,res)=>{
 	musics=[{"name ": "Frio", "author ": "Maria Parrado"},
 	{"name ": "Te dejo en libertad", "author ": "Ha-Ash"}]
-	res.send(200);
+	res.sendStatus(200);
 	console.log("This songs are my initial data");
 });
 
