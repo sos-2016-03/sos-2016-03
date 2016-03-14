@@ -328,6 +328,7 @@ app.delete("/api/sandbox/music/:name",(req,res)=>{
 		console.log("Delete this song");
 		musics.splice(i);
 		res.sendStatus(200);
+		break;
 		}	
 	}
 	if(buscado == -1){
@@ -352,6 +353,7 @@ app.put("/api/sandbox/music/:name", (req,res)=>{
 			musics[i]=nueva;
 			console.log("Modified");
 			res.sendStatus(200);
+			break;
 		}
 	}
 	if(buscado == -1){
