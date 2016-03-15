@@ -287,7 +287,7 @@ app.post("/api/sandbox/music/:name", (req,res)=>{
 //get collection patri
 app.get("/api/sandbox/music",(req,res)=>{
 	console.log("NEW GET");
-	var music = req.body;
+	//var music = req.body;
 	res.send(musics);
 });
 
@@ -363,10 +363,10 @@ app.put("/api/sandbox/music/:name", (req,res)=>{
 
 //get load patri
 app.get("/api-test/music/loadInitialData", (req,res)=>{
-	musics=[{"name ": "Frio", "author ": "Maria Parrado"},
-	{"name ": "Te dejo en libertad", "author ": "Ha-Ash"}]
+	initial_musics=[{"name": "Frio", "author": "Maria Parrado"},
+	{"name": "Te dejo en libertad", "author": "Ha-Ash"}];
+	musics=initial_musics;
 	res.sendStatus(200);
-	console.log("This songs are my initial data");
 });
 
 
