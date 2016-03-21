@@ -3,28 +3,33 @@ var fs=require("fs");
 var app=express();
 var bodyParser=require("body-parser");
 var timeCtrl=require("./timeCtrl.js");
-var apif1teams=require("./apif1teams.js");
+var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
 app.use(bodyParser.json());
+
 
 var port = (process.env.PORT || 11000);
 
 
 app.get("/time",timeCtrl.getTime);
 
-app.get("/api/sandbox/f1teams/:name",apif1teams.getItem);
-app.get("/api/sandbox/f1teams",apif1teams.getList);
-app.get("/api-test/f1teams/loadInitialData",apif1teams.getLoadInitialData);
-app.post("/api/sandbox/f1teams",apif1teams.getPostItem);
-app.post("/api/sandbox/f1teams/:name",apif1teams.getPostInvalid);
-app.delete("/api/sandbox/f1teams",apif1teams.getDelete);
-app.delete("/api/sandbox/f1teams/:name",apif1teams.getDeleteItem);
-app.put("/api/sandbox/f1teams/",apif1teams.getPutInvalid);
-app.put("/api/sandbox/f1teams/:name",apif1teams.getPut);
+app.use("/api/v1/spain-births",spainBirthsApi);
+
+
+/*app.get("/api/v1/spain-births/:region",spainBirthsApi.getItem);
+app.get("/api/v1/spain-births",spainBirthsApi.getList);
+app.get("/api/v1/spain-births/loadInitialData",spainBirthsApi.getLoadInitialData);
+app.post("/api/v1/spain-births",spainBirthsApi.postItem);
+app.post("/api/v1/spain-births/:name",spainBirthsApi.postInvalid);
+app.delete("/api/v1/spain-births",spainBirthsApi.delete);
+app.delete("/api/v1/spain-births/:name",spainBirthsApi.deleteItem);
+app.put("/api/v1/spain-births/",spainBirthsApi.putInvalid);
+app.put("/api/v1/spain-births/:name",spainBirthsApi.put);*/
 
 
 
 /*****API de Ana*****/
 //--------------------------------------------------------------------------------------------
+
 var tennisplayers = [];
 /*-------GET-------*/
 app.get("/api/sandbox/tennisplayers", (req,res)=>{
