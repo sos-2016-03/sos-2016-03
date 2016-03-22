@@ -23,8 +23,8 @@ module.exports.getStatisticsId = function(req,res){
 		{region:"Cataluña", year: "2011", age:"45-49", men: "271109", women: "270808", total_population: "541917"},
 		{region:"Galicia", year: "2012", age:"65-69", men: "72977", women: "82399", total_population: "155376"},
 		{region:"Pais Vasco", year: "2013", age:"00-04", men: "53971", women: "51188", total_population: "105159"},
-		{region:"Andalucia", year: "2012", age:"20-24", men: "252799", women: "241437", total_population: "494236"},
-		{region:"Andalucia", year: "2005", age:"20-24", men: "296769", women: "282956", total_population: "533129"}];
+		{region:"Andalucia", year: "2012", age:"20-24", men: "252799", women: "241437", total_population: "494236"}
+		];
 		population_growth = initial_array;
 		//console.log(population_growth);
 		res.sendStatus(200);
@@ -303,6 +303,7 @@ module.exports.getLoad = function(req,res){
 	//console.log(population_growth);
 	*/
 	res.sendStatus(200);
+
 };
 
 module.exports.getBusqueda = function(req,res){
