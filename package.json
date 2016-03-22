@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sos-2016-03/sos-2016-03#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "passport-localapikey": "0.0.3"
   }
 }

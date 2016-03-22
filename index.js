@@ -15,15 +15,7 @@ app.get("/time",timeCtrl.getTime);
 app.use("/api/v1/spain-births",spainBirthsApi);
 
 
-/*app.get("/api/v1/spain-births/:region",spainBirthsApi.getItem);
-app.get("/api/v1/spain-births",spainBirthsApi.getList);
-app.get("/api/v1/spain-births/loadInitialData",spainBirthsApi.getLoadInitialData);
-app.post("/api/v1/spain-births",spainBirthsApi.postItem);
-app.post("/api/v1/spain-births/:name",spainBirthsApi.postInvalid);
-app.delete("/api/v1/spain-births",spainBirthsApi.delete);
-app.delete("/api/v1/spain-births/:name",spainBirthsApi.deleteItem);
-app.put("/api/v1/spain-births/",spainBirthsApi.putInvalid);
-app.put("/api/v1/spain-births/:name",spainBirthsApi.put);*/
+
 
 
 
