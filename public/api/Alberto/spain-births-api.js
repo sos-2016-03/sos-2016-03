@@ -183,8 +183,12 @@ router.post("/",(req,res) => {
   var birth=req.body;
   cont=0;
   if(births.length==0){
+    if(birth.region && birth.year && birth.men && birth.women && birth.totalbirth){
       births.push(birth);
       res.sendStatus(201); 
+    }else{
+      res.sendStatus(400);
+    }
   }else{
       for(i=0;i<births.length;i++){  
         if(births[i].region==birth.region && births[i].year==birth.year){
@@ -194,9 +198,11 @@ router.post("/",(req,res) => {
       }
       if(cont==1){
         res.sendStatus(409);
-      }else{
+      }else if(birth.region && birth.year && birth.men && birth.women && birth.totalbirth){
         births.push(birth);
         res.sendStatus(201);
+      }else{
+        res.sendStatus(400);
       }
   }
 });
@@ -270,7 +276,7 @@ router.put("/:region",(req,res) => {
     for(i=0;i<births.length;i++){
       	if(births[i].region == region){
           cont=1;
-          if(births[i].region==regionUpdated.region){
+          if(births[i].region==regionUpdated.region && regionUpdated.region  && regionUpdated.region && regionUpdated.year && regionUpdated.men && regionUpdated.women && regionUpdated.totalbirth){
         	  births[i]=regionUpdated;
         	  break;
           }else{
@@ -296,7 +302,7 @@ router.put("/:region/:year",(req,res) => {
     for(i=0;i<births.length;i++){
         if(births[i].region == region && births[i].year == year){
           cont=1;
-          if(births[i].region==regionUpdated.region && births[i].year==regionUpdated.year){
+          if(births[i].region==regionUpdated.region && births[i].year==regionUpdated.year && regionUpdated.region && regionUpdated.year && regionUpdated.men && regionUpdated.women && regionUpdated.totalbirth){
             births[i]=regionUpdated;
             break;
           }else{
