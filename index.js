@@ -4,6 +4,8 @@ var app=express();
 var bodyParser=require("body-parser");
 var timeCtrl=require("./timeCtrl.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
+var mortSickness = require("./public/api/Patricia/mort-sickness.js");
+
 app.use(bodyParser.json());
 
 
@@ -14,6 +16,21 @@ app.get("/time",timeCtrl.getTime);
 
 app.use("/api/v1/spain-births",spainBirthsApi);
 
+//Código Patri
+app.get("/api/v1/mort-sickness",mortSickness.getSickness);
+
+app.get("/api/v1/mort-sickness/:region/:year", mortSickness.getSicknessRegionYear);
+
+app.get("/api/v1/mort-sickness/:region", mortSickness.getSicknessRegion);
+
+app.get("/api/v1/mort-sickness/:year", mortSickness.getSicknessYear);
+
+app.post("/api/v1/mort-sickness", mortSickness.postSickness);
+
+app.post("/api/v1/mort-sickness/:region", mortSickness.postSicknessRegion);
+
+app.post("/api/v1/mort-sickness/:region/:year", mortSickness.postSicknessRegionYear);
+//Final código Patri
 
 
 /*****API de Ana*****/
@@ -227,4 +244,3 @@ app.use('/',express.static(__dirname + '/public'));
 app.listen(port, ()=>{
 	console.log("Magic happens on port: " + port);
 });
-
