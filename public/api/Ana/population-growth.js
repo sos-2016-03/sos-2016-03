@@ -168,15 +168,17 @@ module.exports.getStatisticsRegionAndYear = function(req,res){
 module.exports.postSatitistics = function(req,res){
 	var p = req.body;
 	var cmp = 1;
-
 	var x = p.region;
 	var x2 = p.year;
 	var x3 = p.age;
 	var x4 = p.men;
 	var x5 = p.women;
 	var x6 = p.total_population;
+	
+	var alb = Object.keys(p).length;
 
-	if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined){
+	if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
+		|| alb!=6){
 		res.sendStatus(400);
 	}else{
 
@@ -213,10 +215,21 @@ module.exports.putStatistics = function(req,res){
 	var year = req.params.year;
 	var p = req.body;
 	console.log(region + "," + year);
+	var x = p.region;
+	var x2 = p.year;
+	var x3 = p.age;
+	var x4 = p.men;
+	var x5 = p.women;
+	var x6 = p.total_population;
+	
+	var alb = Object.keys(p).length;
 
-	if(year!=p.year && region!=p.region){
+	if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
+		|| alb!=6){
+		res.sendStatus(400);
+	}else if(year!=p.year || region!=p.region){
 		res.sendStatus(409);
-	}
+	}else{
 
 	for(var i = 0; i< population_growth.length; i++){
 		if(region == population_growth[i].region){
@@ -237,6 +250,7 @@ module.exports.putStatistics = function(req,res){
 		console.log("Operation PUT not permitted because the object is not found");
 		res.sendStatus(404);
 	}
+}
 };
 
 /*-------DELETE-------*/
