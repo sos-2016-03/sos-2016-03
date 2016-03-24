@@ -213,6 +213,12 @@ router.post("/:region",(req,res) => {
 	res.sendStatus(405);
 });
 
+//Método inválido por año
+
+router.post("/:year",(req,res)=>{
+  res.sendStatus(405);
+})
+
 //Método inválido por región y año
 router.post("/:region/:year",(req,res) => {
   res.sendStatus(405);
@@ -225,15 +231,15 @@ router.delete("/",(req,res) => {
 	res.sendStatus(200);
 });
 
-//Borra un recurso individual por región; 404 si no está
+//Borra un recurso individual por región o año; 404 si no está
 router.delete("/:region",(req,res) => {
 	var region=req.params.region;
+  var year=req.params.region;
 	var cont=0;
   for(i=0;i<births.length;i++){
-     	if(births[i].region == region){
+     	if(births[i].region == region || births[i].year == year){
        	births.splice(i,1);
        	cont=1;
-        break;
       }
   }
   if(cont==1){
@@ -242,7 +248,6 @@ router.delete("/:region",(req,res) => {
     res.sendStatus(404);
   }
 });
-
 
 //Borra un recurso individual por región y año; 404 si no está
 router.delete("/:region/:year",(req,res) => {
@@ -269,50 +274,15 @@ router.put("/",(req,res) => {
 	res.sendStatus(405);
 });
 
-//Actualiza un elemento de array; devuelve 404 si no está; devuelve 400 si formato erróneo
+//Método inválido
 router.put("/:region",(req,res) => {
-    var region = req.params.region;
-    var regionUpdated = req.body;
-    var aux=compruebaLista(region);
-    var aux2=0;
-    var cont = 0;
-    for(i=0;i<births.length;i++){
-      	if(births[i].region == region){
-          aux2=i;
-          cont=1;
-          if(births[i].region==regionUpdated.region && regionUpdated.region && regionUpdated.year && regionUpdated.men && regionUpdated.women && regionUpdated.totalbirth){
-            for(i=0;i<aux.length;i++){
-              if(aux[i].year==regionUpdated.year){
-                cont=3;
-                break;
-              }
-            }
-          }else{
-            cont=2;  
-          }
-      }
-    }
-	if(cont==1){
-    births[aux2]=regionUpdated;
-		res.sendStatus(200);
-	}else if(cont==2){
-		res.sendStatus(400);
-  }else if(cont==3){
-    res.sendStatus(409);
-	}else{
-    res.sendStatus(404);
-  }
+  res.sendStatus(405);
 });
 
-function compruebaLista(region){
-  aux=[];
-  for(i=0;i<births.length;i++){
-    if(births[i].region==region){
-      aux.push(births[i]);
-    }
-  }
-  return aux;
-}
+//Método inválido
+router.put("/:year",(req,res)=>{
+  res.sendStatus(405);
+})
 
 //Actualiza un recurso por región y año; devuelve 404 si no está; devuelve 400 si formato erróneo
 router.put("/:region/:year",(req,res) => {
