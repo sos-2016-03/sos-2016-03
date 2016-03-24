@@ -3,17 +3,31 @@ var fs=require("fs");
 var app=express();
 var bodyParser=require("body-parser");
 var timeCtrl=require("./timeCtrl.js");
+var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
 app.use(bodyParser.json());
 
 
 var port = (process.env.PORT || 11000);
 
-
+//Time
 app.get("/time",timeCtrl.getTime);
 
+//F1Teams API (Hobby Alberto)
+app.get("/api/sandbox/f1teams/:name",apif1teams.getItem);
+app.get("/api/sandbox/f1teams",apif1teams.getList);
+app.get("/api-test/f1teams/loadInitialData",apif1teams.getLoadInitialData);
+app.post("/api/sandbox/f1teams",apif1teams.getPostItem);
+app.post("/api/sandbox/f1teams/:name",apif1teams.getPostInvalid);
+app.delete("/api/sandbox/f1teams",apif1teams.getDelete);
+app.delete("/api/sandbox/f1teams/:name",apif1teams.getDeleteItem);
+app.put("/api/sandbox/f1teams/",apif1teams.getPutInvalid);
+app.put("/api/sandbox/f1teams/:name",apif1teams.getPut);
+
+//Spain Births API (Main API Alberto)
 app.use("/api/v1/spain-births",spainBirthsApi);
 //-----------------------------------------------------------------------------//
+
 
 var populationgrowth = require('./public/api/Ana/population-growth.js');
 

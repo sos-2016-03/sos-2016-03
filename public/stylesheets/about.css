@@ -8,7 +8,7 @@ table{
 	-moz-border-radius: 10px; /* Firefox */
 	-webkit-border-radius: 10px; /* Google Chrome y Safari */
 	border-radius: 10px;
-	width: 95%;
+	width: 100%;
 }
 table, tr, td{
 	border:1px solid #848484;
@@ -23,16 +23,11 @@ tr{
 	-moz-border-radius: 10px; /* Firefox */
 	-webkit-border-radius: 10px; /* Google Chrome y Safari */
 	border-radius: 10px;	
-	padding:20px;
-	height: 30%;
+	padding:15px;
+	height: 40%;
 	background-color:#D8D8D8;
 }
-.list-group{
-	float:left;
-	width: 60%;
-}
 .theme{
-	float:left;
-	width: 40%;
 	margin-top:-17px;
+	padding-bottom:10px;
 }
