@@ -249,15 +249,19 @@ router.delete("/:region",(req,res) => {
 	var apikey=req.query.apikey;
   var region=req.params.region;
   var year=req.params.region;
+  var aux = [];
 	var cont=0;
   if(apikey && apikey==keyWrite){
     for(i=0;i<births.length;i++){
        	if(births[i].region == region || births[i].year == year){
-         	births.splice(i,1);
+          aux.push(i);
          	cont=1;
         }
     }
     if(cont==1){
+      for(i=0;i<aux.length;i++){
+        births.splice(aux[i],1);
+      }
       res.sendStatus(200);
     }else{
       res.sendStatus(404);
