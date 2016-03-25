@@ -2,7 +2,7 @@ var express=require("express");
 var fs=require("fs");
 var app=express();
 var bodyParser=require("body-parser");
-var timeCtrl=require("./timeCtrl.js");
+var time=require("./time.js");
 var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
 app.use(bodyParser.json());
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 var port = (process.env.PORT || 11000);
 
 //Time
-app.get("/time",timeCtrl.getTime);
+app.get("/time",time.getTime);
 
 //F1Teams API (Hobby Alberto)
 app.get("/api/sandbox/f1teams/:name",apif1teams.getItem);
