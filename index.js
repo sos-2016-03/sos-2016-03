@@ -6,7 +6,7 @@ var time=require("./time.js");
 var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
 var mortSickness = require("./public/api/Patricia/mort-sickness.js");
-var musics = require("./public/api/Patricia/musicsjs");
+var musics = require("./public/api/Patricia/musics.js");
 
 app.use(bodyParser.json());
 
