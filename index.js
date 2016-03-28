@@ -55,7 +55,7 @@ app.delete("/api/v1/mort-sickness/:year", mortSickness.deleteSicknessRegion);
 //Musics API Patri
 app.get("/api/sandbox/music",musics.getMusics);
 app.get("/api/sandbox/music/:name",musics.getMusicsName);
-app.get("/api-test/musics/loadInitialData",musics.getLoadInitialData);
+app.get("/api-test/music/loadInitialData",musics.getLoadInitialData);
 
 app.post("/api/sandbox/music",musics.postMusics);
 app.post("/api/sandbox/music/:name",musics.postMusicsName);
