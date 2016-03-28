@@ -13,9 +13,81 @@ app.use(bodyParser.json());
 //Métodos GET
 //Devuelve la lista de recursos
 router.get("/",(req,res) => {
+  var limit = req.query.limit;
+  var offset = req.query.offset;
+  var from = req.query.from;
+  var to = req.query.to;
+  var birth = [];  
   var apikey=req.query.apikey;
   if(apikey && apikey==keyRead){
-    res.send(births);
+    //From: desde un año en específico; To: hasta un año específico    
+    if(from && to){
+      for(i=0;i<births.length;i++){
+          if(births[i].year>=from && births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+     }       
+     //To: Hasta un año específico
+    }else if(to){
+      for(i=0;i<births.length;i++){
+        if(births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+      }       
+     //From: Desde un año específico hasta el final
+    }else if(from){
+      for(i=0;i<births.length;i++){
+        if(births[i].year>=from){
+          birth.push(births[i]);
+        }
+      }
+      if(birth.length!=0){
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+      }       
+      //Limit: cantidad a mostrar; Offset: a partir de donde
+    }else if(limit && offset){
+      if(births.length!=0){
+        aux=births.slice(offset,births.length);
+        aux.splice(limit,aux.length);
+          res.send(aux);
+      }else{
+        res.sendStatus(404);
+      }
+      //Limit: cantidad a mostrar
+    }else if(limit){
+      if(births.length!=0){
+        for(i=0;i<births.length;i++){
+          birth.push(births[i]);
+        }
+        birth.splice(limit,births.length);
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+      }
+      //Offset: a partir de donde
+    }else if(offset){
+      if(births.length!=0){
+        aux=births.slice(offset,births.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+      }      
+      //Ningún parámetro, método normal y original
+    }else{
+      res.send(births);
+    }
   }else{
     res.sendStatus(401);
   }
