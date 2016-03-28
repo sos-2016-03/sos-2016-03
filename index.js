@@ -67,7 +67,7 @@ app.put("/api/sandbox/music",musics.putMusics);
 app.put("/api/sandbox/music/:name",musics.putMusicsName);
 
 
-
+//-----------------------------------------------------------------------------------------------
 
 var populationgrowth = require('./public/api/Ana/population-growth.js');
 
@@ -86,11 +86,11 @@ app.put("/api/v1/population-growth/:id", populationgrowth.putStatisticsNotPermit
 app.put("/api/v1/population-growth/:region/:year", populationgrowth.putStatistics);
 
 app.delete("/api/v1/population-growth", populationgrowth.deleteAllStatistics);
-app.delete("/api/v1/population-growth/:region", populationgrowth.deleteStatisticsRegion);
+app.delete("/api/v1/population-growth/:id", populationgrowth.deleteStatisticsRegionOYear);
 app.delete("/api/v1/population-growth/:region/:year", populationgrowth.deleteStatistics);
 
 app.get("/api/v1/population-growth/loadInitialData", populationgrowth.getStatisticsId);
-
+//------------------------------------------------------------------------------------------------
 
 app.use('/',express.static(__dirname + '/public'));
 

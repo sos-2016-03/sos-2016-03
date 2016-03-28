@@ -283,21 +283,35 @@ module.exports.deleteStatistics = function (req,res){
 	}
 };
 
-module.exports.deleteStatisticsRegion = function (req,res){
+module.exports.deleteStatisticsRegionOYear = function (req,res){
 	var encontrado = -1;
-	var region = req.params.region;
+	var id = req.params.id;
 	var aux = [];
+	var cont = 0;
 	console.log(req.params);
 	for (var i = 0; i < population_growth.length; i++) {
-		if(region != population_growth[i].region){
+		if(id != population_growth[i].region && id!=population_growth[i].year){
 			encontrado = i;
 			aux.push(population_growth[i]);
 		}
 	}
-	if (encontrado == -1){
+	var l_aux = aux.length;
+
+	console.log(aux);
+	var indice_borrar= aux.length;
+	for (var j = 0; j < population_growth.length; j++) {
+		if(id == population_growth[j].region || id==population_growth[j].year){
+			aux.push(population_growth[j]);
+			cont = cont + 1;
+		}
+	}
+	var l_aux_2 = aux.length;
+	console.log(aux);
+	if (l_aux==l_aux_2){
 		res.sendStatus(404);
 	}else{
-		console.log("New DELETE of resource " + region);
+		console.log("New DELETE of resource " + id);
+		aux.splice(indice_borrar, cont);
 		population_growth = aux;
 		res.sendStatus(200);
 	}
