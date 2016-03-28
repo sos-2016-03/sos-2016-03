@@ -21,6 +21,22 @@ router.get("/",(req,res) => {
   }
 });
 
+router.get("/loadInitialData",(req,res)=>{
+  var apikey=req.query.apikey;
+  if(apikey && apikey==keyWrite){
+    births=[];
+    fs.readFile('./public/api/Alberto/spain-births.json','utf8',(err,content) => {
+      aux=JSON.parse(content);
+      aux.forEach((birth) =>{
+        births.push(birth);
+      });
+    });
+    res.sendStatus(200);
+  }else{
+    res.sendStatus(401);
+  }
+});
+
 //Devuelve una lista del recurso, por región, año + búsqueda, paginación
 router.get("/:region/",(req,res) => {
     var year = req.params.region;
@@ -32,11 +48,8 @@ router.get("/:region/",(req,res) => {
     var birth = [];
     var apikey=req.query.apikey;
     if(apikey && apikey==keyRead){
-      if(region=='loadInitialData'){
-        loadInitialData();
-        res.sendStatus(200);
-        //From: desde un año en específico; To: hasta un año específico
-      }else if(from && to){
+      //From: desde un año en específico; To: hasta un año específico
+      if(from && to){
         for(i=0;i<births.length;i++){
             if((births[i].region == region || births[i].year == year) && births[i].year>=from && births[i].year<=to){
               birth.push(births[i]);
