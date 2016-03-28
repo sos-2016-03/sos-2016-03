@@ -262,19 +262,18 @@ router.delete("/:region",(req,res) => {
 	var apikey=req.query.apikey;
   var region=req.params.region;
   var year=req.params.region;
-  var aux = [];
 	var cont=0;
+  var aux=births.length;
   if(apikey && apikey==keyWrite){
-    for(i=0;i<births.length;i++){
-       	if(births[i].region == region || births[i].year == year){
-          aux.push(i);
-         	cont=1;
+    for(j=0;j<aux;j++){
+      for(i=0;i<births.length;i++){
+      	if(births[i].region == region || births[i].year == year){
+          births.splice(i,1);
+         	cont=1;          
         }
+      }
     }
     if(cont==1){
-      for(i=0;i<aux.length;i++){
-        births.splice(aux[i],1);
-      }
       res.sendStatus(200);
     }else{
       res.sendStatus(404);
