@@ -265,35 +265,41 @@ module.exports.putSicknessRegionYear = function(req,res){
 
 module.exports.deleteSickness = function(req,res){
 	for(var i=0; i<sickness.length; i++){
-		sickness.splice(i);
+		sickness.splice(0,sickness.length);
 		res.sendStatus(200);
 	}
 	console.log("Delete mort-sickness list");
 }
 
 module.exports.deleteSicknessRegion = function(req,res){
+	var sick = sickness.length;
 	var buscado = -1;
 	var name= req.params.region;
-	for(var i=0; i<sickness.length; i++){
-		if(name==sickness[i].region){
-			buscado = 1;
-			console.log("Delete this region");
-			sickness.splice(i,1);
+	for(var j=0; j<sick; j++){
+		for(var i=0; i<sickness.length; i++){
+			if(name==sickness[i].region){
+				buscado = 1;
+				console.log("Delete this region");
+				sickness.splice(i,sickness.length);
+			}
 		}
 	}
-
-	for(var i=0; i<sickness.length; i++){
-		if(name==sickness[i].year){
-			buscado = 1;
-			console.log("Delete this year");
-			sickness.splice(i,1);
+	for(var j=0; j<sick; j++){
+		for(var i=0; i<sickness.length; i++){
+			if(name==sickness[i].year){
+				buscado = 1;
+				console.log("Delete this year");
+				sickness.splice(i,sickness.length);
+			}
 		}
 	}
-	if(buscado == 1){
-		res.sendStatus(200);
-	}else{
-		res.sendStatus(404);
-	}
+		if(buscado == 1){
+			res.sendStatus(200);
+		}else{
+			res.sendStatus(404);
+		}
+	
+	
 }
 
 module.exports.deleteSicknessRegionYear = function(req,res){
