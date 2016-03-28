@@ -280,7 +280,7 @@ module.exports.deleteSicknessRegion = function(req,res){
 			if(name==sickness[i].region){
 				buscado = 1;
 				console.log("Delete this region");
-				sickness.splice(i,sickness.length);
+				sickness.splice(i,1);
 			}
 		}
 	}
@@ -289,7 +289,7 @@ module.exports.deleteSicknessRegion = function(req,res){
 			if(name==sickness[i].year){
 				buscado = 1;
 				console.log("Delete this year");
-				sickness.splice(i,sickness.length);
+				sickness.splice(i,1);
 			}
 		}
 	}
