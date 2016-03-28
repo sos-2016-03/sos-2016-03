@@ -6,6 +6,7 @@ var time=require("./time.js");
 var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
 var mortSickness = require("./public/api/Patricia/mort-sickness.js");
+var musics = require("./public/api/Patricia/musicsjs");
 
 app.use(bodyParser.json());
 
@@ -49,8 +50,23 @@ app.delete("/api/v1/mort-sickness", mortSickness.deleteSickness);
 app.delete("/api/v1/mort-sickness/:region/:year", mortSickness.deleteSicknessRegionYear);
 app.delete("/api/v1/mort-sickness/:region", mortSickness.deleteSicknessRegion);
 app.delete("/api/v1/mort-sickness/:year", mortSickness.deleteSicknessRegion);
-
 //Final código Patri
+
+//Musics API Patri
+app.get("/api/sandbox/music",musics.getMusics);
+app.get("/api/sandbox/music/:name",musics.getMusicsName);
+app.get("/api-test/musics/loadInitialData",musics.getLoadInitialData);
+
+app.post("/api/sandbox/music",musics.postMusics);
+app.post("/api/sandbox/music/:name",musics.postMusicsName);
+
+app.delete("/api/sandbox/music",musics.deleteMusics);
+app.delete("/api/sandbox/music/:name",musics.deleteMusicsName);
+
+app.put("/api/sandbox/music",musics.putMusics);
+app.put("/api/sandbox/music/:name",musics.putMusicsName);
+
+
 
 
 var populationgrowth = require('./public/api/Ana/population-growth.js');

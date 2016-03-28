@@ -2,28 +2,27 @@
 var musics=[];
 
 //post collection patri
-app.post("/api/sandbox/music",(req,res)=>{
+module.exports.postMusics=function(req,res){
 	var music = req.body;
 	musics.push(music);
 	console.log("New POST " + music.name);
 	res.sendStatus(200);
-});
+}
 
 //post name patri
-app.post("/api/sandbox/music/:name", (req,res)=>{
+module.exports.postMusicsName=function(req,res){
 	console.log("Method not allowed");
 	res.sendStatus(405);
-});
+}
 
 //get collection patri
-app.get("/api/sandbox/music",(req,res)=>{
+module.exports.getMusics=function(req,res){
 	console.log("NEW GET");
-	//var music = req.body;
 	res.send(musics);
-});
+}
 
 //get name patri
-app.get("/api/sandbox/music/:name", (req,res)=>{
+module.exports.getMusicsName=function(req,res){
 	var buscado = -1;
 	var name = req.params.name;
 	for(var i=0;i<musics.length;i++){
@@ -38,19 +37,19 @@ app.get("/api/sandbox/music/:name", (req,res)=>{
 	if(buscado == -1){
 		res.sendStatus(404);
 	}
-});
+}
 
 //delete collection patri
-app.delete("/api/sandbox/music",(req,res)=>{
+module.exports.deleteMusics=function(req,res){
 	for(var i=0; i<musics.length; i++){
 		musics.splice(i);
 		res.sendStatus(200);
 	}
 	console.log("Delete songs list");
-});
+}
 
 //delete name patri
-app.delete("/api/sandbox/music/:name",(req,res)=>{
+module.exports.deleteMusicsName=function(req,res){
 	var buscado = -1;
 	var name = req.params.name;
 	for(var i=0; i<musics.length; i++){
@@ -65,16 +64,16 @@ app.delete("/api/sandbox/music/:name",(req,res)=>{
 	if(buscado == -1){
 		res.sendStatus(404);
 	}
-});
+}
 
 //put collection patri
-app.put("/api/sandbox/music", (req,res)=>{
+module.exports.putMusics=function(req,res){
 	console.log("Method not allowed");
 	res.sendStatus(405);
-});
+}
 
 //put name patri
-app.put("/api/sandbox/music/:name", (req,res)=>{
+module.exports.putMusicsName=function(req,res){
 	var buscado = -1;
 	var name = req.params.name;
 	var nueva = req.body;
@@ -90,12 +89,12 @@ app.put("/api/sandbox/music/:name", (req,res)=>{
 	if(buscado == -1){
 		res.sendStatus(404);
 	}
-});
+}
 
 //get load patri
-app.get("/api-test/music/loadInitialData", (req,res)=>{
+module.exports.getLoadInitialData=function(req,res){
 	initial_musics=[{"name": "Frio", "author": "Maria Parrado"},
 	{"name": "Te dejo en libertad", "author": "Ha-Ash"}];
 	musics=initial_musics;
 	res.sendStatus(200);
-});
+}
