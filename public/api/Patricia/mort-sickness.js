@@ -244,8 +244,8 @@ module.exports.putSicknessRegionYear = function(req,res){
 				res.sendStatus(200);
 				break;
 			}else{
-				console.log("Conflict");
-				res.sendStatus(409);
+				console.log("Not Found");
+				res.sendStatus(404);
 				break;
 			}
 		}
