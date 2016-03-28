@@ -1,9 +1,169 @@
-
 var population_growth = [];
 /*-------GET-------*/
 module.exports.getAllStatistics = function(req,res){
-	res.send(population_growth);
+	var f = req.query.from;
+  	var t = req.query.to;
+  	var r = [];
+	var l = req.query.limit;
+  	var o = req.query.offset;  	
+  	console.log(l + "----" + o);
+    var aux_paginacion = [];
+    var aux = [];
+  	if(f!=undefined && t!=undefined){
+  		for(var j = f; j<= t ; j++){
+  			for(var i = 0; i<population_growth.length; i++){
+  				if(population_growth[i].year==j){
+  					r.push(population_growth[i]);
+  				}
+  			}
+  		}
+  		if(r==[]){
+  			res.sendStatus(404);
+  		}else{
+  			res.send(r);
+  		}
+  	}else if(f==undefined && t!=undefined){
+  		var tp = parseInt(t, 10);
+  		for(var j= 0; j<population_growth.length; j++){
+  			var x = parseInt(population_growth[j].year, 10);
+ 
+  			if(x<=tp){
+  				r.push(population_growth[j]);
+  			}
+  		}
+  		if(r==[]){
+  			res.sendStatus(404);
+  		}else{
+  			r.sort(compare);
+  			res.send(r);	
+  		}
+  		
+  	}else if(f!=undefined && t==undefined){
+  		var fp = parseInt(f, 10);
+  		for(var j= 0; j<population_growth.length; j++){
+  			var x = parseInt(population_growth[j].year, 10);
+  			if(x>=fp){
+  				r.push(population_growth[j]);
+  			}
+  		}
+  		if(r==[]){
+  			res.sendStatus(404);
+  		}else{
+  			r.sort(compare);
+  			res.send(r);
+    	}
+    }else if(l!=undefined && o==undefined){
+    	if(l<0){
+    		res.sendStatus(400);
+    	}else{
+
+    	for(var i=0; i<l;i++){
+    		if(population_growth[i]==null){
+    			break;
+    		}
+    		aux_paginacion.push(population_growth[i]);
+    	}
+    	console.log(aux_paginacion);
+    	if(aux==[]){
+    		res.sendStatus(404);
+    	}else{
+    		res.send(aux_paginacion);
+    	}
+    	}
+    }else if(l==undefined && o!=undefined){
+    	if(o<0){
+    		res.sendStatus(400);
+    	}else{
+    	var pag1 = o; //o me dice la pos (incluye la 0)
+    	var pag2 = population_growth.length;
+    	var pag3 = pag2 - pag1;
+    	for(var i=o; i<o+pag3;i++){
+    		if(population_growth[i]==null){
+    			break;
+    		}
+    		aux_paginacion.push(population_growth[i]);
+    		    	}
+    	if(aux==[]){
+    		res.sendStatus(400);
+    	}else{
+    		res.send(aux_paginacion);
+    	}  
+    	}
+    }else if(l!=undefined && o!=undefined){
+    	if(l<0 || o<0){
+    		res.sendStatus(400);
+    	}else{
+    	for(var i=o; i<o+l;i++){
+    		aux_paginacion.push(population_growth[i]);
+    		if(population_growth[i]==null){
+    			break;
+    		}
+    	}
+    	if(aux==[]){
+    		res.sendStatus(400);
+    	}else{
+    		res.send(aux_paginacion);
+    	}   
+    	}
+  	}else{
+  		res.send(population_growth);
+  	}
 	console.log("New GET of resource " + "population-growth");
+	
+	  	//*****************--------------PAGINACIÓN------------------******************
+/*
+    console.log(l + "----" + o);
+    var aux_paginacion = [];
+    if(l!=undefined && o!=undefined ){
+    	if(l<0 || o<0){
+    		res.sendStatus(400);
+    	}
+    	for(var i=o; i<o+l;i++){
+    		aux_paginacion.push(population_growth[i]);
+    	}
+    	if(aux==[]){
+    		res.sendStatus(400);
+    	}else{
+    		res.send(aux_paginacion);
+    	}   
+    }
+
+    if(l!=undefined && o==undefined ){
+    	if(l<0){
+    		res.sendStatus(400);
+    	}
+
+    	for(var i=0; i<l;i++){
+    		aux_paginacion.push(population_growth[i]);
+    	}
+    	console.log(aux_paginacion);
+    	if(aux==[]){
+    		res.sendStatus(404);
+    	}else{
+    		res.send(aux_paginacion);
+    	}
+    }
+    
+    if(l==undefined && o!=undefined ){
+    	if(o<0){
+    		res.sendStatus(400);
+    	}
+    	var pag1 = o; //o me dice la pos (incluye la 0)
+    	var pag2 = population_growth.length;
+    	var pag3 = pag2 - pag1;
+    	for(var i=o; i<o+pag3;i++){
+    		aux_paginacion.push(population_growth[i]);
+    	}
+    	if(aux==[]){
+    		res.sendStatus(400);
+    	}else{
+    		res.send(aux_paginacion);
+    	}    	
+    }  
+
+	}else{
+*/
+  	//*****************---------------FN PAGINACIÓN---------------*****************
 };
 
 module.exports.getStatisticsId = function(req,res){
@@ -365,4 +525,9 @@ function compare(a,b) {
   else 
     return 0;
 }
-
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
