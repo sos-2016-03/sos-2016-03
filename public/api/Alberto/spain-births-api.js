@@ -20,8 +20,137 @@ router.get("/",(req,res) => {
   var birth = [];  
   var apikey=req.query.apikey;
   if(apikey && apikey==keyRead){
+    //From: desde un año en específico; To: hasta un año específico;
+    //Limit: Nº de elementos; Offset: desde el elemento tal    
+    if(from && to && limit && offset){
+      for(i=0;i<births.length;i++){
+          if(births[i].year>=from && births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        aux=birth.slice(offset,birth.length);
+        aux.splice(limit,aux.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+     }       
+    //To: Hasta un año específico
+    //Limit: Nº de elementos; Offset: desde el elemento tal       
+    }else if(to && limit && offset){
+      for(i=0;i<births.length;i++){
+        if(births[i].year<=to){
+            birth.push(births[i]);
+          } 
+      }
+      if(birth.length!=0){
+        aux=birth.slice(offset,birth.length);
+        aux.splice(limit,aux.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+      }       
+    //From: Desde un año específico hasta el final
+    //Limit: Nº de elementos; Offset: desde el elemento tal       
+    }else if(from && limit && offset){
+      for(i=0;i<births.length;i++){
+        if(births[i].year>=from){
+          birth.push(births[i]);
+        }
+      }
+      if(birth.length!=0){
+        aux=birth.slice(offset,birth.length);
+        aux.splice(limit,aux.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+      } 
+    //From: desde un año en específico; To: hasta un año específico 
+    //Limit: Nº de elementos 
+    }else if(from && to && limit){
+      for(i=0;i<births.length;i++){
+          if(births[i].year>=from && births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        birth.splice(limit,birth.length);
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+     }       
+     //To: Hasta un año específico
+    //Limit: Nº de elementos      
+    }else if(to && limit){
+      for(i=0;i<births.length;i++){
+        if(births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        birth.splice(limit,birth.length);
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+      }       
+    //From: Desde un año específico hasta el final
+    //Limit: Nº de elementos      
+    }else if(from && limit){
+      for(i=0;i<births.length;i++){
+        if(births[i].year>=from){
+          birth.push(births[i]);
+        }
+      }
+      if(birth.length!=0){
+        birth.splice(limit,birth.length);
+        res.send(birth);
+      }else{
+        res.sendStatus(404);
+      }   
+    //From: desde un año en específico; To: hasta un año específico 
+    //Offset: desde el elemento tal
+    }else if(from && to && offset){
+      for(i=0;i<births.length;i++){
+          if(births[i].year>=from && births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        aux=birth.slice(offset,birth.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+     }       
+     //To: Hasta un año específico
+    //Limit: Nº de elementos      
+    }else if(to && offset){
+      for(i=0;i<births.length;i++){
+        if(births[i].year<=to){
+            birth.push(births[i]);
+          }
+      }
+      if(birth.length!=0){
+        aux=birth.slice(offset,birth.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+      }       
+    //From: Desde un año específico hasta el final
+    //Offset: desde el elemento tal     
+    }else if(from && offset){
+      for(i=0;i<births.length;i++){
+        if(births[i].year>=from){
+          birth.push(births[i]);
+        }
+      }
+      if(birth.length!=0){
+        aux=birth.slice(offset,birth.length);
+        res.send(aux);
+      }else{
+        res.sendStatus(404);
+      }                                   
     //From: desde un año en específico; To: hasta un año específico    
-    if(from && to){
+    }else if(from && to){
       for(i=0;i<births.length;i++){
           if(births[i].year>=from && births[i].year<=to){
             birth.push(births[i]);
@@ -61,7 +190,7 @@ router.get("/",(req,res) => {
       if(births.length!=0){
         aux=births.slice(offset,births.length);
         aux.splice(limit,aux.length);
-          res.send(aux);
+        res.send(aux);
       }else{
         res.sendStatus(404);
       }
@@ -121,7 +250,136 @@ router.get("/:region/",(req,res) => {
     var apikey=req.query.apikey;
     if(apikey && apikey==keyRead){
       //From: desde un año en específico; To: hasta un año específico
-      if(from && to){
+      //Limit: cantidad a mostrar; Offset: a partir de donde
+      if(from && to && limit && offset){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year>=from && births[i].year<=to){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          aux=birth.slice(offset,birth.length);
+          aux.splice(limit,aux.length);
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }       
+        //To: Hasta un año específico
+        //Limit: cantidad a mostrar; Offset: a partir de donde
+      }else if(to && limit && offset){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year<=to){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          aux=birth.slice(offset,birth.length);
+          aux.splice(limit,aux.length);
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }       
+        //From: Desde un año específico hasta el final
+        //Limit: cantidad a mostrar; Offset: a partir de donde
+      }else if(from && limit && offset){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year>=from){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          aux=birth.slice(offset,birth.length);
+          aux.splice(limit,aux.length);
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }      
+      //From: desde un año en específico; To: hasta un año específico
+      //Offset: a partir de donde
+      }else if(from && to && offset){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year>=from && births[i].year<=to){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          aux=birth.slice(offset,birth.length);
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }       
+        //To: Hasta un año específico
+        //Offset: a partir de donde
+      }else if(to && offset){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year<=to){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          aux=birth.slice(offset,birth.length);
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }       
+        //From: Desde un año específico hasta el final
+        //Offset: a partir de donde
+      }else if(from && offset){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year>=from){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          aux=birth.slice(offset,birth.length);
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }           
+      //From: desde un año en específico; To: hasta un año específico
+      //Limit: cantidad a mostrar
+      }else if(from && to && limit){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year>=from && births[i].year<=to){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          birth.splice(limit,birth.length);
+          res.send(birth);
+        }else{
+          res.sendStatus(404);
+        }       
+        //To: Hasta un año específico
+        //Limit: cantidad a mostrar
+      }else if(to && limit){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year<=to){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          birth.splice(limit,birth.length);
+          res.send(birth);
+        }else{
+          res.sendStatus(404);
+        }       
+        //From: Desde un año específico hasta el final
+        //Limit: cantidad a mostrar
+      }else if(from && limit){
+        for(i=0;i<births.length;i++){
+            if((births[i].region == region || births[i].year == year) && births[i].year>=from){
+              birth.push(births[i]);
+            }
+        }
+        if(birth.length!=0){
+          birth.splice(limit,birth.length);
+          res.send(birth);
+        }else{
+          res.sendStatus(404);
+        }             
+      //From: desde un año en específico; To: hasta un año específico
+      }else if(from && to){
         for(i=0;i<births.length;i++){
             if((births[i].region == region || births[i].year == year) && births[i].year>=from && births[i].year<=to){
               birth.push(births[i]);
