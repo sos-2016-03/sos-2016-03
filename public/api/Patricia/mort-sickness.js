@@ -616,16 +616,12 @@ module.exports.postSickness = function(req,res){
 						console.log("Conflict");
 						res.sendStatus(409);//Error porque ya existe
 						break;
-					}else{
-					}
-					if(sickness[i].region == sick.region){
+					}else if(sickness[i].region == sick.region && sickness[i].year != sick.year){
 						sickness.push(sick);
 						console.log("NEW POST " + sick.region);
 						res.sendStatus(201);//Lo crea con la misma región pero no el mismo año
 						break;
-					}else{
-					}
-					if(sickness[i].region != sick.region){
+					}else if(sickness[i].region != sick.region){
 						sickness.push(sick);
 						console.log("NEW POST " + sick.region);
 						res.sendStatus(201);//Lo crea con distinta región
