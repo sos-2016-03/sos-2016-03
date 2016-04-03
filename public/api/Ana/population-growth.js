@@ -27,7 +27,11 @@ module.exports.getAllStatistics = function(req,res){
       if(aux_paginacion.length!=0){
         aux=aux_paginacion.slice(o,aux_paginacion.length);
         aux.splice(l,aux.length);
-        res.send(aux);
+        if(aux.length!=0){
+          res.send(aux);
+        }else{
+          res.sendStatus(404);
+        }
       }else{
         res.sendStatus(404);
      }   
@@ -77,7 +81,7 @@ module.exports.getAllStatistics = function(req,res){
       }
     }else if(l!=undefined && o==undefined){
       if(l<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else{
 
       for(var i=0; i<l;i++){
@@ -95,29 +99,30 @@ module.exports.getAllStatistics = function(req,res){
       }
     }else if(l==undefined && o!=undefined){
       if(o<0){
-        res.sendStatus(400);
-      }else{
-      var pag1 = o; //o me dice la pos (incluye la 0)
-      var pag2 = population_growth.length;
-      var pag3 = pag2 - pag1;
-      for(var i=o; i<o+pag3;i++){
-        if(population_growth[i]==null){
-          break;
-        }
-        aux_paginacion.push(population_growth[i]);
-              }
-      if(aux_paginacion.length==0){
         res.sendStatus(404);
       }else{
-        res.send(aux_paginacion);
-      }  
+        var pag1 = o; //o me dice la pos (incluye la 0)
+        var pag2 = population_growth.length;
+        var pag3 = pag2 - pag1;
+        for(var i=o; i<o+pag3;i++){
+          if(population_growth[i]==null){
+            break;
+          }
+          aux_paginacion.push(population_growth[i]);
+        }
+        if(aux_paginacion.length==0){
+          res.sendStatus(404);
+        }else{
+          res.send(aux_paginacion);
+        }  
       }
+
     }else if(l!=undefined && o!=undefined){
       var gg= [];
       if(l<0 || o<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else if(o>population_growth.length-1){
-        res.send(gg);
+        res.sendStatus(404);
       }else{
         var pag1 = o; //o me dice la pos (incluye la 0)
         var pag2 = population_growth.length;
@@ -136,6 +141,7 @@ module.exports.getAllStatistics = function(req,res){
             dd.push(aux_paginacion[k]);
           }
         }
+        console.log(dd.length);
         if(dd.length==0){
           res.sendStatus(404);
         }else{
@@ -163,9 +169,9 @@ module.exports.getStatisticsId = function(req,res){
   var t = req.query.to;
   var l = req.query.limit;
   var o = req.query.offset;
-   // console.log(id + "-" + f + "-" + t);
+  // console.log(id + "-" + f + "-" + t);
 
-    //--------------------------------------------------
+  //--------------------------------------------------
 if(apikey && apikey==keyr){
   if(id=='loadInitialData'){
     encontrado = 1;
@@ -213,19 +219,28 @@ if(apikey && apikey==keyr){
       if(aux_paginacion.length!=0){
         r4=aux_paginacion.slice(o,aux_paginacion.length);
         r4.splice(l,r4.length);
-        res.send(r4);
+        if(r4.length!=0){
+          res.send(r4);
+        }else{
+          res.sendStatus(404);
+        }
       }else{
         res.sendStatus(404);
      }   
     }else if(f!=undefined && t!=undefined){
         for(var j = f; j<= t ; j++){
-          for(var i = 0; i<r4.length; i++){
-            if(r4[i].year==j){
-              r4.push(r4[i]);
+          for(var i = 0; i<aux.length; i++){
+            if(aux[i].year==j){
+              r4.push(aux[i]);
             }
           }
         }
-        res.send(r4);
+        if(r4.length!=0){
+          res.send(r4);
+        }else{
+          res.sendStatus(404);
+        }
+        
     }else if(f!=undefined && t==undefined){
         var r5 = [];
         var fp = parseInt(f, 10);
@@ -235,8 +250,13 @@ if(apikey && apikey==keyr){
             r5.push(aux[j]);
           }
         }
-        r5.sort(compare);
-        res.send(r5);
+        //r5.sort(compare);
+        if(r5.length!=0){
+          res.send(r5);
+        }else{
+          res.sendStatus(404);
+        }
+        
     }else if(f==undefined && t!=undefined){
         var r5 = [];
         var tp = parseInt(t, 10);
@@ -246,13 +266,18 @@ if(apikey && apikey==keyr){
             r5.push(aux[j]);
           }
         }
-        r5.sort(compare);
-        res.send(r5);
+        //r5.sort(compare);
+        if(r5.length!=0){
+          res.send(r5);
+        }else{
+          res.sendStatus(404);
+        }
+        
 
     //************
     }else if(l!=undefined && o==undefined){
       if(l<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else{
         for(var i=0; i<l;i++){
           if(aux[i]==null){
@@ -260,11 +285,16 @@ if(apikey && apikey==keyr){
           }
           aux_paginacion.push(aux[i]);
         }
-        res.send(aux_paginacion);
+        if(aux_paginacion.length!=0){
+          res.send(aux_paginacion);
+        }else{
+          res.sendStatus(404);
+        }
+        
       }
     }else if(l==undefined && o!=undefined){
       if(o<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else{
         var pag1 = o; //o me dice la pos (incluye la 0)
         var pag2 = aux.length;
@@ -275,15 +305,20 @@ if(apikey && apikey==keyr){
           }
           aux_paginacion.push(aux[i]);
         }
-        res.send(aux_paginacion);
+        if(aux_paginacion.length!=0){
+          res.send(aux_paginacion);
+        }else{
+          res.sendStatus(404);
+        }
+        
          
       }
     }else if(l!=undefined && o!=undefined){
       var gg= [];
       if(l<0 || o<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else if(o>aux.length-1){
-        res.send(gg);
+        res.sendStatus(404);
       }else{
         var pag1 = o; //o me dice la pos (incluye la 0)
         var pag2 = aux.length;
@@ -302,8 +337,12 @@ if(apikey && apikey==keyr){
             dd.push(aux_paginacion[k]);
           }
         }
+        if(dd.length!=0){
+          res.send(dd);
+        }else{
+          res.sendStatus(404);
+        }
         
-        res.send(dd);
         } 
       
     //************
@@ -315,7 +354,7 @@ if(apikey && apikey==keyr){
     var aux_paginacion = [];
     if(l!=undefined && o==undefined){
       if(l<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else{
         for(var i=0; i<l;i++){
           if(aux2[i]==null){
@@ -323,11 +362,16 @@ if(apikey && apikey==keyr){
           }
           aux_paginacion.push(aux2[i]);
         }
-        res.send(aux_paginacion);
+        if(aux_paginacion.length!=0){
+          res.send(aux_paginacion);
+        }else{
+          res.sendStatus(404);
+        }
+        
       }
     }else if(l==undefined && o!=undefined){
       if(o<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else{
         var pag1 = o; //o me dice la pos (incluye la 0)
         var pag2 = aux2.length;
@@ -338,15 +382,20 @@ if(apikey && apikey==keyr){
           }
           aux_paginacion.push(aux2[i]);
         }
-        res.send(aux_paginacion);
+        if(aux_paginacion.length!=0){
+          res.send(aux_paginacion);
+        }else{
+          res.sendStatus(404);
+        }
+        
          
       }
     }else if(l!=undefined && o!=undefined){
       var gg= [];
       if(l<0 || o<0){
-        res.sendStatus(400);
+        res.sendStatus(404);
       }else if(o>aux2.length-1){
-        res.send(gg);
+        res.sendStatus(404);
       }else{
         var pag1 = o; //o me dice la pos (incluye la 0)
         var pag2 = aux2.length;
@@ -365,8 +414,8 @@ if(apikey && apikey==keyr){
             dd.push(aux_paginacion[k]);
           }
         }
-        if(aux_paginacion==[]){
-          res.sendStatus(400);
+        if(dd.length==0 || aux_paginacion.length==0){
+          res.sendStatus(404);
         }else{
           res.send(dd);
         }  
@@ -377,7 +426,7 @@ if(apikey && apikey==keyr){
   }else if(encontrado == -1){
     res.sendStatus(404);
   }else if(aux2.length!=0 && (f!=undefined || t!=undefined)){
-      res.sendStatus(400);
+      res.sendStatus(404);
   }
 
   
