@@ -2,9 +2,160 @@ var sickness = [];
 
 //métodos GET 
 module.exports.getSickness = function(req,res){
+	var buscado = -1;
+	var aux= [];
+	var aux1=[];
+	var fr = req.query.from;
+	var to = req.query.to;
 	var limit = req.query.limit;
-	console.log("NEW GET");
-	res.status(200).send(sickness);
+	var offset = req.query.offset;
+	if(fr == undefined && to == undefined){
+		for(var i=0; i<sickness.length;i++){
+			if(limit<=0){
+				res.send(aux);
+				break;
+			}else if(offset>=sickness.length){
+				console.log("Not found with this offset");
+				buscado=-1;
+			}else if(!limit && !offset){
+				buscado = i;
+				console.log("NEW GET");
+				res.send(sickness);
+				break;
+			}else if(limit && !offset){
+				buscado = i;
+				console.log("NEW GET with limit");
+				aux.push(sickness[i]);
+				aux.splice(limit,aux.length);
+			}else if(!limit && offset){
+				buscado=i;
+				console.log("NEW GET with offset");
+				aux=sickness.slice(offset,sickness.length);
+			}else if(limit && offset){
+				buscado = i;
+				console.log("NEW GET with limit and offset");
+				aux.push(sickness[i]);
+				aux=sickness.slice(offset, sickness.length);
+				aux.splice(limit, aux.length);
+				break;
+			}
+		}
+	}else if(fr != undefined && to == undefined){
+		for(var i = 0; i<sickness.length; i++){
+			if(sickness[i].year>=fr){
+				if(limit<=0){
+					res.send(aux);
+					break;
+				}else if(offset>=sickness.length){
+					console.log("Not found with this offset");
+					buscado=-1;
+				}else if(!limit && !offset){
+					buscado=i;
+					console.log("New GET with from");
+					aux.push(sickness[i]);
+				}else if(limit && !offset){
+					buscado = i;
+					console.log("New GET with from and limit");
+					aux.push(sickness[i]);
+					aux.splice(limit, aux.length);
+				}else if(!limit && offset){
+					buscado = i;
+					console.log("New GET with from and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+					}
+				}else if(limit && offset){
+					buscado = i;
+					console.log("New GET with from, limit and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+						aux.splice(limit, aux1.length);
+					}
+				}
+			}
+		}
+	}else if(fr == undefined && to != undefined){
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].year<=to){
+				if(limit<=0){
+					res.send(aux);
+					break;
+				}else if(offset>=sickness.length){
+					console.log("Not found with this offset");
+					buscado=-1;
+				}else if(!limit && !offset){
+					buscado=i;
+					console.log("New GET with to");
+					aux.push(sickness[i]);
+				}else if(limit && !offset){
+					buscado=i;
+					console.log("New GET with to and limit");
+					aux.push(sickness[i]);
+					aux.splice(limit, aux.length);
+				}else if(!limit && offset){
+					buscado =i;
+					console.log("New GET with to and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+					}
+				}else if(limit && offset){
+					buscado =i;
+					console.log("New GET with to, limit and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+						aux.splice(limit, aux1.length);
+					}
+				}
+			}
+		}
+	}else if(fr != undefined && to != undefined){
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].year>=fr && sickness[i].year<=to){
+				if(limit<=0){
+					res.send(aux);
+					break;
+				}else if(offset>=sickness.length){
+					console.log("Not found with this offset");
+					buscado=-1;
+				}else if(!limit && !offset){
+					buscado=i;
+					console.log("New GET with from and to");
+					aux.push(sickness[i]);
+				}else if(limit && !offset){
+					buscado = i;
+					console.log("New GET with from, to and limit");
+					aux.push(sickness[i]);
+					aux.splice(limit, aux.length);
+				}else if(!limit && offset){
+					buscado =i;
+					console.log("New GET with from, to and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+					}
+				}else if(limit && offset){
+					buscado=i;
+					console.log("New GET with from, to, limit and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+					aux=aux1.slice(offset, aux1.length);
+					aux.splice(limit, aux.length);
+				}
+			}
+		}
+	}
+}
+
+	if(aux.length!=0 || sickness.length==0){
+		res.send(aux);
+	}
+	if(buscado==-1){
+		res.sendStatus(404);
+	}
 }
 
 module.exports.getSicknessRegionYear = function(req,res){
@@ -29,11 +180,14 @@ module.exports.getSicknessRegionYear = function(req,res){
 
 module.exports.getSicknessRegion = function(req,res){
 	var aux = [];
+	var aux1 = [];
+	var aux2 = [];
 	var buscado = -1;
 	var name = req.params.region;
 	var fr = req.query.from;
 	var to = req.query.to;
 	var limit = req.query.limit;
+	var offset = req.query.offset;
 
 	if(name=='loadInitialData'){
 	buscado=1;
@@ -49,34 +203,83 @@ module.exports.getSicknessRegion = function(req,res){
 	if(fr==undefined && to==undefined){
 		for(var i=0;i<sickness.length;i++){
 			if(name==sickness[i].region){
-				if(limit){
-				buscado = i;
-				console.log("New GET of resource region with limit: " + limit);
-				var atributo = sickness[i];
-				aux.push(atributo);	
-				aux.splice(limit,aux.length);
-				}else{
+				aux2.push(sickness[i]);
+			}
+		}
+		for(var i=0;i<sickness.length;i++){
+			if(name==sickness[i].region){
+				if(limit<=0){
+					res.send(aux);
+					break;
+				}else if(offset>=aux2.length){
+					console.log("Not found with this offset");
+					buscado=-1;
+				}else if(!limit && !offset){
 					buscado = i;
 					console.log("New GET of resource region");
-					var atributo = sickness[i];
-					aux.push(atributo);
+					aux.push(sickness[i]);
+				}else if(limit && !offset){
+					buscado=i;
+					console.log("New GET of resource region with limit");
+					aux.push(sickness[i]);
+					aux.splice(limit, aux.length);
+				}else if(!limit && offset){
+					buscado = i;
+					console.log("New GET of resource region with offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+					}
+				}else if(limit && offset){
+					buscado = i;
+					console.log("New GET of resource region with limit and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+						aux.splice(limit, aux.length);
+					}
 				}
 			}
 		}
 
 		for(var i=0;i<sickness.length;i++){
 			if(name==sickness[i].year){
-				if(limit){
-				buscado = i;
-				console.log("New GET of resource year with limit: " + limit);
-				var atributo = sickness[i];
-				aux.push(atributo);	
-				aux.splice(limit,aux.length);
-				}else{
+				aux2.push(sickness[i]);
+			}
+		}
+
+		for(var i=0;i<sickness.length;i++){
+			if(name==sickness[i].year){
+				if(limit<=0){
+					res.send(aux);
+					break;
+				}else if(offset>=aux2.length){
+					console.log("Not found with this offset");
+					buscado=-1;
+				}else if(!limit && !offset){
 					buscado = i;
-				console.log("New GET of resource year");
-				var atributo = sickness[i];
-				aux.push(atributo);	
+					console.log("New GET of resource year");
+					aux.push(sickness[i]);	
+				}else if(limit && !offset){
+					buscado = i;
+					console.log("New GET of resource year with limit");
+					aux.push(sickness[i]);
+					aux.splice(limit, aux.length);	
+				}else if(!limit && offset){
+					buscado = i;
+					console.log("New GET of resource year with offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+					}
+				}else if(limit && offset){
+					buscado = i;
+					console.log("New GET of resource year with limit and offset");
+					aux1.push(sickness[i]);
+					if(aux1.length!=0){
+						aux=aux1.slice(offset, aux1.length);
+						aux.splice(limit, aux.length);
+					}
 				}
 			}
 		}
@@ -91,21 +294,94 @@ module.exports.getSicknessRegion = function(req,res){
 
 	if(fr!=undefined && to!=undefined){
 		for(var j=fr; j<=to; j++){
+			for(var i=0;i<sickness.length;i++){
+				if(sickness[i].year==j && name==sickness[i].region){
+					aux2.push(sickness[i]);
+				}
+			}
+		}
+		for(var j=fr; j<=to; j++){
 			for(var i=0; i<sickness.length; i++){
 				if(sickness[i].year==j && sickness[i].region == name){
-					if(limit){
-					buscado=i;
-					console.log("New region between year found with limit: " + limit);
-					aux.push(sickness[i]);
-					aux.splice(limit,aux.length);
-					}else{
-						buscado=i;
-						console.log("New region between year found");
+					if(limit<=0){
+						res.send(aux);
+						break;
+					}else if(offset>=aux2.length){
+						console.log("Not found with this offset");
+						buscado=-1;
+					}else if(!limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with from and to");
+						aux.push(sickness[i]);	
+					}else if(limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with from, to and limit");
 						aux.push(sickness[i]);
+						aux.splice(limit, aux.length);	
+					}else if(!limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with from, to and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+						}
+					}else if(limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with from, to, limit and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+							aux.splice(limit, aux.length);
+						}
 					}
 				}
 			}
 		}
+		for(var j=fr; j<=to; j++){
+			for(var i=0;i<sickness.length;i++){
+				if(sickness[i].year==j && name==sickness[i].year){
+					aux2.push(sickness[i]);
+				}
+			}
+		}
+		for(var j=fr; j<=to; j++){
+			for(var i=0; i<sickness.length; i++){
+				if(sickness[i].year==j && sickness[i].year == name){
+					if(limit<=0){
+						res.send(aux);
+						break;
+					}else if(offset>=aux2.length){
+						console.log("Not found with this offset");
+						buscado=-1;
+					}else if(!limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with from and to");
+						aux.push(sickness[i]);	
+					}else if(limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with from, to and limit");
+						aux.push(sickness[i]);
+						aux.splice(limit, aux.length);	
+					}else if(!limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with from, to and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+						}
+					}else if(limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with from, to, limit and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+							aux.splice(limit, aux.length);
+						}
+					}
+				}
+			}
+		}
+
 		if(aux.length!=0){
 			res.send(aux);
 		}
@@ -115,17 +391,84 @@ module.exports.getSicknessRegion = function(req,res){
 	}
 
 	if(fr!=undefined && to==undefined){
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].year>=fr && sickness[i].region == name){
+				aux2.push(sickness[i]);
+			}
+		}
 			for(var i=0; i<sickness.length; i++){
 				if(sickness[i].year>=fr && sickness[i].region == name){
-					if(limit){
-					buscado=i;
-					console.log("New region from year found with limit: " + limit);
-					aux.push(sickness[i]);
-					aux.splice(limit,aux.length);
-					}else{
-						buscado=i;
-						console.log("New region from year found");
+					if(limit<=0){
+						res.send(aux);
+						break;
+					}else if(offset>=aux2.length){
+						console.log("Not found with this offset");
+						buscado=-1;
+					}else if(!limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with from");
+						aux.push(sickness[i]);	
+					}else if(limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with from and limit");
 						aux.push(sickness[i]);
+						aux.splice(limit, aux.length);	
+					}else if(!limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with from and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+						}
+					}else if(limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with from, limit and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+							aux.splice(limit, aux.length);
+						}
+					}
+				}
+			}
+
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].year>=fr && sickness[i].year == name){
+				aux2.push(sickness[i]);
+			}
+		}
+			for(var i=0; i<sickness.length; i++){
+				if(sickness[i].year>=fr && sickness[i].year == name){
+					if(limit<=0){
+						res.send(aux);
+						break;
+					}else if(offset>=aux2.length){
+						console.log("Not found with this offset");
+						buscado=-1;
+					}else if(!limit && !offset){
+						buscado = i;
+						console.log("New GET of resource year with from");
+						aux.push(sickness[i]);	
+					}else if(limit && !offset){
+						buscado = i;
+						console.log("New GET of resource year with from and limit");
+						aux.push(sickness[i]);
+						aux.splice(limit, aux.length);	
+					}else if(!limit && offset){
+						buscado = i;
+						console.log("New GET of resource year with from and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+						}
+					}else if(limit && offset){
+						buscado = i;
+						console.log("New GET of resource year with from, limit and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+							aux.splice(limit, aux.length);
+						}
 					}
 				}
 			}
@@ -138,17 +481,84 @@ module.exports.getSicknessRegion = function(req,res){
 	}
 
 	if(fr==undefined && to!=undefined){
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].year<=to && sickness[i].region == name){
+				aux2.push(sickness[i]);
+			}
+		}
 			for(var i=0; i<sickness.length; i++){
 				if(sickness[i].year<=to && sickness[i].region == name){
-					if(limit){
-					buscado=i;
-					console.log("New region to year found");
-					aux.push(sickness[i]);
-					aux.splice(limit,aux.length);
-					}else{
-						buscado=i;
-						console.log("New region to year found");
+					if(limit<=0){
+						res.send(aux);
+						break;
+					}else if(offset>=aux2.length){
+						console.log("Not found with this offset");
+						buscado=-1;
+					}else if(!limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with to");
+						aux.push(sickness[i]);	
+					}else if(limit && !offset){
+						buscado = i;
+						console.log("New GET of resource region with to and limit");
 						aux.push(sickness[i]);
+						aux.splice(limit, aux.length);	
+					}else if(!limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with to and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+						}
+					}else if(limit && offset){
+						buscado = i;
+						console.log("New GET of resource region with to, limit and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+							aux.splice(limit, aux.length);
+						}
+					}
+			}
+		}
+
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].year<=to && sickness[i].year == name){
+				aux2.push(sickness[i]);
+			}
+		}
+			for(var i=0; i<sickness.length; i++){
+				if(sickness[i].year<=to && sickness[i].year == name){
+					if(limit<=0){
+						res.send(aux);
+						break;
+					}else if(offset>=aux2.length){
+						console.log("Not found with this offset");
+						buscado=-1;
+					}else if(!limit && !offset){
+						buscado = i;
+						console.log("New GET of resource year with to");
+						aux.push(sickness[i]);	
+					}else if(limit && !offset){
+						buscado = i;
+						console.log("New GET of resource year with to and limit");
+						aux.push(sickness[i]);
+						aux.splice(limit, aux.length);	
+					}else if(!limit && offset){
+						buscado = i;
+						console.log("New GET of resource year with to and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+						}
+					}else if(limit && offset){
+						buscado = i;
+						console.log("New GET of resource year with to, limit and offset");
+						aux1.push(sickness[i]);
+						if(aux1.length!=0){
+							aux=aux1.slice(offset, aux1.length);
+							aux.splice(limit, aux.length);
+						}
 					}
 			}
 		}
