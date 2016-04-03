@@ -1,6 +1,14 @@
 var population_growth = [];
+var keyr = '"read"';
+var keyw = '"write"';
+//PARA LOS MÉTODOS GET -> keyr
+//PARA LOS MÉTODOS POST, PUT Y DELETE -> keyw
+
 /*-------GET-------*/
 module.exports.getAllStatistics = function(req,res){
+    var apikey = req.query.apikey;
+    console.log(apikey);
+    if(apikey && apikey==keyr){
     var f = req.query.from;
     var t = req.query.to;
     var r = [];
@@ -31,8 +39,11 @@ module.exports.getAllStatistics = function(req,res){
           }
         }
       }
-      
-      res.send(r);
+      if(r.length!=0){
+        res.send(r);
+      }else{
+        res.sendStatus(404);
+      }
       
     }else if(f==undefined && t!=undefined){
       var tp = parseInt(t, 10);
@@ -43,10 +54,10 @@ module.exports.getAllStatistics = function(req,res){
           r.push(population_growth[j]);
         }
       }
-      if(r==[]){
+      if(r.length==0){
         res.sendStatus(404);
       }else{
-        r.sort(compare);
+        //r.sort(compare);
         res.send(r);  
       }
       
@@ -58,10 +69,10 @@ module.exports.getAllStatistics = function(req,res){
           r.push(population_growth[j]);
         }
       }
-      if(r==[]){
+      if(r.length==0){
         res.sendStatus(404);
       }else{
-        r.sort(compare);
+        //r.sort(compare);
         res.send(r);
       }
     }else if(l!=undefined && o==undefined){
@@ -76,7 +87,7 @@ module.exports.getAllStatistics = function(req,res){
         aux_paginacion.push(population_growth[i]);
       }
       console.log(aux_paginacion);
-      if(aux==[]){
+      if(aux_paginacion.length==0){
         res.sendStatus(404);
       }else{
         res.send(aux_paginacion);
@@ -95,8 +106,8 @@ module.exports.getAllStatistics = function(req,res){
         }
         aux_paginacion.push(population_growth[i]);
               }
-      if(aux_paginacion==[]){
-        res.sendStatus(400);
+      if(aux_paginacion.length==0){
+        res.sendStatus(404);
       }else{
         res.send(aux_paginacion);
       }  
@@ -125,8 +136,8 @@ module.exports.getAllStatistics = function(req,res){
             dd.push(aux_paginacion[k]);
           }
         }
-        if(aux_paginacion==[]){
-          res.sendStatus(400);
+        if(dd.length==0){
+          res.sendStatus(404);
         }else{
           res.send(dd);
         }  
@@ -135,61 +146,15 @@ module.exports.getAllStatistics = function(req,res){
       res.send(population_growth);
     }
   console.log("New GET of resource " + "population-growth");
-  
-      //*****************--------------PAGINACIÓN------------------******************
-/*
-    console.log(l + "----" + o);
-    var aux_paginacion = [];
-    if(l!=undefined && o!=undefined ){
-      if(l<0 || o<0){
-        res.sendStatus(400);
-      }
-      for(var i=o; i<o+l;i++){
-        aux_paginacion.push(population_growth[i]);
-      }
-      if(aux==[]){
-        res.sendStatus(400);
-      }else{
-        res.send(aux_paginacion);
-      }   
-    }
-    if(l!=undefined && o==undefined ){
-      if(l<0){
-        res.sendStatus(400);
-      }
-      for(var i=0; i<l;i++){
-        aux_paginacion.push(population_growth[i]);
-      }
-      console.log(aux_paginacion);
-      if(aux==[]){
-        res.sendStatus(404);
-      }else{
-        res.send(aux_paginacion);
-      }
-    }
-    
-    if(l==undefined && o!=undefined ){
-      if(o<0){
-        res.sendStatus(400);
-      }
-      var pag1 = o; //o me dice la pos (incluye la 0)
-      var pag2 = population_growth.length;
-      var pag3 = pag2 - pag1;
-      for(var i=o; i<o+pag3;i++){
-        aux_paginacion.push(population_growth[i]);
-      }
-      if(aux==[]){
-        res.sendStatus(400);
-      }else{
-        res.send(aux_paginacion);
-      }     
-    }  
   }else{
-*/
-    //*****************---------------FN PAGINACIÓN---------------*****************
+    res.sendStatus(401);
+  }
 };
 
 module.exports.getStatisticsId = function(req,res){
+  var apikey = req.query.apikey;
+  console.log(apikey);
+  
   var aux = [];
   var aux2 = [];
   var encontrado = -1;
@@ -198,9 +163,10 @@ module.exports.getStatisticsId = function(req,res){
   var t = req.query.to;
   var l = req.query.limit;
   var o = req.query.offset;
-    console.log(id + "-" + f + "-" + t);
+   // console.log(id + "-" + f + "-" + t);
 
     //--------------------------------------------------
+if(apikey && apikey==keyr){
   if(id=='loadInitialData'){
     encontrado = 1;
     initial_array = [
@@ -418,9 +384,15 @@ module.exports.getStatisticsId = function(req,res){
   //------------------------------------------------------------------------------
 }
 
+}else{
+  res.sendStatus(401);
+}
+
 };
 
 module.exports.getStatisticsRegionAndYear = function(req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyr){
   var aux = [];
   var encontrado = -1;
   var region = req.params.region;
@@ -447,11 +419,15 @@ module.exports.getStatisticsRegionAndYear = function(req,res){
   if (encontrado == -1){
     res.sendStatus(404);
   }
-
+}else{
+  res.sendStatus(401);
+}
 };
 
 //-------POST-------
 module.exports.postSatitistics = function(req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyw){
   var p = req.body;
   var cmp = 1;
   var x = p.region;
@@ -469,37 +445,58 @@ module.exports.postSatitistics = function(req,res){
     if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
       || alb!=6){
       res.sendStatus(400);
-    }
-  }else{
-    for(k=0; k<population_growth.length; k++){
-      if(x==population_growth[k].region && x2==population_growth[k].year){
-        semaforo = 1;
-      }
-    }
-    if(semaforo==1){
-      res.sendStatus(409);
     }else{
       population_growth.push(p);
-      console.log("New POST of resource " + "population growth");
-      res.sendStatus(201);
+    }
+  }else{
+    if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
+        || alb!=6){
+        res.sendStatus(400);
+    }else{
+      for(k=0; k<population_growth.length; k++){
+        if(x==population_growth[k].region && x2==population_growth[k].year){
+          semaforo = 1;
+        }
+      }
+      if(semaforo==1){
+        res.sendStatus(409);
+      }else{
+          population_growth.push(p);
+          console.log("New POST of resource " + "population growth");
+          res.sendStatus(201);
+      }
     }
   }
-
+}else{
+  res.sendStatus(401);
+}
 
 };
 
 module.exports.postStatisticsNotPermitted = function(req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyw){
   console.log("Operation POST not permitted in this case");
   res.sendStatus(405);
+}else{
+  res.sendStatus(401);
+}
 };
 
 /*-------PUT-------*/
 module.exports.putStatisticsNotPermitted = function(req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyw){
   console.log("Operation PUT not permitted in this case");
   res.sendStatus(405);
+}else{
+  res.sendStatus(401);
+}
 };
 
 module.exports.putStatistics = function(req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyw){
   var encontrado = -1;
   var region = req.params.region;
   var year = req.params.year;
@@ -514,45 +511,58 @@ module.exports.putStatistics = function(req,res){
   
   var alb = Object.keys(p).length;
 
-  if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
-    || alb!=6){
-    res.sendStatus(400);
-  }else if(year!=p.year || region!=p.region){
+  if(population_growth.length==0){
     res.sendStatus(400);
   }else{
-
-  for(var i = 0; i< population_growth.length; i++){
-    if(region == population_growth[i].region){
-      //encontrado = i;
-      //console.log("New GET of resource " + population_growth[i].region);
-      var t = population_growth[i];
-      if(t.year == year){
-        encontrado = i;
-        console.log("New PUT of resource " + t.region + "/" + t.year);
-        population_growth[i] = p;
-        res.sendStatus(200);
+    if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
+      || alb!=6){
+      res.sendStatus(400);
+    }else{
+      if(year!=p.year || region!=p.region){
+        res.sendStatus(400);
+      }else{
+        for(var i = 0; i< population_growth.length; i++){
+          if(region == population_growth[i].region){
+            var t = population_growth[i];
+            if(t.year == year){
+              encontrado = i;
+              console.log("New PUT of resource " + t.region + "/" + t.year);
+              population_growth[i] = p;
+              res.sendStatus(200);
+            }
+          }
+        }
+        if (encontrado == -1){
+          console.log("Operation PUT not permitted because the object is not found");
+          res.sendStatus(404);
+        }
       }
-      //res.send(t);
-      //break;
+
     }
   }
-  if (encontrado == -1){
-    console.log("Operation PUT not permitted because the object is not found");
-    res.sendStatus(404);
-  }
+}else{
+  res.sendStatus(401);
 }
 };
 
 /*-------DELETE-------*/
 module.exports.deleteAllStatistics = function (req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyw){
   if(population_growth.length != 0){
     population_growth.splice(0, population_growth.length);
   }
   console.log("New DELETE of resource " + "population_growth");
   res.sendStatus(200);
+  }else{
+    res.sendStatus(401);
+  }
 };
 
 module.exports.deleteStatistics = function (req,res){
+  var apikey = req.query.apikey;
+  console.log(apikey);
+  if(apikey && apikey==keyw){
   var encontrado = -1;
   var region = req.params.region;
   var year = req.params.year;
@@ -571,14 +581,20 @@ module.exports.deleteStatistics = function (req,res){
   if (encontrado == -1){
     res.sendStatus(404);
   }
+}else{
+  res.sendStatus(401);
+}
 };
 
 module.exports.deleteStatisticsRegionOYear = function (req,res){
+  var apikey = req.query.apikey;
+  if(apikey && apikey==keyw){
   var encontrado = -1;
   var id = req.params.id;
   var aux = [];
   var cont = 0;
   console.log(req.params);
+
   for (var i = 0; i < population_growth.length; i++) {
     if(id != population_growth[i].region && id!=population_growth[i].year){
       encontrado = i;
@@ -605,25 +621,9 @@ module.exports.deleteStatisticsRegionOYear = function (req,res){
     population_growth = aux;
     res.sendStatus(200);
   }
+}
 };
-
-
-module.exports.getLoad = function(req,res){
-  console.log("Hola Ana");
-  /*
-  initial_array = [
-  {region:"Andalucia", year: "2009", age:"20-24", men: "273183", women: "259946", total_population: "533129"},
-  {region:"Marid", year: "2010", age:"20-24", men: "176043", women: "174849", total_population: "350892"},
-  {region:"Cataluña", year: "2011", age:"45-49", men: "271109", women: "270808", total_population: "541917"},
-  {region:"Galicia", year: "2012", age:"65-69", men: "72977", women: "82399", total_population: "155376"},
-  {region:"Pais Vasco", year: "2013", age:"00-04", men: "53971", women: "51188", total_population: "105159"}];
-  population_growth = initial_array;
-  //console.log(population_growth);
-  */
-  res.sendStatus(200);
-
-};
-
+/*
 module.exports.getBusqueda = function(req,res){
   var id = req.params.id;
     var f = req.query.from;
@@ -646,7 +646,7 @@ module.exports.getBusqueda = function(req,res){
 
     res.send(r);
 };
-
+*/
 function compare(a,b) {
   if (a.year < b.year)
     return -1;
