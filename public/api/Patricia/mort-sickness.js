@@ -20,7 +20,7 @@ module.exports.getSickness = function(req,res){
 			}else if(!limit && !offset){
 				buscado = i;
 				console.log("NEW GET");
-				aux.push(sickness);
+				res.send(sickness);
 				break;
 			}else if(limit && !offset){
 				buscado = i;
@@ -149,7 +149,8 @@ module.exports.getSickness = function(req,res){
 		}
 	}
 }
-	if(aux.length!=0){
+
+	if(aux.length!=0 || sickness.length==0){
 		res.send(aux);
 	}
 	if(buscado==-1){
