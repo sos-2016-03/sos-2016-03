@@ -3,23 +3,52 @@ var fs=require("fs");
 var bodyParser=require("body-parser");
 var app=express();
 var router=express.Router();
+var passport = require('passport')
+var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
 var keyWrite ='"write"';
 var keyRead='"read"';
 var births=[];
 
+app.use(passport.initialize());
 app.use(bodyParser.json());
+
+passport.use(new LocalAPIKeyStrategy(
+  function(apikey, done) { 
+    done(null,apikey); 
+  }
+));
+
+function WriteAccess(req, res, next) {
+    passport.authenticate('localapikey', function(err, user, info) {
+        if(user==false)
+            return res.sendStatus(401);
+        else if (user!='"write"') {
+            return res.sendStatus(403);
+        }
+        return next();
+    })(req, res, next);   
+};
+
+function ReadAccess(req, res, next) {
+    passport.authenticate('localapikey', function(err, user, info) {
+        if(user==false)
+            return res.sendStatus(401);
+        else if (user!='"read"') {
+            return res.sendStatus(403);
+        }
+        return next();
+    })(req, res, next);   
+};
 
 //API Alberto
 //Métodos GET
 //Devuelve la lista de recursos
-router.get("/",(req,res) => {
+router.get("/",ReadAccess,(req,res) => {
   var limit = req.query.limit;
   var offset = req.query.offset;
   var from = req.query.from;
   var to = req.query.to;
   var birth = [];  
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyRead){
     //From: desde un año en específico; To: hasta un año específico;
     //Limit: Nº de elementos; Offset: desde el elemento tal    
     if(from && to && limit && offset){
@@ -217,14 +246,9 @@ router.get("/",(req,res) => {
     }else{
       res.send(births);
     }
-  }else{
-    res.sendStatus(401);
-  }
 });
 
-router.get("/loadInitialData",(req,res)=>{
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
+router.get("/loadInitialData",WriteAccess,(req,res)=>{
     births=[];
     fs.readFile('./public/api/Alberto/spain-births.json','utf8',(err,content) => {
       aux=JSON.parse(content);
@@ -233,13 +257,10 @@ router.get("/loadInitialData",(req,res)=>{
       });
     });
     res.sendStatus(200);
-  }else{
-    res.sendStatus(401);
-  }
 });
 
 //Devuelve una lista del recurso, por región, año + búsqueda, paginación
-router.get("/:region/",(req,res) => {
+router.get("/:region/",ReadAccess,(req,res) => {
     var year = req.params.region;
     var region = req.params.region;
     var limit = req.query.limit;
@@ -247,8 +268,6 @@ router.get("/:region/",(req,res) => {
     var from = req.query.from;
     var to = req.query.to;
     var birth = [];
-    var apikey=req.query.apikey;
-    if(apikey && apikey==keyRead){
       //From: desde un año en específico; To: hasta un año específico
       //Limit: cantidad a mostrar; Offset: a partir de donde
       if(from && to && limit && offset){
@@ -467,18 +486,13 @@ router.get("/:region/",(req,res) => {
           res.sendStatus(404);
         }
       }
-    }else{
-      res.sendStatus(401);
-    }
 });
 
 //Consulta un elemento por región y año
-router.get("/:region/:year",(req,res) => {
-    var apikey=req.query.apikey;
+router.get("/:region/:year",ReadAccess,(req,res) => {
     var year = req.params.year;
     var region = req.params.region;
     var birth = [];
-    if(apikey && apikey==keyRead){
       for(i=0;i<births.length;i++){     
           if(births[i].year == year && births[i].region == region){
           	birth.push(births[i]);
@@ -490,9 +504,6 @@ router.get("/:region/:year",(req,res) => {
       }else{
       	 res.sendStatus(404);
       }
-    }else{
-      res.sendStatus(401);
-    }
 });
 
 
@@ -510,12 +521,10 @@ function loadInitialData(){
 
 //Métodos POST
 //Método que añade un nuevo equipo; 409 si ya existe el elemento por región y año
-router.post("/",(req,res) => {
-  var apikey=req.query.apikey;
+router.post("/",WriteAccess,(req,res) => {
   var birth=req.body;
   var aux=Object.keys(birth).length;
   cont=0;
-  if(apikey && apikey==keyWrite){
     if(births.length==0){
       if(birth.region && birth.year && birth.men && birth.women && birth.totalbirth && aux==5){
         births.push(birth);
@@ -539,62 +548,37 @@ router.post("/",(req,res) => {
           res.sendStatus(400);
         }
     }
-  }else{
-    res.sendStatus(401);
-  }
 });
 
 //Método inválido por región
-router.post("/:region",(req,res) => {
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-	  res.sendStatus(405);
-  }else{
-    res.sendStatus(401);
-  }
+router.post("/:region",WriteAccess,(req,res) => {
+  res.sendStatus(405);
 });
 
 //Método inválido por año
 
-router.post("/:year",(req,res)=>{
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-    res.sendStatus(405);
-  }else{
-    res.sendStatus(401);
-  }
+router.post("/:year",WriteAccess,(req,res)=>{
+  res.sendStatus(405);
 })
 
 //Método inválido por región y año
-router.post("/:region/:year",(req,res) => {
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-    res.sendStatus(405);
-  }else{
-    res.sendStatus(401);
-  }
+router.post("/:region/:year",WriteAccess,(req,res) => {
+  res.sendStatus(405);
 });
 
 //Métodos DELETE
 //Borra toda la lista
-router.delete("/",(req,res) => {
-	var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-    births=[];
-	  res.sendStatus(200);
-  }else{
-    res.sendStatus(401);
-  }
+router.delete("/",WriteAccess,(req,res) => {
+  births=[];
+  res.sendStatus(200);
 });
 
 //Borra un recurso individual por región o año; 404 si no está
-router.delete("/:region",(req,res) => {
-	var apikey=req.query.apikey;
+router.delete("/:region",WriteAccess,(req,res) => {
   var region=req.params.region;
   var year=req.params.region;
 	var cont=0;
   var aux=births.length;
-  if(apikey && apikey==keyWrite){
     for(j=0;j<aux;j++){
       for(i=0;i<births.length;i++){
       	if(births[i].region == region || births[i].year == year){
@@ -608,18 +592,13 @@ router.delete("/:region",(req,res) => {
     }else{
       res.sendStatus(404);
     }
-  }else{
-    res.sendStatus(401);
-  }
 });
 
 //Borra un recurso individual por región y año; 404 si no está
-router.delete("/:region/:year",(req,res) => {
-  var apikey=req.query.apikey;
+router.delete("/:region/:year",WriteAccess,(req,res) => {
   var region=req.params.region;
   var year=req.params.year;
   var cont=0;
-  if(apikey && apikey==keyWrite){
     for(i=0;i<births.length;i++){
         if(births[i].region == region && births[i].year == year){
           births.splice(i,1);
@@ -632,50 +611,30 @@ router.delete("/:region/:year",(req,res) => {
     }else{
       res.sendStatus(404);
     }
-  }else{
-    res.sendStatus(401);
-  }
 });
 
 //Métodos PUT
 //Método inválido
-router.put("/",(req,res) => {
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-	 res.sendStatus(405);
-  }else{
-    res.sendStatus(401);
-  }
+router.put("/",WriteAccess,(req,res) => {
+  res.sendStatus(405);
 });
 
 //Método inválido
-router.put("/:region",(req,res) => {
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-   res.sendStatus(405);
-  }else{
-    res.sendStatus(401);
-  }
+router.put("/:region",WriteAccess,(req,res) => {
+  res.sendStatus(405);
 });
 
 //Método inválido
-router.put("/:year",(req,res)=>{
-  var apikey=req.query.apikey;
-  if(apikey && apikey==keyWrite){
-   res.sendStatus(405);
-  }else{
-    res.sendStatus(401);
-  }
+router.put("/:year",WriteAccess,(req,res)=>{
+  res.sendStatus(405);
 });
 
 //Actualiza un recurso por región y año; devuelve 404 si no está; devuelve 400 si formato erróneo
-router.put("/:region/:year",(req,res) => {
-    var apikey=req.query.apikey;
+router.put("/:region/:year",WriteAccess,(req,res) => {
     var region = req.params.region;
     var year = req.params.year;
     var regionUpdated = req.body;
     var cont = 0;
-    if(apikey && apikey==keyWrite){
       for(i=0;i<births.length;i++){
           if(births[i].region == region && births[i].year == year){
             cont=1;
@@ -694,9 +653,6 @@ router.put("/:region/:year",(req,res) => {
     }else{
       res.sendStatus(404);
     }
-  }else{
-    res.sendStatus(401);
-  }
 });
 
 module.exports=router;
