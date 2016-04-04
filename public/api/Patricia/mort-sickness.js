@@ -583,36 +583,64 @@ module.exports.postSickness = function(req,res){
 	var mortMen = sick.mortalityInMen;
 	var mortWomen = sick.mortalityInWomen;
 	var totalMort = sick.totalMortality;
+	var buscado = 0;
+	if(sickness.length==0){
 		if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-			&& totalMort!=undefined){
-			if(sickness.length==0){
-				sickness.push(sick);
-				console.log("NEW POST " + sick.region);
-				res.sendStatus(201);
-			}else{
-				for(var i=0; i<sickness.length; i++){
-					if(sickness[i].region == region && sickness[i].year == year){
-						console.log("Conflict");
-						res.sendStatus(409);//Error porque ya existe
-						break;
-					}else if(sickness[i].region == region && sickness[i].year != year){
-						sickness.push(sick);
-						console.log("NEW POST " + region);
-						res.sendStatus(201);//Lo crea con la misma región pero no el mismo año
-						break;
-					}else if(sickness[i].region != region){
-						sickness.push(sick);
-						console.log("NEW POST " + sick.region);
-						res.sendStatus(201);//Lo crea con distinta región
-						break;
+		&& totalMort!=undefined){
+			sickness.push(sick);
+			res.sendStatus(201);
+		}else{
+			res.sendStatus(400);
+		}
+	}else{
+		for(var i=0; i<sickness.length; i++){
+			if(sickness[i].region==sick.region &&  sickness[i].year ==sick.year){
+				buscado=1;//Error porque ya existe
+				break;
+			}
+		}
+		if(buscado==1){
+			res.sendStatus(409);
+		}else if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
+		&& totalMort!=undefined){
+			sickness.push(sick);
+			console.log("NEW POST " + region);
+			res.sendStatus(201);
+		}else{
+			res.sendStatus(400);
+		}
+	}
+}
+	/*if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
+		&& totalMort!=undefined){
+		if(sickness.length==0){
+			sickness.push(sick);
+			console.log("NEW POST " + sick.region);
+			res.sendStatus(201);
+		}else{
+			for(var i=0; i<sickness.length; i++){
+				if(sickness[i].region == region && sickness[i].year == year){
+					console.log("Conflict");
+					res.sendStatus(409);//Error porque ya existe
+					break;
+				}else if(sickness[i].region == region && sickness[i].year != year){
+					sickness.push(sick);
+					console.log("NEW POST " + region);
+					res.sendStatus(201);//Lo crea con la misma región pero no el mismo año
+					break;
+				}else if(sickness[i].region != region){
+					sickness.push(sick);
+					console.log("NEW POST " + sick.region);
+					res.sendStatus(201);//Lo crea con distinta región
+					break;
 					}
 				}
 			}
-		}else{
-			console.log("Bad Request");
-			res.sendStatus(400);
-		}	
-}
+	}else{
+		console.log("Bad Request");
+		res.sendStatus(400);
+	}	
+}*/
 
 module.exports.postSicknessRegion = function(req,res){
 		console.log("Method Not Allowed");
