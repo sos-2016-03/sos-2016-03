@@ -593,19 +593,21 @@ module.exports.postSickness = function(req,res){
 			res.sendStatus(400);
 		}
 	}else{
-		for(var i=0; i<sickness.length; i++){
-			if(sickness[i].region==sick.region &&  sickness[i].year ==sick.year){
-				buscado=1;//Error porque ya existe
-				break;
-			}
-		}
-		if(buscado==1){
-			res.sendStatus(409);
-		}else if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
+		if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
 		&& totalMort!=undefined){
-			sickness.push(sick);
-			console.log("NEW POST " + region);
-			res.sendStatus(201);
+			for(var i=0; i<sickness.length; i++){
+				if(sickness[i].region==sick.region &&  sickness[i].year ==sick.year){
+					buscado=1;//Error porque ya existe
+					break;
+				}
+			}
+			if(buscado==1){
+				res.sendStatus(409);
+			}else{
+				sickness.push(sick);
+				console.log("NEW POST " + region);
+				res.sendStatus(201);
+			}
 		}else{
 			res.sendStatus(400);
 		}
