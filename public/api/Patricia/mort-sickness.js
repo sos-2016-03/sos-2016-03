@@ -63,8 +63,8 @@ module.exports.getSickness = function(req,res){
 					}else if(!limit && offset){
 						buscado = i;
 						console.log("New GET with from and offset");
-						aux1.push(sickness[i]);
-							aux=aux.slice(offset, aux.length);
+						aux.push(sickness[i]);
+						aux=aux.slice(offset, aux.length);
 					}else if(limit && offset){
 						buscado = i;
 						console.log("New GET with from, limit and offset");
