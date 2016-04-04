@@ -613,36 +613,6 @@ module.exports.postSickness = function(req,res){
 		}
 	}
 }
-	/*if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-		&& totalMort!=undefined){
-		if(sickness.length==0){
-			sickness.push(sick);
-			console.log("NEW POST " + sick.region);
-			res.sendStatus(201);
-		}else{
-			for(var i=0; i<sickness.length; i++){
-				if(sickness[i].region == region && sickness[i].year == year){
-					console.log("Conflict");
-					res.sendStatus(409);//Error porque ya existe
-					break;
-				}else if(sickness[i].region == region && sickness[i].year != year){
-					sickness.push(sick);
-					console.log("NEW POST " + region);
-					res.sendStatus(201);//Lo crea con la misma región pero no el mismo año
-					break;
-				}else if(sickness[i].region != region){
-					sickness.push(sick);
-					console.log("NEW POST " + sick.region);
-					res.sendStatus(201);//Lo crea con distinta región
-					break;
-					}
-				}
-			}
-	}else{
-		console.log("Bad Request");
-		res.sendStatus(400);
-	}	
-}*/
 
 module.exports.postSicknessRegion = function(req,res){
 		console.log("Method Not Allowed");
@@ -659,7 +629,6 @@ module.exports.putSickness = function(req,res){
 }
 
 module.exports.putSicknessRegionYear = function(req,res){
-	var buscado = -1;
 	var region = req.body.region;
 	var year = req.body.year;
 	var sic = req.body.sickness;
@@ -669,8 +638,8 @@ module.exports.putSicknessRegionYear = function(req,res){
 	var nueva = req.body;
 	var regN = req.params.region;
 	var yearN = req.params.year;
-		if(Object.keys(nueva).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-			&& totalMort!=undefined){
+	if(Object.keys(nueva).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
+		&& totalMort!=undefined){
 			for(var i=0; i<sickness.length; i++){
 				if(regN==sickness[i].region && yearN==sickness[i].year){
 					buscado=i;
@@ -678,21 +647,18 @@ module.exports.putSicknessRegionYear = function(req,res){
 					console.log("Modified");
 					res.sendStatus(200);
 					break;
-				}else{
-					console.log("Bad Request");
+				}else if(regN==sickness[i].region && yearN!=sickness[i].year){
+					buscado=1;
 					res.sendStatus(400);
 					break;
-				}
-			}
-
-
-			if(buscado == -1){
+			}else{
 				res.sendStatus(404);
 			}
-		}else{
-			console.log("Bad Request");
-				res.sendStatus(400);
 		}
+	}else{
+		console.log("Bad Request");
+		res.sendStatus(400);
+	}
 }
 
 
