@@ -175,7 +175,7 @@ module.exports.getStatisticsId = function(req,res){
     encontrado = 1;
     initial_array = [
     {region:"Andalucia", year: "2009", age:"20-24", men: "273183", women: "259946", total_population: "533129"},
-    {region:"Marid", year: "2010", age:"20-24", men: "176043", women: "174849", total_population: "350892"},
+    {region:"Madrid", year: "2010", age:"20-24", men: "176043", women: "174849", total_population: "350892"},
     {region:"Cataluña", year: "2011", age:"45-49", men: "271109", women: "270808", total_population: "541917"},
     {region:"Galicia", year: "2012", age:"65-69", men: "72977", women: "82399", total_population: "155376"},
     {region:"Pais Vasco", year: "2013", age:"00-04", men: "53971", women: "51188", total_population: "105159"},

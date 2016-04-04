@@ -27,7 +27,7 @@ function WriteAccess(req, res, next) {
         if(user==false)
             return res.sendStatus(401);
         else if (user!='"write"') {
-            return res.sendStatus(403);
+            return res.sendStatus(401);
         }
         return next();
     })(req, res, next);   
@@ -38,7 +38,7 @@ function ReadAccess(req, res, next) {
         if(user==false)
             return res.sendStatus(401);
         else if (user!='"read"') {
-            return res.sendStatus(403);
+            return res.sendStatus(401);
         }
         return next();
     })(req, res, next);   
