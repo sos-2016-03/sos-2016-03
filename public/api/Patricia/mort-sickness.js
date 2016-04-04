@@ -11,8 +11,6 @@ module.exports.getSickness = function(req,res){
 	var to = req.query.to;
 	var limit = req.query.limit;
 	var offset = req.query.offset;
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyR){
 		if(fr == undefined && to == undefined){
 			for(var i=0; i<sickness.length;i++){
 				if(limit<=0){
@@ -160,9 +158,6 @@ module.exports.getSickness = function(req,res){
 		if(buscado==-1){
 			res.sendStatus(404);
 		}
-	}else{
-		res.sendStatus(401);
-	}
 }
 
 module.exports.getSicknessRegionYear = function(req,res){
@@ -171,8 +166,6 @@ module.exports.getSicknessRegionYear = function(req,res){
 	var year = req.params.year;
 	var fr = req.query.from;
 	var to = req.query.to;
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyR){
 		for(var i=0; i<sickness.length; i++){
 			if(region == sickness[i].region && year == sickness[i].year){
 				buscado=i;
@@ -185,10 +178,19 @@ module.exports.getSicknessRegionYear = function(req,res){
 		if(buscado == -1){
 			res.sendStatus(404);
 		}
-	}else{
-		res.sendStatus(401);
-	}
 }
+
+module.exports.getLoad = function(req,res){
+	buscado=1;
+	    initial_array=[{"region": "Andalucia","sickness": "Sifilis", "year": "2009", "mortalityInMen": "0,06", "mortalityInWomen": "0", "totalMortality": "0,02"},
+		{"region": "Galicia","sickness": "Clamidia", "year": "2012", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
+		{"region": "Pais Vasco","sickness": "VIH", "year": "2013", "mortalityInMen": "2,39", "mortalityInWomen": "0,32", "totalMortality": "1,35"},
+		{"region": "Madrid","sickness": "Gonorrea", "year": "2010", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
+		{"region": "Cataluña","sickness": "Herpes Simple", "year": "2011", "mortalityInMen": "0,04", "mortalityInWomen": "0,02", "totalMortality": "0,04"}];
+		sickness=initial_array;
+		console.log("Load Initial Data");
+		res.sendStatus(200);
+	}
 
 module.exports.getSicknessRegion = function(req,res){
 	var aux = [];
@@ -200,23 +202,6 @@ module.exports.getSicknessRegion = function(req,res){
 	var to = req.query.to;
 	var limit = req.query.limit;
 	var offset = req.query.offset;
-	var apiKey = req. query.apikey;
-	if(name=='loadInitialData'){
-		if(apiKey && apiKey==keyW){
-		buscado=1;
-	    initial_array=[{"region": "Andalucia","sickness": "Sifilis", "year": "2009", "mortalityInMen": "0,06", "mortalityInWomen": "0", "totalMortality": "0,02"},
-		{"region": "Galicia","sickness": "Clamidia", "year": "2012", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
-		{"region": "Pais Vasco","sickness": "VIH", "year": "2013", "mortalityInMen": "2,39", "mortalityInWomen": "0,32", "totalMortality": "1,35"},
-		{"region": "Madrid","sickness": "Gonorrea", "year": "2010", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
-		{"region": "Cataluña","sickness": "Herpes Simple", "year": "2011", "mortalityInMen": "0,04", "mortalityInWomen": "0,02", "totalMortality": "0,04"}];
-		sickness=initial_array;
-		console.log("Load Initial Data");
-		res.sendStatus(200);
-		}else{
-			res.sendStatus(401);
-		}
-	}
-	if(apiKey && apiKey==keyR){
 		if(fr==undefined && to==undefined){
 			for(var i=0;i<sickness.length;i++){
 				if(name==sickness[i].region){
@@ -586,89 +571,64 @@ module.exports.getSicknessRegion = function(req,res){
 				res.sendStatus(404);
 			}
 		}
-	}else{
-		res.sendStatus(401);
-	}
-
 }
 
 //métodos POST
 
 module.exports.postSickness = function(req,res){
 	var sick = req.body;
-	var region = req.body.region;
-	var year = req.body.year;
-	var sic = req.body.sickness;
-	var mortMen = req.body.mortalityInMen;
-	var mortWomen = req.body.mortalityInWomen;
-	var totalMort = req.body.totalMortality;
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
+	var region = sick.region;
+	var year = sick.year;
+	var sic = sick.sickness;
+	var mortMen = sick.mortalityInMen;
+	var mortWomen = sick.mortalityInWomen;
+	var totalMort = sick.totalMortality;
+	var buscado = 0;
+	if(sickness.length==0){
 		if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-			&& totalMort!=undefined){
-			if(sickness.length==0){
-				sickness.push(sick);
-				console.log("NEW POST " + sick.region);
-				res.sendStatus(201);
-			}else{
-				for(var i=0; i<sickness.length; i++){
-					if(sickness[i].region == sick.region && sickness[i].year == sick.year){
-						console.log("Conflict");
-						res.sendStatus(409);//Error porque ya existe
-						break;
-					}else if(sickness[i].region == sick.region && sickness[i].year != sick.year){
-						sickness.push(sick);
-						console.log("NEW POST " + sick.region);
-						res.sendStatus(201);//Lo crea con la misma región pero no el mismo año
-						break;
-					}else if(sickness[i].region != sick.region){
-						sickness.push(sick);
-						console.log("NEW POST " + sick.region);
-						res.sendStatus(201);//Lo crea con distinta región
-						break;
-					}
-				}
-			}
+		&& totalMort!=undefined){
+			sickness.push(sick);
+			res.sendStatus(201);
 		}else{
-			console.log("Bad Request");
 			res.sendStatus(400);
 		}
 	}else{
-		res.sendStatus(401);
-	}	
+		if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
+		&& totalMort!=undefined){
+			for(var i=0; i<sickness.length; i++){
+				if(sickness[i].region==sick.region &&  sickness[i].year ==sick.year){
+					buscado=1;//Error porque ya existe
+					break;
+				}
+			}
+			if(buscado==1){
+				res.sendStatus(409);
+			}else{
+				sickness.push(sick);
+				console.log("NEW POST " + region);
+				res.sendStatus(201);
+			}
+		}else{
+			res.sendStatus(400);
+		}
+	}
 }
 
 module.exports.postSicknessRegion = function(req,res){
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
 		console.log("Method Not Allowed");
 		res.sendStatus(405);
-	}else{
-		res.sendStatus(401);
-	}
 }
 module.exports.postSicknessRegionYear = function(req,res){
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
 		console.log("Method Not Allowed");
 		res.sendStatus(405);
-	}else{
-		res.sendStatus(401);
-	}
 }
 //métodos PUT
 module.exports.putSickness = function(req,res){
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
 		console.log("Method Not Allowed");
 		res.sendStatus(405);
-	}else{
-		res.sendStatus(401);
-	}
 }
 
 module.exports.putSicknessRegionYear = function(req,res){
-	var buscado = -1;
 	var region = req.body.region;
 	var year = req.body.year;
 	var sic = req.body.sickness;
@@ -678,10 +638,8 @@ module.exports.putSicknessRegionYear = function(req,res){
 	var nueva = req.body;
 	var regN = req.params.region;
 	var yearN = req.params.year;
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
-		if(Object.keys(nueva).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-			&& totalMort!=undefined){
+	if(Object.keys(nueva).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
+		&& totalMort!=undefined){
 			for(var i=0; i<sickness.length; i++){
 				if(regN==sickness[i].region && yearN==sickness[i].year){
 					buscado=i;
@@ -689,23 +647,17 @@ module.exports.putSicknessRegionYear = function(req,res){
 					console.log("Modified");
 					res.sendStatus(200);
 					break;
-				}else{
-					console.log("Bad Request");
+				}else if(regN==sickness[i].region && yearN!=sickness[i].year){
+					buscado=1;
 					res.sendStatus(400);
 					break;
-				}
-			}
-
-
-			if(buscado == -1){
+			}else{
 				res.sendStatus(404);
 			}
-		}else{
-			console.log("Bad Request");
-				res.sendStatus(400);
 		}
 	}else{
-		res.sendStatus(401);
+		console.log("Bad Request");
+		res.sendStatus(400);
 	}
 }
 
@@ -713,24 +665,17 @@ module.exports.putSicknessRegionYear = function(req,res){
 //métodos DELETE
 
 module.exports.deleteSickness = function(req,res){
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
 		for(var i=0; i<sickness.length; i++){
 			sickness.splice(0,sickness.length);
 			res.sendStatus(200);
 		}
 		console.log("Delete mort-sickness list");
-	}else{
-		res.sendStatus(401);
-	}
 }
 
 module.exports.deleteSicknessRegion = function(req,res){
 	var sick = sickness.length;
 	var buscado = -1;
 	var name= req.params.region;
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
 		for(var j=0; j<sick; j++){
 			for(var i=0; i<sickness.length; i++){
 				if(name==sickness[i].region){
@@ -753,19 +698,13 @@ module.exports.deleteSicknessRegion = function(req,res){
 			res.sendStatus(200);
 		}else{
 			res.sendStatus(404);
-		}
-	}else{
-		res.sendStatus(401);
-	}
-	
+		}	
 }
 
 module.exports.deleteSicknessRegionYear = function(req,res){
 	var buscado = -1;
 	var region = req.params.region;
 	var year = req.params.year;
-	var apiKey = req.query.apikey;
-	if(apiKey && apiKey==keyW){
 		for(var i=0; i<sickness.length;i++){
 			if(region == sickness[i].region && year == sickness[i].year){
 				buscado=i;
@@ -778,7 +717,4 @@ module.exports.deleteSicknessRegionYear = function(req,res){
 		if(buscado == -1){
 			res.sendStatus(404);
 		}
-	}else{
-		res.sendStatus(401);
-	}
 }

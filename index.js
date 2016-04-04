@@ -10,6 +10,74 @@ var musics = require("./public/api/Patricia/musics.js");
 
 app.use(bodyParser.json());
 
+//----
+
+var passport = require('passport');
+var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
+app.use(passport.initialize());
+
+passport.use(new LocalAPIKeyStrategy(
+  function(apikey, done) { 
+    done(null,apikey); 
+  }
+));
+
+function WriteAccess(req, res, next) {
+    passport.authenticate('localapikey', function(err, user, info) {
+        if(user==false)
+            return res.sendStatus(401);
+        else if (user!='"write"') {
+            return res.sendStatus(401);
+        }
+        return next();
+    })(req, res, next);   
+};
+
+function ReadAccess(req, res, next) {
+    passport.authenticate('localapikey', function(err, user, info) {
+        if(user==false)
+            return res.sendStatus(401);
+        else if (user!='"read"') {
+            return res.sendStatus(401);
+        }
+        return next();
+    })(req, res, next);   
+};
+//---
+var passportKey = require('passport');
+var LocalAPIKey = require('passport-localapikey-update').Strategy;
+app.use(passportKey.initialize());
+
+passportKey.use(new LocalAPIKey(
+  function(apikey, done) { 
+    done(null,apikey); 
+  }
+)); 
+
+function keyW(req, res, next) {
+    passportKey.authenticate('localapikey', function(err, user, info) {
+        if(user==false)
+            return res.sendStatus(401);
+        else if (user!="patriW") {
+            return res.sendStatus(403);
+        }
+        return next();
+    })(req, res, next);   
+};
+
+function keyR(req, res, next) {
+    passportKey.authenticate('localapikey', function(err, user, info) {
+        if(user==false)
+            return res.sendStatus(401);
+        else if (user!="patriR") {
+            return res.sendStatus(403);
+        }
+        return next();
+    })(req, res, next);   
+};
+
+
+
 
 var port = (process.env.PORT || 11000);
 
@@ -31,25 +99,27 @@ app.put("/api/sandbox/f1teams/:name",apif1teams.getPut);
 app.use("/api/v1/spain-births",spainBirthsApi);
 
 //Código Patri
-app.get("/api/v1/mort-sickness",mortSickness.getSickness);
-app.get("/api/v1/mort-sickness/:region/:year", mortSickness.getSicknessRegionYear);
-app.get("/api/v1/mort-sickness/:region", mortSickness.getSicknessRegion);
-app.get("/api/v1/mort-sickness/:year", mortSickness.getSicknessRegion);
+app.get("/api/v1/mort-sickness",keyR, mortSickness.getSickness);
+app.get("/api/v1/mort-sickness/loadInitialData",keyW, mortSickness.getLoad);
+app.get("/api/v1/mort-sickness/:region/:year", keyR, mortSickness.getSicknessRegionYear);
+app.get("/api/v1/mort-sickness/:region", keyR, mortSickness.getSicknessRegion);
+app.get("/api/v1/mort-sickness/:year", keyR, mortSickness.getSicknessRegion);
 
-app.post("/api/v1/mort-sickness", mortSickness.postSickness);
-app.post("/api/v1/mort-sickness/:region/:year", mortSickness.postSicknessRegionYear);
-app.post("/api/v1/mort-sickness/:region", mortSickness.postSicknessRegion);
-app.post("/api/v1/mort-sickness/:year", mortSickness.postSicknessRegion);
 
-app.put("/api/v1/mort-sickness", mortSickness.putSickness);
-app.put("/api/v1/mort-sickness/:region/:year", mortSickness.putSicknessRegionYear);
-app.put("/api/v1/mort-sickness/:region", mortSickness.putSickness);
-app.put("/api/v1/mort-sickness/:year", mortSickness.putSickness);
+app.post("/api/v1/mort-sickness", keyW, mortSickness.postSickness);
+app.post("/api/v1/mort-sickness/:region/:year",keyW, mortSickness.postSicknessRegionYear);
+app.post("/api/v1/mort-sickness/:region", keyW, mortSickness.postSicknessRegion);
+app.post("/api/v1/mort-sickness/:year", keyW, mortSickness.postSicknessRegion);
 
-app.delete("/api/v1/mort-sickness", mortSickness.deleteSickness);
-app.delete("/api/v1/mort-sickness/:region/:year", mortSickness.deleteSicknessRegionYear);
-app.delete("/api/v1/mort-sickness/:region", mortSickness.deleteSicknessRegion);
-app.delete("/api/v1/mort-sickness/:year", mortSickness.deleteSicknessRegion);
+app.put("/api/v1/mort-sickness", keyW,mortSickness.putSickness);
+app.put("/api/v1/mort-sickness/:region/:year",keyW, mortSickness.putSicknessRegionYear);
+app.put("/api/v1/mort-sickness/:region",keyW, mortSickness.putSickness);
+app.put("/api/v1/mort-sickness/:year",keyW, mortSickness.putSickness);
+
+app.delete("/api/v1/mort-sickness", keyW,mortSickness.deleteSickness);
+app.delete("/api/v1/mort-sickness/:region/:year",keyW, mortSickness.deleteSicknessRegionYear);
+app.delete("/api/v1/mort-sickness/:region",keyW, mortSickness.deleteSicknessRegion);
+app.delete("/api/v1/mort-sickness/:year",keyW, mortSickness.deleteSicknessRegion);
 //Final código Patri
 
 //Musics API Patri
@@ -73,23 +143,23 @@ var populationgrowth = require('./public/api/Ana/population-growth.js');
 
 
 var populationgrowth = require('./public/api/Ana/population-growth.js');
-app.get("/api/v1/population-growth", populationgrowth.getAllStatistics);
-app.get("/api/v1/population-growth/:id", populationgrowth.getStatisticsId);
-app.get("/api/v1/population-growth/:region/:year", populationgrowth.getStatisticsRegionAndYear);
+app.get("/api/v1/population-growth",ReadAccess, populationgrowth.getAllStatistics);
+app.get("/api/v1/population-growth/:id",ReadAccess, populationgrowth.getStatisticsId);
+app.get("/api/v1/population-growth/:region/:year",ReadAccess, populationgrowth.getStatisticsRegionAndYear);
 
-app.post("/api/v1/population-growth", populationgrowth.postSatitistics);
-app.post("/api/v1/population-growth/:id", populationgrowth.postStatisticsNotPermitted);
-app.post("/api/v1/population-growth/:region/:year", populationgrowth.postStatisticsNotPermitted);
+app.post("/api/v1/population-growth",WriteAccess, populationgrowth.postSatitistics);
+app.post("/api/v1/population-growth/:id",WriteAccess, populationgrowth.postStatisticsNotPermitted);
+app.post("/api/v1/population-growth/:region/:year",WriteAccess, populationgrowth.postStatisticsNotPermitted);
 
-app.put("/api/v1/population-growth", populationgrowth.putStatisticsNotPermitted);
-app.put("/api/v1/population-growth/:id", populationgrowth.putStatisticsNotPermitted);
-app.put("/api/v1/population-growth/:region/:year", populationgrowth.putStatistics);
+app.put("/api/v1/population-growth",WriteAccess, populationgrowth.putStatisticsNotPermitted);
+app.put("/api/v1/population-growth/:id",WriteAccess, populationgrowth.putStatisticsNotPermitted);
+app.put("/api/v1/population-growth/:region/:year",WriteAccess, populationgrowth.putStatistics);
 
-app.delete("/api/v1/population-growth", populationgrowth.deleteAllStatistics);
-app.delete("/api/v1/population-growth/:id", populationgrowth.deleteStatisticsRegionOYear);
-app.delete("/api/v1/population-growth/:region/:year", populationgrowth.deleteStatistics);
+app.delete("/api/v1/population-growth",WriteAccess, populationgrowth.deleteAllStatistics);
+app.delete("/api/v1/population-growth/:id",WriteAccess, populationgrowth.deleteStatisticsRegionOYear);
+app.delete("/api/v1/population-growth/:region/:year", WriteAccess,populationgrowth.deleteStatistics);
 
-app.get("/api/v1/population-growth/loadInitialData", populationgrowth.getStatisticsId);
+app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth.getStatisticsId);
 //------------------------------------------------------------------------------------------------
 
 app.use('/',express.static(__dirname + '/public'));

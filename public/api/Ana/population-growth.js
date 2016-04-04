@@ -1,14 +1,15 @@
 var population_growth = [];
-var keyr = '"read"';
-var keyw = '"write"';
+
 //PARA LOS MÉTODOS GET -> keyr
 //PARA LOS MÉTODOS POST, PUT Y DELETE -> keyw
 
+
+
 /*-------GET-------*/
 module.exports.getAllStatistics = function(req,res){
-    var apikey = req.query.apikey;
-    console.log(apikey);
-    if(apikey && apikey==keyr){
+    
+    
+    
     var f = req.query.from;
     var t = req.query.to;
     var r = [];
@@ -152,14 +153,11 @@ module.exports.getAllStatistics = function(req,res){
       res.send(population_growth);
     }
   console.log("New GET of resource " + "population-growth");
-  }else{
-    res.sendStatus(401);
-  }
+  
 };
 
 module.exports.getStatisticsId = function(req,res){
-  var apikey = req.query.apikey;
-  console.log(apikey);
+  
   
   var aux = [];
   var aux2 = [];
@@ -172,12 +170,12 @@ module.exports.getStatisticsId = function(req,res){
   // console.log(id + "-" + f + "-" + t);
 
   //--------------------------------------------------
-if(apikey && apikey==keyr){
+
   if(id=='loadInitialData'){
     encontrado = 1;
     initial_array = [
     {region:"Andalucia", year: "2009", age:"20-24", men: "273183", women: "259946", total_population: "533129"},
-    {region:"Marid", year: "2010", age:"20-24", men: "176043", women: "174849", total_population: "350892"},
+    {region:"Madrid", year: "2010", age:"20-24", men: "176043", women: "174849", total_population: "350892"},
     {region:"Cataluña", year: "2011", age:"45-49", men: "271109", women: "270808", total_population: "541917"},
     {region:"Galicia", year: "2012", age:"65-69", men: "72977", women: "82399", total_population: "155376"},
     {region:"Pais Vasco", year: "2013", age:"00-04", men: "53971", women: "51188", total_population: "105159"},
@@ -433,15 +431,12 @@ if(apikey && apikey==keyr){
   //------------------------------------------------------------------------------
 }
 
-}else{
-  res.sendStatus(401);
-}
+
 
 };
 
 module.exports.getStatisticsRegionAndYear = function(req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyr){
+ 
   var aux = [];
   var encontrado = -1;
   var region = req.params.region;
@@ -468,15 +463,12 @@ module.exports.getStatisticsRegionAndYear = function(req,res){
   if (encontrado == -1){
     res.sendStatus(404);
   }
-}else{
-  res.sendStatus(401);
-}
+
 };
 
 //-------POST-------
 module.exports.postSatitistics = function(req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyw){
+  
   var p = req.body;
   var cmp = 1;
   var x = p.region;
@@ -516,36 +508,27 @@ module.exports.postSatitistics = function(req,res){
       }
     }
   }
-}else{
-  res.sendStatus(401);
-}
+
 
 };
 
 module.exports.postStatisticsNotPermitted = function(req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyw){
+ 
   console.log("Operation POST not permitted in this case");
   res.sendStatus(405);
-}else{
-  res.sendStatus(401);
-}
+
 };
 
 /*-------PUT-------*/
 module.exports.putStatisticsNotPermitted = function(req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyw){
+  
   console.log("Operation PUT not permitted in this case");
   res.sendStatus(405);
-}else{
-  res.sendStatus(401);
-}
+
 };
 
 module.exports.putStatistics = function(req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyw){
+  
   var encontrado = -1;
   var region = req.params.region;
   var year = req.params.year;
@@ -589,29 +572,22 @@ module.exports.putStatistics = function(req,res){
 
     }
   }
-}else{
-  res.sendStatus(401);
-}
+
 };
 
 /*-------DELETE-------*/
 module.exports.deleteAllStatistics = function (req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyw){
+  
   if(population_growth.length != 0){
     population_growth.splice(0, population_growth.length);
   }
   console.log("New DELETE of resource " + "population_growth");
   res.sendStatus(200);
-  }else{
-    res.sendStatus(401);
-  }
+  
 };
 
 module.exports.deleteStatistics = function (req,res){
-  var apikey = req.query.apikey;
-  console.log(apikey);
-  if(apikey && apikey==keyw){
+  
   var encontrado = -1;
   var region = req.params.region;
   var year = req.params.year;
@@ -630,14 +606,11 @@ module.exports.deleteStatistics = function (req,res){
   if (encontrado == -1){
     res.sendStatus(404);
   }
-}else{
-  res.sendStatus(401);
-}
+
 };
 
 module.exports.deleteStatisticsRegionOYear = function (req,res){
-  var apikey = req.query.apikey;
-  if(apikey && apikey==keyw){
+  
   var encontrado = -1;
   var id = req.params.id;
   var aux = [];
@@ -670,7 +643,7 @@ module.exports.deleteStatisticsRegionOYear = function (req,res){
     population_growth = aux;
     res.sendStatus(200);
   }
-}
+
 };
 /*
 module.exports.getBusqueda = function(req,res){
