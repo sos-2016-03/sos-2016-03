@@ -1,0 +1,48 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    console.log("JQuery Ready!");
+    $("#button").click(function(){
+      
+      $("#log").text("Sending request...");
+
+      var request = $.ajax({
+        url: "../api/v1/spain-births?apikey=read",
+        type: $("input[type='radio']:checked").val(),
+        contentType: "application/json"
+      });
+      request.done(function(data,status,jqXHR){
+        var statusCode = jqXHR.status;
+        $("#log").text("Data received", statusCode);
+        $("#data").text(JSON.stringify(data));
+      });
+      request.always(function(jqXHR, status){
+
+      });
+    });
+  });
+</script>
+</head>
+<body>
+  <h1>JQuery REST Client</h1>
+  URL: <input id="url" size="30" value="../api/v1/spain-births?apikey=read"/>
+  GET <input name="method" type="radio" value="GET" checked="checked"/>
+  POST <input name="method" type="radio" value="POST"/>
+  PUT <input name="method" type="radio" value="PUT"/>
+  DELETE <input name="method" type="radio" value="DELETE"/>
+  <br />
+  Payload: <input id="payload" size="60" value='{"name":"sevilla","population":99000}'/>
+  <br /><br />
+  <span id="button">Send</span>
+  <br /><br />
+  HTTP Status: <span id="status"></span>
+  <br /><br />
+  <span id="data"></span>
+  <br /><br />
+  <ul id="list"></ul>
+  <hr />
+  Log: <span id="log"></span>
+</body>
+</html>

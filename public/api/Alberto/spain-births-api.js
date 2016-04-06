@@ -5,8 +5,8 @@ var app=express();
 var router=express.Router();
 var passport = require('passport')
 var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
-var keyWrite ='"write"';
-var keyRead='"read"';
+var keyWrite ="write";
+var keyRead="read";
 var births=[];
 
 app.use(passport.initialize());
@@ -22,7 +22,7 @@ function WriteAccess(req, res, next) {
     passport.authenticate('localapikey', function(err, user, info) {
         if(user==false)
             return res.sendStatus(401);
-        else if (user!='"write"') {
+        else if (user!=keyWrite) {
             return res.sendStatus(403);
         }
         return next();
@@ -33,7 +33,7 @@ function ReadAccess(req, res, next) {
     passport.authenticate('localapikey', function(err, user, info) {
         if(user==false)
             return res.sendStatus(401);
-        else if (user!='"read"') {
+        else if (user!=keyRead) {
             return res.sendStatus(403);
         }
         return next();
