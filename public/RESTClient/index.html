@@ -9,17 +9,22 @@
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: "../api/v1/spain-births?apikey=read",
-        type: $("input[type='radio']:checked").val(),
+        url: $("#url").val(),
+        type: $("input[type=radio]:checked").val(),
         contentType: "application/json"
       });
       request.done(function(data,status,jqXHR){
         var statusCode = jqXHR.status;
-        $("#log").text("Data received", statusCode);
+        $("#log").text("Data received");
+        $("#status").text(statusCode);
         $("#data").text(JSON.stringify(data));
+        console.log(statusCode);
       });
       request.always(function(jqXHR, status){
-
+        var statusCode = jqXHR.status;
+        $("#status").text(statusCode);
+        $("#log").text("Error");
+        console.log(statusCode);
       });
     });
   });
@@ -27,7 +32,7 @@
 </head>
 <body>
   <h1>JQuery REST Client</h1>
-  URL: <input id="url" size="30" value="../api/v1/spain-births?apikey=read"/>
+  URL: <input id="url" size="30" value=""/>
   GET <input name="method" type="radio" value="GET" checked="checked"/>
   POST <input name="method" type="radio" value="POST"/>
   PUT <input name="method" type="radio" value="PUT"/>
