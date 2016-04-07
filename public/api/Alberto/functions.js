@@ -313,3 +313,54 @@ function getRegion(array,region,year){
     }
     return aux;	
 }
+
+exports.deleteRegionAño=function(array,region,year){
+    for(i=0;i<array.length;i++){
+        if(array[i].region == region && array[i].year == year){
+ 	        array.splice(i,1);
+    	    break;
+        }
+    }
+    return array;
+}
+
+exports.deleteRegion=function(array,region,year){
+	var aux=Object.keys(array).length;
+    for(j=0;j<aux;j++){
+      	for(i=0;i<array.length;i++){
+      		if(array[i].region == region || array[i].year == year){
+          		array.splice(i,1);
+         	}
+      	}
+    }
+    return array;
+}
+
+exports.post=function(array,body){
+	var aux=Object.keys(body).length;
+	var res=0;
+	if(array.length==0){
+      if(body.region && body.year && body.men && body.women && body.totalbirth && aux==5){
+        array.push(body);
+        res=array;
+      }else{
+        res=2;
+      }
+    }else{
+        for(i=0;i<array.length;i++){  
+          if(array[i].region==body.region && array[i].year==body.year){
+            res=1;
+            break;
+          }
+        }
+        if(res==0){
+        	if(body.region && body.year && body.men && body.women && body.totalbirth && aux==5){
+        		array.push(body);
+          		res=array;
+        	}else{
+        		res=2;
+        	}
+    	}
+    }
+    return res;
+}

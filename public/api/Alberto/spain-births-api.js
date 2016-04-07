@@ -99,31 +99,15 @@ router.get("/:region/:year",ReadAccess,(req,res) => {
 //Método que añade un nuevo equipo; 409 si ya existe el elemento por región y año
 router.post("/",WriteAccess,(req,res) => {
   var birth=req.body;
-  var aux=Object.keys(birth).length;
-  cont=0;
-    if(births.length==0){
-      if(birth.region && birth.year && birth.men && birth.women && birth.totalbirth && aux==5){
-        births.push(birth);
-        res.sendStatus(201); 
-      }else{
-        res.sendStatus(400);
-      }
-    }else{
-        for(i=0;i<births.length;i++){  
-          if(births[i].region==birth.region && births[i].year==birth.year){
-            cont=1;
-            break;
-          }
-        }
-        if(cont==1){
-          res.sendStatus(409);
-        }else if(birth.region && birth.year && birth.men && birth.women && birth.totalbirth && aux==5){
-          births.push(birth);
-          res.sendStatus(201);
-        }else{
-          res.sendStatus(400);
-        }
-    }
+  aux=functions.post(births,birth);
+  if(aux==1){
+    res.sendStatus(409);
+  }else if(aux==2){
+    res.sendStatus(400);
+  }else{
+    births=aux;
+    res.sendStatus(201);
+  }
 });
 
 //Método inválido por región
@@ -154,39 +138,26 @@ router.delete("/:region",WriteAccess,(req,res) => {
   var region=req.params.region;
   var year=req.params.region;
 	var cont=0;
-  var aux=births.length;
-    for(j=0;j<aux;j++){
-      for(i=0;i<births.length;i++){
-      	if(births[i].region == region || births[i].year == year){
-          births.splice(i,1);
-         	cont=1;          
-        }
-      }
-    }
-    if(cont==1){
-      res.sendStatus(200);
-    }else{
-      res.sendStatus(404);
-    }
+  var aux=Object.keys(births).length;
+  births=functions.deleteRegion(births,region,year);
+  if((aux-births.length)>0){
+    res.sendStatus(200);
+  }else{
+    res.sendStatus(404);
+  }
 });
 
 //Borra un recurso individual por región y año; 404 si no está
 router.delete("/:region/:year",WriteAccess,(req,res) => {
   var region=req.params.region;
   var year=req.params.year;
-  var cont=0;
-    for(i=0;i<births.length;i++){
-        if(births[i].region == region && births[i].year == year){
-          births.splice(i,1);
-          cont=1;
-          break;
-        }
-    }
-    if(cont==1){
-      res.sendStatus(200);
-    }else{
-      res.sendStatus(404);
-    }
+  var aux=Object.keys(births).length;
+  births=functions.deleteRegionAño(births,region,year);
+  if((aux-births.length)>0){
+    res.sendStatus(200);
+  }else{
+    res.sendStatus(404);
+  }
 });
 
 //Métodos PUT
