@@ -164,6 +164,7 @@ app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth
 
 app.use('/',express.static(__dirname + '/public'));
 
+
 app.listen(port, ()=>{
 	console.log("Magic happens on port: " + port);
 });
