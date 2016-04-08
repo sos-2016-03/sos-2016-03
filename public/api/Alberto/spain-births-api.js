@@ -181,24 +181,14 @@ router.put("/:region/:year",WriteAccess,(req,res) => {
     var region = req.params.region;
     var year = req.params.year;
     var regionUpdated = req.body;
-    var cont = 0;
-      for(i=0;i<births.length;i++){
-          if(births[i].region == region && births[i].year == year){
-            cont=1;
-            if(births[i].region==regionUpdated.region && births[i].year==regionUpdated.year && regionUpdated.region && regionUpdated.year && regionUpdated.men && regionUpdated.women && regionUpdated.totalbirth){
-              births[i]=regionUpdated;
-              break;
-            }else{
-              cont=2;  
-            }
-        }
-      }
-    if(cont==1){
-      res.sendStatus(200);
-    }else if(cont==2){
+    aux=functions.put(births,region,year,regionUpdated);
+    if(aux==0){
+      res.sendStatus(404);
+    }else if(aux==2){
       res.sendStatus(400);
     }else{
-      res.sendStatus(404);
+      births=aux;
+      res.sendStatus(200);
     }
 });
 

@@ -364,3 +364,21 @@ exports.post=function(array,body){
     }
     return res;
 }
+
+exports.put=function(array,region,year,body){
+	var res=0;
+	var aux=Object.keys(body).length;
+	for(i=0;i<array.length;i++){
+        if(array[i].region == region && array[i].year == year){
+        	res=1;
+            if(array[i].region==body.region && array[i].year==body.year && body.region && body.year && body.men && body.women && body.totalbirth && aux==5 && res==1){
+              	array[i]=body;
+              	res=array;
+              	break;
+            }else{
+              	res=2;  
+            }
+    	}
+    }
+    return res;  
+}
