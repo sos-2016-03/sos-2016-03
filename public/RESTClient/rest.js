@@ -14,29 +14,21 @@ $(document).ready(function(){
       });
       request.done(function(data,status,jqXHR){
         var statusCode = jqXHR.status;
-        if(status=="error"){
-          $("#status").text(statusCode);
-          $("#data").text("");
-          $("#log").text("Error");
-          console.log(statusCode);
-        }else{
-          $("#log").text("Data received");
-          $("#status").text(statusCode);
-          $("#data").text(JSON.stringify(data));
-          console.log(statusCode);
-        }
+        var statusCodeText = jqXHR.statusText;
+        $("#log").text("Data received");
+        $("#status").text(statusCode +" "+statusCodeText);
+        $("#data").text(JSON.stringify(data));
+        console.log(statusCode);
       });
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
-        if(status=="error"){
-          $("#status").text(statusCode);
-          $("#data").text("");
-          $("#log").text("Error");
-          console.log(statusCode);
+        var statusCodeText = jqXHR.statusText;
+        if (status == "error"){
+            $("#status").text(statusCode + " " + statusCodeText); 
+            $("#data").text("");
+            $("#log").text("");
         }else{
-          $("status").text(statusCode);
-          $("#log").text("");
-          console.log(statusCode);
+            $("#txtStatus").text(status);
         }
       });
     });
