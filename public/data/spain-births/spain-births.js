@@ -24,7 +24,7 @@ $(document).ready(function(){
 
 	function drawRow(rowData) {
 	    var row = $("<tr bgcolor='#FFFFFF'/>")
-	    $("#location").append(row); 
+	    $("#births").append(row); 
 	    row.append($("<td>" + rowData.region + "</td>"));
 	    row.append($("<td>" + rowData.year + "</td>"));
 	    row.append($("<td>" + rowData.men + "</td>"));
