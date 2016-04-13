@@ -164,6 +164,10 @@ app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth
 
 app.use('/',express.static(__dirname + '/public'));
 
+
+app.use('/RESTClient',express.static(__dirname + '/static'));
+
+
 app.listen(port, ()=>{
 	console.log("Magic happens on port: " + port);
 });
