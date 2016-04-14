@@ -12,24 +12,18 @@ $(document).ready(function(){
         dataType: "json",
         cache: false,
         success: function(data) {
-        drawTable(data);
         var trHTML = '';
+            var trHTML = '';
+            $.each(data, function(i,item){
+                trHTML += '<tr><td>' + 
+                data[i].region + '</td><td>' + 
+                data[i].year + '</td><td>' + 
+                data[i].men + '</td><td>' + 
+                data[i].women + '</td><td>' + 
+                data[i].totalbirth + '</td></tr>';
+            });
+            $('#births').append(trHTML);        
     	}
     });
-    function drawTable(data) {
-	    for (var i = 0; i < data.length; i++) {
-	        drawRow(data[i]);
-	    }
-	}	
-
-	function drawRow(rowData) {
-	    var row = $("<tr bgcolor='#FFFFFF'/>")
-	    $("#births").append(row); 
-	    row.append($("<td>" + rowData.region + "</td>"));
-	    row.append($("<td>" + rowData.year + "</td>"));
-	    row.append($("<td>" + rowData.men + "</td>"));
-	    row.append($("<td>" + rowData.women + "</td>"));
-	    row.append($("<td>" + rowData.totalbirth + "</td>"));
-	}
 
 })
