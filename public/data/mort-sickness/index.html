@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<head>
+<meta charset="utf-8">
+<title>Mort Sickness Data</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheets/mort-sickness.css" />
+<script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+</head>
+<h1>Mort Sickness Data</h1>
+<table id="sickness" border='1' rules='all' cellpadding='5'>
+<tr bgcolor="#81BEF7">
+<td>Region</td>
+<td>Sickness</td>
+<td>Year</td>
+<td>MortalityInMen</td>
+<td>MortalityInWomen</td>
+<td>TotalMortality</td>
+</tr>
+</table>
+<script>
+var service = '../../api/v1/';
+$(document).ready(function(){
+	jQuery.support.cors=true;
+	$.ajax({
+		type:"GET",
+		url:service + 'mort-sickness?apikey=patriR',
+		data:"{}",
+		contentType:"application/json; charset=utf-8",
+		dataType:"json",
+		cache:false,
+		success: function(data){
+			var trHTML = '';
+			$.each(data, function(i,item){
+				trHTML += '<tr><td>' + data[i].region + '</td><td>' + data[i].sickness + '</td><td>' + data[i].year + '</td><td>' + data[i].mortalityInMen + '</td><td>' + data[i].mortalityInWomen + '</td><td>' + data[i].totalMortality + '</td></tr>';
+			});
+			$('#sickness').append(trHTML);
+		},
+		error: function(msg){
+			alert(msg.responseText);
+		}
+	})
+});
+</script>
+</br>
+</br>
+<a href="/about/">«Previous</a>
+</body>
+</html>
