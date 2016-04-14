@@ -1,0 +1,64 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Population Growth Data</title>
+	<script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+	<h1>Population Growth Data</h1>
+	<table id="location" border='1'>
+    <tr>
+        <th>Region</th>
+        <th>Year</th>
+        <th>Age</th>
+        <th>Men</th>
+        <th>Women</th>
+        <th>Total population</th>
+    </tr>
+</table>
+<br/>
+<a href="/about/">« Previous</a>
+
+
+<script>
+
+var service = '../../api/v1/population-growth?apikey="read"';
+
+$(document).ready(function(){
+
+    jQuery.support.cors = true;
+
+    $.ajax(
+    {
+        type: "GET",
+        url: service,
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        cache: false,
+
+        success: function (data) {
+        	var trHTML = '';
+			
+    		
+
+			$.each(data, function (i, item) {
+    			trHTML += '<tr><td>' + data[i].region + '</td><td>' + data[i].year + '</td><td>' + data[i].age + '</td><td>' + data[i].men + '</td><td>' + data[i].women + '</td><td>' + data[i].total_population + '</td></tr>';
+			});
+
+			$('#location').append(trHTML);  
+
+
+
+        },
+        
+        error: function (msg) {
+            alert(msg.responseText);
+        }
+    });
+})
+
+</script>
+</body>
+</html>
