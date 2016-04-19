@@ -642,14 +642,12 @@ module.exports.putSicknessRegionYear = function(req,res){
 		&& totalMort!=undefined){
 			for(var i=0; i<sickness.length; i++){
 				 var t = sickness[i];
-				if(t.region==region && t.year==year){
-					buscado=i;
+				if(regN==region && yearN==year){
 					sickness[i]=nueva;
 					console.log("Modified");
 					res.sendStatus(200);
 					break;
 				}else if(t.region!=region || t.year!=year){
-					buscado=1;
 					res.sendStatus(400);
 					break;
 				}else{
