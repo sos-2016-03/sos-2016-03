@@ -648,14 +648,14 @@ module.exports.putSicknessRegionYear = function(req,res){
 					console.log("Modified");
 					res.sendStatus(200);
 					break;
-				}else if(t.region!=region && t.year!=year){
+				}else if(t.region!=region || t.year!=year){
 					buscado=1;
 					res.sendStatus(400);
 					break;
-			}else{
-				res.sendStatus(404);
+				}else{
+					res.sendStatus(404);
+				}
 			}
-		}
 	}else{
 		console.log("Bad Request");
 		res.sendStatus(400);
