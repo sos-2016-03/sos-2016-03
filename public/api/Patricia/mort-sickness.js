@@ -647,7 +647,7 @@ module.exports.putSicknessRegionYear = function(req,res){
 					console.log("Modified");
 					res.sendStatus(200);
 					break;
-				}else if(regN==sickness[i].region && yearN!=sickness[i].year){
+				}else if(regN!=sickness[i].region && yearN!=sickness[i].year){
 					buscado=1;
 					res.sendStatus(400);
 					break;
