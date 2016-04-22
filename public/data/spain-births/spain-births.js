@@ -12,8 +12,7 @@ $(document).ready(function(){
         dataType: "json",
         cache: false,
         success: function(data) {
-        var trHTML = '';
-            var trHTML = '';
+        var trHTML = '<tbody>';
             $.each(data, function(i,item){
                 trHTML += '<tr><td>' + 
                 data[i].region + '</td><td>' + 
@@ -22,6 +21,7 @@ $(document).ready(function(){
                 data[i].women + '</td><td>' + 
                 data[i].totalbirth + '</td></tr>';
             });
+            trHTML += '</tbody>';
             $('#births').append(trHTML);        
     	}
     });

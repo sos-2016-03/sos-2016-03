@@ -1,0 +1,41 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+<script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<script src="rest.js"></script>
+</head>
+<body class="card-panel #f5f5f5 grey lighten-5 z-depth-0">
+<div class="container">
+<h4>JQuery REST Client</h4>
+<div class="row centered">
+<div class="col s7">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
+
+<div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
+<div class="col s1"><input type="text" name="param" id="offset" placeholder="offset"/></div>
+<div class="col s1"><input type="text" name="param" id="limit" placeholder="limit"/></div>
+<div class="col s1"><input type="text" name="param" id="from" placeholder="from"/></div>
+<div class="col s1"><input type="text" name="param" id="to" placeholder="to"/></div>
+</div>
+<a id="GET" value="GET" class="waves-effect waves-light btn"/>GET</a>&nbsp;
+<a id="DELETE" value="DELETE" class="waves-effect waves-light btn"/>DELETE</a>&nbsp;
+<a id="LOAD" value="Carga inicial" class="waves-effect waves-light btn"/>Carga inicial</a>&nbsp;
+<div class="row centered"><p>Payload:</p>
+<div class="col s7"><textarea id="payload" cols="5" rows="1" value=''></textarea></div>
+<div class="col s1 offset-s1"><a id="POST" value="POST" class="waves-effect waves-light btn"/>ADD</a>&nbsp;</div>
+<div class="col s1 offset-s1"><a id="PUT" value="PUT" class="waves-effect waves-light btn"/>UPDATE</a>&nbsp;</div></div>
+<hr />
+HTTP Status: <span id="status"></span>
+<br /><br />
+<table id="data2" border='1' rules="all" cellpadding="5">
+</table>
+<hr />
+<span id="data"></span>
+
+<hr />
+Log: <span id="log"></span>
+<br /><br />
+<a href="/about/">« Previous</a>
+</div>
+</body>
+</html>
