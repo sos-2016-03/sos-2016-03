@@ -35,29 +35,65 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	}	
 	$scope.loadBirth = function(){
 		console.log("Loading initial list");
-		$http.get('../../../api/v1/spain-births/loadInitialData?apikey=write');
-		refresh();
+		$http.get('../../../api/v1/spain-births/loadInitialData?apikey=write').success(function(){
+			refresh();
+		});
 	}	
-	$scope.search = function(region,year){
-		if(region!="" && (year=="" || year==null)){
+	$scope.search = function(region,year,limit){
+		//búsqueda de región
+		if(region!=undefined && year==undefined && limit==undefined){
 		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').success(function (birth){
 			console.log('Data received successfully');
 			$scope.birthlist = birth;
 		});			
 		}
-		else if(year!="" && (region=="" || region==null)){
+		//búsqueda de año
+		else if(year!=undefined && region==undefined && limit==undefined){
 		$http.get('../../../api/v1/spain-births/'+year+'?apikey=read').success(function (birth){
 			console.log('Data received successfully');
 			$scope.birthlist = birth;
 		});
 		}
-		else if(region!="" && year!=""){
+		//búsqueda de región y año
+		else if(region!=undefined && year!=undefined && limit==undefined){
 		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read').success(function (birth){
 			console.log('Data received successfully');
 			$scope.birthlist = birth;
 		});
-		}else if((region=="" || region==null) && (year=="" || year==null)){
-			refresh();
+		}
+		//búsqueda de región y límite		
+		else if(region!=undefined && limit!=undefined && year==undefined){
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).success(function (birth){
+			console.log('Data received successfully');
+			$scope.birthlist = birth;
+		});
+		}
+		//búsqueda con límite		
+		else if(limit!=undefined && region==undefined && year==undefined){
+		$http.get('../../../api/v1/spain-births/?apikey=read&limit='+limit).success(function (birth){
+			console.log('Data received successfully');
+			$scope.birthlist = birth;
+		});
+		}		
+		//búsqueda de año y límite
+		else if(year!=undefined && limit!=undefined && region==undefined){
+		$http.get('../../../api/v1/spain-births/'+year+'?apikey=read&limit='+limit).success(function (birth){
+			console.log('Data received successfully');
+			$scope.birthlist = birth;
+		});
+		}				
+		//búsqueda de región, año y límite
+		else if(region!=undefined && year!=undefined && limit!=undefined){
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&limit='+limit).success(function (birth){
+			console.log('Data received successfully');
+			$scope.birthlist = birth;
+		});
+		}
+		//no hay búsqueda
+		else{
+			$http.get('../../../api/v1/spain-births?apikey=read').success(function (births){			
+				$scope.birthlist=births;
+			});
 		}	
 	}		
 	$scope.getAll = function(){

@@ -36,7 +36,7 @@
 		<div class="col s1"><button class="btn-floating btn-large waves-effect waves-light red" ng-click="deleteAll()"><i class="material-icons">delete</i></button></div>		
 		<div class="col s6"><button class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light" ng-click="loadBirth()"><i class="material-icons">restore</i></button></div>
 <div class="col s2">
-  <select ng-model="region" class="browser-default form-control">
+  <select ng-model="region" class="form-control">
     <option value="">Region</option>
     <option value="Andalucia">Andalucia</option>
     <option value="Cataluña">Cataluña</option>
@@ -47,7 +47,7 @@
   </select>
 </div>
 <div class="col s1">
-  <select class="browser-default form-control" ng-model="year">
+  <select class="form-control" ng-model="year">
     <option value="">Year</option>
     <option value="2009">2009</option>
     <option value="2010">2010</option>    
@@ -57,8 +57,21 @@
     <option value="2014">2014</option>      
   </select>
 </div>
-		<div class="col s1"><button class="#2e7d32 green darken-3 btn-floating btn-large waves-effect waves-light" ng-click="search(region,year)"><i class="material-icons">search</i></button></div>
-</div>		
+		<div class="col s1"><button class="#2e7d32 green darken-3 btn-floating btn-large waves-effect waves-light" ng-click="search(region,year,limit)"><i class="material-icons">search</i></button></div>
+</div>	
+<div class="row">
+<div class="col s1">
+  <select class="form-control" ng-model="limit">
+    <option value="">Limit</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>        
+    <option value="4">4</option>    
+    <option value="5">5</option>    
+  </select>
+</div>
+		<div class="col s1"><button class="#2e7d32 green darken-3 btn-floating btn-large waves-effect waves-light" ng-click="search(region,year,limit)"><i class="material-icons">search</i></button></div>
+</div>	
 		<table class="striped">
 			<thead>
 				<tr class="#42a5f5 blue lighten-1 z-depth-0">
@@ -91,7 +104,15 @@
 				</tr>
 			</tbody>
 		</table>
-		  
+  <ul class="pagination" ng-model="offset">
+    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">3</a></li>
+    <li class="waves-effect"><a href="#!">4</a></li>
+    <li class="waves-effect"><a href="#!">5</a></li>
+    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>		  
 	</div>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 	<script type="text/javascript" src="controllers.js"></script>
