@@ -1,37 +1,116 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 <script src="rest.js"></script>
+<style>
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #778899;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #778899;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #778899;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #778899;
+}
+</style>
 </head>
 <body class="card-panel #f5f5f5 grey lighten-5 z-depth-0">
 <div class="container">
 <h4>JQuery REST Client</h4>
 <div class="row centered">
-<div class="col s7">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
-
+<div class="col s5">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
 <div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
-<div class="col s1"><input type="text" name="param" id="offset" placeholder="offset"/></div>
-<div class="col s1"><input type="text" name="param" id="limit" placeholder="limit"/></div>
-<div class="col s1"><input type="text" name="param" id="from" placeholder="from"/></div>
-<div class="col s1"><input type="text" name="param" id="to" placeholder="to"/></div>
+<div class="col s1">
+  <select class="browser-default form-control" id="region">
+    <option value="">Region</option>
+    <option value="Andalucia">Andalucia</option>
+    <option value="Cataluña">Cataluña</option>
+    <option value="Madrid">Madrid</option>
+    <option value="Galicia">Galicia</option>            
+    <option value="País Vasco">País Vasco</option>            
+    <option value="Murcia">Murcia</option>                
+  </select>
 </div>
-<a id="GET" value="GET" class="waves-effect waves-light btn"/>GET</a>&nbsp;
-<a id="DELETE" value="DELETE" class="waves-effect waves-light btn"/>DELETE</a>&nbsp;
-<a id="LOAD" value="Carga inicial" class="waves-effect waves-light btn"/>Carga inicial</a>&nbsp;
-<div class="row centered"><p>Payload:</p>
-<div class="col s7"><textarea id="payload" cols="5" rows="1" value=''></textarea></div>
-<div class="col s1 offset-s1"><a id="POST" value="POST" class="waves-effect waves-light btn"/>ADD</a>&nbsp;</div>
-<div class="col s1 offset-s1"><a id="PUT" value="PUT" class="waves-effect waves-light btn"/>UPDATE</a>&nbsp;</div></div>
+<div class="col s1">
+  <select class="browser-default form-control" id="year">
+    <option value="">Year</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>    
+    <option value="2011">2011</option>
+    <option value="2012">2012</option>        
+    <option value="2013">2013</option>    
+    <option value="2014">2014</option>      
+  </select>
+</div>
+<div class="col s1">
+  <select class="browser-default form-control" id="offset">
+    <option value="">Offset</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>        
+    <option value="4">4</option>    
+    <option value="5">5</option>    
+  </select>
+</div>
+<div class="col s1">
+  <select class="browser-default form-control" id="limit">
+    <option value="">Limit</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>        
+    <option value="4">4</option>    
+    <option value="5">5</option>    
+  </select>
+</div>
+<div class="col s1">
+  <select class="browser-default form-control" id="from">
+    <option value="">From</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>    
+    <option value="2011">2011</option>
+    <option value="2012">2012</option>        
+    <option value="2013">2013</option>    
+    <option value="2014">2014</option>    
+  </select>
+</div>
+<div class="col s1">
+  <select class="browser-default form-control" id="to">
+    <option value="">To</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>    
+    <option value="2011">2011</option>
+    <option value="2012">2012</option>        
+    <option value="2013">2013</option>    
+    <option value="2014">2014</option>        
+  </select>
+</div>
+</div>
+<a id="GET" value="GET" class="#4caf50 green btn-floating btn-large waves-effect waves-light"/><i class="material-icons">view_list</i></a>
+<a id="DELETE" value="DELETE" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a>
+<a id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light"/><i class="material-icons">restore</i></a>
+<table>
+<tr><td><input type="text" name="payload" id="reion2" placeholder="region"/></td>
+<td><input type="text" name="payload" id="year2" placeholder="year"/></td>
+<td><input type="text" name="payload" id="men" placeholder="men"/></td>
+<td><input type="text" name="payload" id="women" placeholder="women"/></td>
+<td><input type="text" name="payload" id="women" placeholder="totalbirth"/></td>
+<td><a id="POST" value="POST" class="btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">add</i></a></td>
+<td><a id="PUT" value="PUT" class="btn-floating btn-medium waves-effect waves-light purple"><i class="material-icons">mode_edit</i></a></td></tr></table>
 <hr />
 HTTP Status: <span id="status"></span>
 <br /><br />
-<table id="data2" border='1' rules="all" cellpadding="5">
-</table>
+<div class="row"><div class="col s9"><table id="data2" border='1' rules="all" cellpadding="5" class="striped">
+</table></div></div>
 <hr />
 <span id="data"></span>
-
 <hr />
 Log: <span id="log"></span>
 <br /><br />
