@@ -182,12 +182,12 @@ module.exports.getSicknessRegionYear = function(req,res){
 
 module.exports.getLoad = function(req,res){
 	buscado=1;
-	    initial_array=[{"region": "Andalucia","sickness": "Sifilis", "year": "2009", "mortalityInMen": "0,06", "mortalityInWomen": "0", "totalMortality": "0,02"},
+	    sickness=[{"region": "Andalucia","sickness": "Sifilis", "year": "2009", "mortalityInMen": "0,06", "mortalityInWomen": "0", "totalMortality": "0,02"},
 		{"region": "Galicia","sickness": "Clamidia", "year": "2012", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
 		{"region": "Pais Vasco","sickness": "VIH", "year": "2013", "mortalityInMen": "2,39", "mortalityInWomen": "0,32", "totalMortality": "1,35"},
 		{"region": "Madrid","sickness": "Gonorrea", "year": "2010", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
 		{"region": "Cataluña","sickness": "Herpes Simple", "year": "2011", "mortalityInMen": "0,04", "mortalityInWomen": "0,02", "totalMortality": "0,04"}];
-		sickness=initial_array;
+		//sickness=initial_array;
 		console.log("Load Initial Data");
 		res.sendStatus(200);
 	}
@@ -641,20 +641,19 @@ module.exports.putSicknessRegionYear = function(req,res){
 	if(Object.keys(nueva).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
 		&& totalMort!=undefined){
 			for(var i=0; i<sickness.length; i++){
-				if(regN==sickness[i].region && yearN==sickness[i].year){
-					buscado=i;
+				 var t = sickness[i];
+				if(regN==region && yearN==year){
 					sickness[i]=nueva;
 					console.log("Modified");
 					res.sendStatus(200);
 					break;
-				}else if(regN==sickness[i].region && yearN!=sickness[i].year){
-					buscado=1;
+				}else if(t.region!=region || t.year!=year){
 					res.sendStatus(400);
 					break;
-			}else{
-				res.sendStatus(404);
+				}else{
+					res.sendStatus(404);
+				}
 			}
-		}
 	}else{
 		console.log("Bad Request");
 		res.sendStatus(400);
