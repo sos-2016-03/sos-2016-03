@@ -49,7 +49,7 @@ $(document).ready(function(){
                     data[i].year + '</td><td class="center-align">' + 
                     data[i].men + '</td><td class="center-align">' + 
                     data[i].women + '</td><td class="center-align">' +
-                    data[i].totalbirth + '</td></tr>';
+                    data[i].totalbirth + '</td><td class="center-align">';
                 });
           $('#data2').append(trHTML);        
         }      

@@ -24,8 +24,17 @@
 </head>
 <body class="card-panel #f5f5f5 grey lighten-5 z-depth-0">
 <div class="container">
+  <nav>
+    <div class="nav-wrapper">
+      <div>
+        <a href="/about/" class="breadcrumb">About</a>
+        <a href="/data/spain-births" class="breadcrumb">Data</a>
+        <a href="/data/spain-births/RESTClient" class="breadcrumb">jQuery REST Client</a>
+      </div>
+    </div>
+  </nav>  
 <h4>JQuery REST Client</h4>
-<div class="row centered">
+<div class="row">
 <div class="col s5">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
 <div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
 <div class="col s1">
@@ -97,7 +106,7 @@
 <a id="DELETE" value="DELETE" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a>
 <a id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light"/><i class="material-icons">restore</i></a>
 <table>
-<tr><td><input type="text" name="payload" id="reion2" placeholder="region"/></td>
+<tr><td><input type="text" name="payload" id="region2" placeholder="region"/></td>
 <td><input type="text" name="payload" id="year2" placeholder="year"/></td>
 <td><input type="text" name="payload" id="men" placeholder="men"/></td>
 <td><input type="text" name="payload" id="women" placeholder="women"/></td>
@@ -106,8 +115,9 @@
 <td><a id="PUT" value="PUT" class="btn-floating btn-medium waves-effect waves-light purple"><i class="material-icons">mode_edit</i></a></td></tr></table>
 <hr />
 HTTP Status: <span id="status"></span>
+<hr />
 <br /><br />
-<div class="row"><div class="col s9"><table id="data2" border='1' rules="all" cellpadding="5" class="striped">
+<div class="row"><div class="col s12"><table id="data2" border='1' rules="all" cellpadding="5" class="striped">
 </table></div></div>
 <hr />
 <span id="data"></span>
