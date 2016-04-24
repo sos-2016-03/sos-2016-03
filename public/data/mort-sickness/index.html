@@ -1,24 +1,36 @@
 <!DOCTYPE HTML>
 <html>
-<body>
 <head>
 <meta charset="utf-8">
 <title>Mort Sickness Data</title>
-<link rel="stylesheet" type="text/css" href="../../stylesheets/mort-sickness.css" />
-<script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+<script src="scripts/jquery-1.11.1.min.js"></script>
+<script src="jqwidgets/jqxcore.js"></script>
+<script src="jqwidgets/jqxdata.js"></script>
+<script src="jqwidgets/jqxdatatable.js"></script>
+<script src="jqwidgets/jqxscrollbar.js"></script>
+<script src="jqwidgets/jqxbuttons.js"></script>
+<script src="jqwidgets/jqxgrid.js"></script>
+<link type="text/css" rel="stylesheet" href="jqwidgets/styles/jqx.orange.css"/>
+
 </head>
-<h1>Mort Sickness Data</h1>
-<table id="sickness" border='1' rules='all' cellpadding='5'>
-<tr bgcolor="#81BEF7">
-<td>Region</td>
-<td>Sickness</td>
-<td>Year</td>
-<td>MortalityInMen</td>
-<td>MortalityInWomen</td>
-<td>TotalMortality</td>
+<body>
+<div id=title style="font-family: Verdana" align="center">
+<h1>MORT SICKNESS DATA</h1>
+</div>
+<div id=sick style="font-family: Verdana" align="center">
+<table id="sickness">
+<tr>
+<th align="center">Region</th>
+<th align="center">Sickness</th>
+<th align="center">Year</th>
+<th align="center">MortalityInMen</th>
+<th align="center">MortalityInWomen</th>
+<th align="center">TotalMortality</th>
 </tr>
 </table>
-<script>
+</div>
+<script type="text/javascript">
 var service = '../../api/v1/';
 $(document).ready(function(){
 	jQuery.support.cors=true;
@@ -35,6 +47,18 @@ $(document).ready(function(){
 				trHTML += '<tr><td>' + data[i].region + '</td><td>' + data[i].sickness + '</td><td>' + data[i].year + '</td><td>' + data[i].mortalityInMen + '</td><td>' + data[i].mortalityInWomen + '</td><td>' + data[i].totalMortality + '</td></tr>';
 			});
 			$('#sickness').append(trHTML);
+			$('#sickness').jqxDataTable({
+				altRows: true,
+				theme: 'orange',
+				columns: [
+                  { text: 'Region', dataField: 'Region', width: 220},
+                  { text: 'Sickness', dataField: 'Sickness', width: 220},
+                  { text: 'Year', dataField: 'Year', width: 220},
+                  { text: 'MortalityInMen', dataField: 'MortalityInMen',width: 220},
+                  { text: 'MortalityInWomen', dataField: 'MortalityInWomen', width: 220},
+                  { text: 'TotalMortality', dataField: 'TotalMortality', width: 220}
+                ]
+			})
 		},
 		error: function(msg){
 			alert(msg.responseText);
@@ -43,7 +67,6 @@ $(document).ready(function(){
 });
 </script>
 </br>
-</br>
-<a href="/about/">«Previous</a>
+<a href="/about/"><input type="button" value="Previous" id="miBoton"/></a>
 </body>
 </html>
