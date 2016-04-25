@@ -35,7 +35,7 @@
   </nav>  
 <h4>JQuery REST Client</h4>
 <div class="row">
-<div class="col s5">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
+<div class="col s4">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
 <div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
 <div class="col s1">
   <select class="form-control" id="region">
@@ -101,6 +101,8 @@
     <option value="2014">2014</option>        
   </select>
 </div>
+<div class="col s1"><a id="SEARCH" value="GET" class="#2e7d32 green darken-3 btn-floating btn-medium waves-effect waves-light"/><i class="material-icons">search</i></a>
+</div>
 </div>
 <a id="GET" value="GET" class="#4caf50 green btn-floating btn-large waves-effect waves-light"/><i class="material-icons">view_list</i></a>
 <a id="DELETE" value="DELETE" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a>
@@ -124,7 +126,9 @@ HTTP Status: <span id="status"></span>
 <hr />
 Log: <span id="log"></span>
 <br /><br />
-<a href="/about/">« Previous</a>
+<div class="row">
+<a class="col s11" href="/about/">« Previous</a><a class="col s1" href="/data/spain-births/RESTClient/test.html">Forward»</a> 
+</div>
 </div>
 </body>
 </html>
