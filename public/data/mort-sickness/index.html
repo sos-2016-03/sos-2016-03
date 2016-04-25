@@ -12,6 +12,7 @@
 <script src="jqwidgets/jqxbuttons.js"></script>
 <script src="jqwidgets/jqxgrid.js"></script>
 <link type="text/css" rel="stylesheet" href="jqwidgets/styles/jqx.orange.css"/>
+<link type="text/css" rel="stylesheet" href="jqwidgets/styles/jqx.shinyblack.css"/>
 
 </head>
 <body>
@@ -67,6 +68,13 @@ $(document).ready(function(){
 });
 </script>
 </br>
-<a href="/about/"><input type="button" value="Previous" id="miBoton"/></a>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#miBoton').jqxButton({
+			theme: 'shinyblack'
+		})
+	});
+</script>
+<a href="/about/"><input type="button" value="Previous" id="miBoton" style="font-family: Verdana"/></a>
 </body>
 </html>
