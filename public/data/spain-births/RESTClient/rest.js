@@ -1,5 +1,7 @@
 $(document).ready(function(){
   $('select').material_select();
+  $("#status2").hide();
+  $("#status3").hide();
     var url;
     direccion();
     console.log("JQuery Ready!");
@@ -21,7 +23,10 @@ $(document).ready(function(){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+        $("#status5").text(statusCode +" "+statusCodeText);
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
         $("#data").text(JSON.stringify(data));
         $("#data2").html(imprime(data));
         console.log("Status: "+statusCode+ " " +statusCodeText);
@@ -49,7 +54,7 @@ $(document).ready(function(){
                     data[i].year + '</td><td class="center-align">' + 
                     data[i].men + '</td><td class="center-align">' + 
                     data[i].women + '</td><td class="center-align">' +
-                    data[i].totalbirth + '</td><td class="center-align">';
+                    data[i].totalbirth + '</td></tr>';
                 });
           $('#data2').append(trHTML);        
         }      
@@ -73,7 +78,10 @@ $(document).ready(function(){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+        $("#status5").text(statusCode +" "+statusCodeText);
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
         $("#data").text(JSON.stringify(data));
         $("#data2").html(imprime(data));
         console.log("Status: "+statusCode+ " " +statusCodeText);
@@ -82,7 +90,10 @@ $(document).ready(function(){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
-            $("#status").text(statusCode + " " + statusCodeText); 
+            $("#status3").show();          
+            $("#status6").text(statusCode +" "+statusCodeText);
+            $("#status2").hide();
+            $("#status1").hide();
             $("#data").text("");
             $("#data2").text("");
             $("#log").text("");
@@ -101,7 +112,7 @@ $(document).ready(function(){
                     data[i].year + '</td><td class="center-align">' + 
                     data[i].men + '</td><td class="center-align">' + 
                     data[i].women + '</td><td class="center-align">' +
-                    data[i].totalbirth + '</td><td class="center-align">';
+                    data[i].totalbirth + '</td></tr>';
                 });
           $('#data2').append(trHTML);        
         }      
@@ -180,7 +191,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+        $("#status5").text(statusCode +" "+statusCodeText);
+        $("#status2").show();
+        $("#status1").hide();
+        $("#status3").hide();
         $("#data").text("");
         $("#data2").text("");
         console.log("Status: "+statusCode+ " " +statusCodeText);
@@ -189,7 +203,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
-            $("#status").text(statusCode + " " + statusCodeText); 
+            $("#status6").text(statusCode +" "+statusCodeText);
+            $("#status3").show();
+            $("#status1").hide();
+            $("#status2").hide();
             $("#data").text("");
             $("#data2").text("");
             $("#log").text("");
@@ -217,7 +234,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+        $("#status5").text(statusCode +" "+statusCodeText);
+        $("#status2").show();
+        $("#status1").hide();
+        $("#status3").hide();
         $("#data").text("");
         $("#data2").text("");
         console.log("Status: "+statusCode+ " " +statusCodeText);
@@ -226,7 +246,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
-            $("#status").text(statusCode + " " + statusCodeText); 
+            $("#status6").text(statusCode +" "+statusCodeText);
+            $("#status3").show();
+            $("#status1").hide();
+            $("#status2").hide();
             $("#data").text("");
             $("#data2").text("");
             $("#log").text("");
@@ -255,7 +278,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+        $("#status5").text(statusCode +" "+statusCodeText);
+        $("#status2").show();
+        $("#status1").hide();
+        $("#status3").hide();
         $("#data").text("");
         $("#data2").text("");
         console.log("Status: "+statusCode+ " " +statusCodeText);
@@ -264,7 +290,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
-            $("#status").text(statusCode + " " + statusCodeText); 
+            $("#status6").text(statusCode +" "+statusCodeText);
+            $("#status3").show();
+            $("#status1").hide();
+            $("#status2").hide();
             $("#data").text("");
             $("#data2").text("");
             $("#log").text("");
@@ -290,7 +319,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+        $("#status5").text(statusCode +" "+statusCodeText);
+        $("#status2").show();
+        $("#status1").hide();
+        $("#status3").hide();
         $("#data").text("");
         $("#data2").text("");
         console.log("Status: "+statusCode+ " " +statusCodeText);
@@ -299,7 +331,10 @@ function direccion() {
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
-            $("#status").text(statusCode + " " + statusCodeText); 
+            $("#status6").text(statusCode +" "+statusCodeText);
+            $("#status3").show();
+            $("#status1").hide();
+            $("#status2").hide();
             $("#data").text("");
             $("#data2").text("");
             $("#log").text("");

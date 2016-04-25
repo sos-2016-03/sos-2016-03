@@ -148,7 +148,7 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 		});				
 		}										
 		//búsqueda de año
-		if(year!=undefined && region==undefined && limit==undefined && from==undefined && to==undefined && offset==undefined){
+		else if(year!=undefined && region==undefined && limit==undefined && from==undefined && to==undefined && offset==undefined){
 		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(function successCallback(response){
 			console.log('Data received successfully');
 			$scope.myValue=false;
