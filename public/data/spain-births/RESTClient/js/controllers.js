@@ -16,23 +16,12 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 
 	$scope.addBirth = function(){
 		console.log("Inserting birth...");
-		$http.post('../../../api/v1/spain-births?apikey=write',$scope.birth).then(function successCallback(){
-			$scope.myValue=false;
-			refresh();
-		}, function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.error=response.status + " " + response.statusText;
-		});
+		$http.post('../../../api/v1/spain-births?apikey=write',$scope.birth).then(successCallbackAdd, errorCallbackAdd);
 	}
+
 	$scope.updateBirth = function(region,year){
 		console.log("Updating birth...");
-		$http.put('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=write',$scope.birth).then(function successCallback(){
-			$scope.myValue=false;
-			refresh();
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.error=response.status + " " + response.statusText;
-		});
+		$http.put('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=write',$scope.birth).then(successCallbackAU,errorCallbackAU);
 	}	
 
 	$scope.deleteBirth = function(region,year){
@@ -54,387 +43,131 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	$scope.search = function(region,year,limit,offset,from,to){
 		//búsqueda de región
 		if(region!=undefined && year==undefined && limit==undefined && offset==undefined && from==undefined && to==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región y límite		
 		else if(region!=undefined && limit!=undefined && year==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región y from		
 		else if(region!=undefined && from!=undefined && year==undefined && limit==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, limite y from		
 		else if(region!=undefined && from!=undefined && year==undefined && limit!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}		
 		//búsqueda de región y to
 		else if(region!=undefined && to!=undefined && year==undefined && from==undefined && limit==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, to y limit
 		else if(region!=undefined && to!=undefined && year==undefined && from==undefined && limit!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, from y to		
 		else if(region!=undefined && from!=undefined && to!=undefined && limit==undefined && year==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, from, to y limit
 		else if(region!=undefined && from!=undefined && to!=undefined && limit!=undefined && year==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}										
 		//búsqueda de año
 		else if(year!=undefined && region==undefined && limit==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de año y límite		
 		else if(year!=undefined && limit!=undefined && region==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de año y from		
 		else if(year!=undefined && from!=undefined && region==undefined && limit==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de año, from y limit	
 		else if(year!=undefined && from!=undefined && region==undefined && limit!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}		
 		//búsqueda de año y to
 		else if(year!=undefined && to!=undefined && region==undefined && from==undefined && limit==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de año, to y limit
 		else if(year!=undefined && to!=undefined && region==undefined && from==undefined && limit!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}		
 		//búsqueda de año, from y to		
 		else if(year!=undefined && from!=undefined && to!=undefined && limit==undefined && region==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de año, from, to y limit		
 		else if(year!=undefined && from!=undefined && to!=undefined && limit!=undefined && region==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}		
 		//búsqueda de región y año
 		else if(region!=undefined && year!=undefined && limit==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read').then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read').then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, año, límite
 		else if(region!=undefined && year!=undefined && limit!=undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, año, from
 		else if(region!=undefined && year!=undefined && limit==undefined && from!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
 		}	
 		//búsqueda de región, año, from y limit
 		else if(region!=undefined && year!=undefined && limit!=undefined && from!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, año, to
 		else if(region!=undefined && year!=undefined && limit==undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, año, to y limit
 		else if(region!=undefined && year!=undefined && limit!=undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda de región, año, from y to
 		else if(region!=undefined && year!=undefined && limit==undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}													
 		//búsqueda de región, año, from, to y limit
 		else if(region!=undefined && year!=undefined && limit!=undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}															
 		//búsqueda con límite		
 		else if(limit!=undefined && region==undefined && year==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda con límite y from
 		else if(limit!=undefined && region==undefined && year==undefined && from!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda con límite y to
 		else if(limit!=undefined && region==undefined && year==undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda con límite, from y to
 		else if(limit!=undefined && region==undefined && year==undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
 		}						
 		//búsqueda con from
 		else if(from!=undefined && region==undefined && year==undefined && limit==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda con to
 		else if(limit==undefined && region==undefined && year==undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}
 		//búsqueda con from y to
 		else if(limit==undefined && region==undefined && year==undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
 		}	
 		//búsqueda con offset
 		else if(limit==undefined && region==undefined && year==undefined && from==undefined && to==undefined && offset!=undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&offset='+offset).then(function successCallback(response){
-			console.log('Data received successfully');
-			$scope.myValue=false;
-			$scope.birthlist = response.data;
-		},function errorCallback(response, data, status, headers, config){
-			$scope.myValue=true;
-			$scope.birthlist = [];
-			$scope.error=response.status + " " + response.statusText;
-		});				
+		$http.get('../../../api/v1/spain-births?apikey=read&offset='+offset).then(successCallbackSearch,errorCallbackSearch);				
 		}				
 		//no hay búsqueda
 		else{
@@ -446,5 +179,22 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	$scope.getAll = function(){
 		refresh();
 	}
-	
+	var successCallbackAU=function(){
+			$scope.myValue=false;
+			refresh();
+	}
+	var errorCallbackAU=function(response, data, status, headers, config){
+			$scope.myValue=true;
+			$scope.error=response.status + " " + response.statusText;
+	}
+	var successCallbackSearch = function(response){
+			console.log('Data received successfully');
+			$scope.myValue=false;
+			$scope.birthlist = response.data;
+	}
+	var errorCallbackSearch=function(response, data, status, headers, config){
+			$scope.myValue=true;
+			$scope.birthlist = [];
+			$scope.error=response.status + " " + response.statusText;
+	}	
 }]);
