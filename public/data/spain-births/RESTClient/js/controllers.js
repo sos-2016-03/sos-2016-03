@@ -18,7 +18,7 @@ vLimit=3;
 
 	$scope.addBirth = function(){
 		console.log("Inserting birth...");
-		$http.post('../../../api/v1/spain-births?apikey=write',$scope.birth).then(successCallbackAdd, errorCallbackAdd);
+		$http.post('../../../api/v1/spain-births?apikey=write',$scope.birth).then(successCallbackAU, errorCallbackAU);
 	}
 
 	$scope.updateBirth = function(region,year){
