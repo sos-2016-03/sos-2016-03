@@ -1,6 +1,6 @@
 exports.getRegionAño=function(array,region,year){
 	res=[];
-	for(i=0;i<array.length;i++){     
+	for(i=0;i<array.length;i++){
         if(array[i].year == year && array[i].region == region){
          	res.push(array[i]);
           	break;
@@ -24,7 +24,7 @@ exports.getListaFTLO=function(array,from,to,limit,offset){
 		aux=getListaT(array,to);
 		if(aux.length!=0){
       		res=getListaLO(aux,limit,offset);
-        }      	
+        }
 	}else if(from && to && limit){
 		aux=getListaFT(array,from,to);
 		if(aux.length!=0){
@@ -109,7 +109,7 @@ function getListaT(array,to){
 	for(i=0;i<array.length;i++){
         if(array[i].year<=to){
             aux.push(array[i]);
-        } 
+        }
     }
     return aux;
 }
@@ -146,7 +146,7 @@ exports.getRegionFTLO=function(array,region,year,from,to,limit,offset){
       		res=getRegionLO(aux,region,year,limit,offset);
         }else{
         	res=0;
-        }     	
+        }
 	}else if(from && to && limit){
 		aux=getRegionFT(array,region,year,from,to);
 		if(aux.length!=0){
@@ -202,42 +202,42 @@ exports.getRegionFTLO=function(array,region,year,from,to,limit,offset){
 			res=aux;
 		}else{
 			res=0;
-		}		
+		}
 	}else if(offset){
 		aux=getRegionO(array,region,year,offset);
 		if(aux.length!=0){
 			res=aux;
 		}else{
 			res=0;
-		}		
+		}
 	}else if(from && to){
 		aux=getRegionFT(array,region,year,from,to);
 		if(aux.length!=0){
 			res=aux;
 		}else{
 			res=0;
-		}		
+		}
 	}else if(from){
 		aux=getRegionF(array,region,year,from);
 		if(aux.length!=0){
 			res=aux;
 		}else{
 			res=0;
-		}		
+		}
 	}else if(to){
 		aux=getRegionT(array,region,year,to);
 		if(aux.length!=0){
 			res=aux;
 		}else{
 			res=0;
-		}		
+		}
 	}else{
 		aux=getRegion(array,region,year);
 		if(aux.length!=0){
 			res=aux;
 		}else{
 			res=0;
-		}			
+		}
 	}
 	return res;
 }
@@ -247,8 +247,8 @@ function getRegionLO(array,region,year,limit,offset){
         if(array[i].region == region || array[i].year == year){
             aux.push(array[i]);
         }
-    }	
-    aux2=array.slice(offset,aux.length);
+    }
+    aux2=aux.slice(offset,aux.length);
     aux2.splice(limit,aux.length);
     return aux2;
 }
@@ -290,7 +290,7 @@ function getRegionT(array,region,year,to){
 	for(i=0;i<array.length;i++){
         if((array[i].region == region || array[i].year == year) && array[i].year<=to){
             aux.push(array[i]);
-        } 
+        }
     }
     return aux;
 }
@@ -311,7 +311,7 @@ function getRegion(array,region,year){
           aux.push(array[i]);
         }
     }
-    return aux;	
+    return aux;
 }
 
 exports.deleteRegionAño=function(array,region,year){
@@ -347,7 +347,7 @@ exports.post=function(array,body){
         res=2;
       }
     }else{
-        for(i=0;i<array.length;i++){  
+        for(i=0;i<array.length;i++){
           if(array[i].region==body.region && array[i].year==body.year){
             res=1;
             break;
@@ -376,9 +376,9 @@ exports.put=function(array,region,year,body){
               	res=array;
               	break;
             }else{
-              	res=2;  
+              	res=2;
             }
     	}
     }
-    return res;  
+    return res;
 }
