@@ -17,82 +17,62 @@
         <a href="/data/spain-births/RESTClient" class="breadcrumb">jQuery REST Client</a>
       </div>
     </div>
-  </nav>  
+  </nav>
 <h4>JQuery REST Client</h4>
 <div class="row">
-<div class="col s4">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
-<div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
+<div class="col s8">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
+<div class="col s1"><input type="hidden" name="param" id="apikey" placeholder="apikey" value="read"/></div>
 <div class="col s1">
   <select class="form-control" id="region">
     <option value="">Region</option>
     <option value="Andalucia">Andalucia</option>
     <option value="Cataluña">Cataluña</option>
     <option value="Madrid">Madrid</option>
-    <option value="Galicia">Galicia</option>            
-    <option value="País Vasco">País Vasco</option>            
-    <option value="Murcia">Murcia</option>                
+    <option value="Galicia">Galicia</option>
+    <option value="País Vasco">País Vasco</option>
+    <option value="Murcia">Murcia</option>
   </select>
 </div>
 <div class="col s1">
   <select class="form-control" id="year">
     <option value="">Year</option>
     <option value="2009">2009</option>
-    <option value="2010">2010</option>    
+    <option value="2010">2010</option>
     <option value="2011">2011</option>
-    <option value="2012">2012</option>        
-    <option value="2013">2013</option>    
-    <option value="2014">2014</option>      
-  </select>
-</div>
-<div class="col s1">
-  <select class="form-control" id="offset">
-    <option value="">Offset</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>        
-    <option value="4">4</option>    
-    <option value="5">5</option>    
-  </select>
-</div>
-<div class="col s1">
-  <select class="form-control" id="limit">
-    <option value="">Limit</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>        
-    <option value="4">4</option>    
-    <option value="5">5</option>    
+    <option value="2012">2012</option>
+    <option value="2013">2013</option>
+    <option value="2014">2014</option>
   </select>
 </div>
 <div class="col s1">
   <select class="form-control" id="from">
     <option value="">From</option>
     <option value="2009">2009</option>
-    <option value="2010">2010</option>    
+    <option value="2010">2010</option>
     <option value="2011">2011</option>
-    <option value="2012">2012</option>        
-    <option value="2013">2013</option>    
-    <option value="2014">2014</option>    
+    <option value="2012">2012</option>
+    <option value="2013">2013</option>
+    <option value="2014">2014</option>
   </select>
 </div>
 <div class="col s1">
   <select class="form-control" id="to">
     <option value="">To</option>
     <option value="2009">2009</option>
-    <option value="2010">2010</option>    
+    <option value="2010">2010</option>
     <option value="2011">2011</option>
-    <option value="2012">2012</option>        
-    <option value="2013">2013</option>    
-    <option value="2014">2014</option>        
+    <option value="2012">2012</option>
+    <option value="2013">2013</option>
+    <option value="2014">2014</option>
   </select>
 </div>
-<div class="col s1"><a id="SEARCH" value="GET" class="#2e7d32 green darken-3 btn-floating btn-medium waves-effect waves-light"/><i class="material-icons">search</i></a>
 </div>
 </div>
 <div class="row">
 <div class="col s1"><a id="GET" value="GET" class="#4caf50 green btn-floating btn-large waves-effect waves-light"/><i class="material-icons">view_list</i></a></div>
+<div class="col s1"><a id="DELETEAll" value="DELETEAll" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a></div>
 <div class="col s1"><a id="DELETE" value="DELETE" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a></div>
-<div class="col s4"><a id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light"/><i class="material-icons">restore</i></a></div>
+<div class="col s3"><a id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light"/><i class="material-icons">restore</i></a></div>
 <div class="col s3" id="status1">HTTP Status: <span id="status4"></span></div><div class="col s3 #a5d6a7 green lighten-3 z-index 0" id="status2">HTTP Status: <span id="status5"></span></div><div class="col s3 #ef9a9a red lighten-3 z-index 0" id="status3">HTTP Status: <span id="status6"></span></div>
 <div class="col s3">Log: <span id="log"></span></div>
 </div>
@@ -105,13 +85,39 @@
 <td><a id="POST" value="POST" class="btn-floating btn-medium waves-effect waves-light blue"><i class="material-icons">add</i></a></td>
 <td><a id="PUT" value="PUT" class="btn-floating btn-medium waves-effect waves-light purple"><i class="material-icons">mode_edit</i></a></td></tr></table>
 <br />
-<div class="row"><div class="col s6"><table id="data2" border='1' rules="all" cellpadding="5" class="striped">
+<div class="row">
+<div class="col s2">
+  <select class="form-control entries" id="limit">
+    <option value="3">Entries per page</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</div>
+<!--<div class="col s1"><a id="ENTRIES" value="GET" class="#2e7d32 green darken-3 btn-floating btn-medium waves-effect waves-light"/><i class="material-icons">done</i></a>
+</div>-->
+<div class="row"><div class="col s12"><table id="data" border='1' rules="all" cellpadding="5" class="striped">
+
 </table></div>
-<span class="col s6" id="data"></span>
+</div>
+<br />
+<div class="row">
+<div class="col s1 offset-s6">
+  <select class="form-control" id="offset">
+    <option value="">Page</option>
+    <option value="0">1</option>
+    <option value="1">2</option>
+    <option value="2">3</option>
+    <option value="3">4</option>
+    <option value="4">5</option>
+    <option value="5">6</option>
+    <option value="6">7</option>
+  </select>
+</div>
 </div>
 <br /><br />
 <div class="row">
-<a class="col s11" href="/about/">« Previous</a><a class="col s1" href="/data/spain-births/RESTClient/test.html">Forward»</a> 
+<a class="col s11" href="/about/">« Previous</a><a class="col s1" href="/data/spain-births/RESTClient/test.html">Forward»</a>
 </div>
 </div>
 </body>

@@ -3,8 +3,10 @@ var myApp = angular.module("BirthListApp",[]);
 myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	console.log("Controller initialized");
 
+vLimit=3;
+
 	var refresh = function (){
-		$http.get('../../../api/v1/spain-births?apikey=read').success(function (births){
+		$http.get('../../../api/v1/spain-births?apikey=read&limit='+vLimit).success(function (births){
 			console.log('Data received successfully');
 			$scope.birthlist = births;
 			$scope.myValue=false;
@@ -22,7 +24,7 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	$scope.updateBirth = function(region,year){
 		console.log("Updating birth...");
 		$http.put('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=write',$scope.birth).then(successCallbackAU,errorCallbackAU);
-	}	
+	}
 
 	$scope.deleteBirth = function(region,year){
 		console.log("Deleting birth with "+region+" "+year);
@@ -33,149 +35,152 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 		console.log("Deleting births");
 		$http.delete('../../../api/v1/spain-births?apikey=write');
 		refresh();
-	}	
+	}
 	$scope.loadBirth = function(){
 		console.log("Loading initial list");
 		$http.get('../../../api/v1/spain-births/loadInitialData?apikey=write').success(function(){
 			refresh();
 		});
-	}	
+	}
 	$scope.search = function(region,year,limit,offset,from,to){
+		console.log(limit,offset);
 		//búsqueda de región
 		if(region!=undefined && year==undefined && limit==undefined && offset==undefined && from==undefined && to==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de región y límite		
+		/*//búsqueda de región y límite
 		else if(region!=undefined && limit!=undefined && year==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de región y from		
+		//búsqueda de región y from
 		else if(region!=undefined && from!=undefined && year==undefined && limit==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de región, limite y from		
+		//búsqueda de región, limite y from
 		else if(region!=undefined && from!=undefined && year==undefined && limit!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}		
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda de región y to
 		else if(region!=undefined && to!=undefined && year==undefined && from==undefined && limit==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, to y limit
 		else if(region!=undefined && to!=undefined && year==undefined && from==undefined && limit!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de región, from y to		
+		//búsqueda de región, from y to
 		else if(region!=undefined && from!=undefined && to!=undefined && limit==undefined && year==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, from, to y limit
 		else if(region!=undefined && from!=undefined && to!=undefined && limit!=undefined && year==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}										
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda de año
 		else if(year!=undefined && region==undefined && limit==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read').then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de año y límite		
+		//búsqueda de año y límite
 		else if(year!=undefined && limit!=undefined && region==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de año y from		
+		//búsqueda de año y from
 		else if(year!=undefined && from!=undefined && region==undefined && limit==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de año, from y limit	
+		//búsqueda de año, from y limit
 		else if(year!=undefined && from!=undefined && region==undefined && limit!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}		
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda de año y to
 		else if(year!=undefined && to!=undefined && region==undefined && from==undefined && limit==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de año, to y limit
 		else if(year!=undefined && to!=undefined && region==undefined && from==undefined && limit!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}		
-		//búsqueda de año, from y to		
-		else if(year!=undefined && from!=undefined && to!=undefined && limit==undefined && region==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda de año, from, to y limit		
+		//búsqueda de año, from y to
+		else if(year!=undefined && from!=undefined && to!=undefined && limit==undefined && region==undefined && offset==undefined){
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
+		}
+		//búsqueda de año, from, to y limit
 		else if(year!=undefined && from!=undefined && to!=undefined && limit!=undefined && region==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}		
+		$http.get('../../../api/v1/spain-births/'+region+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda de región y año
 		else if(region!=undefined && year!=undefined && limit==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read').then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, año, límite
 		else if(region!=undefined && year!=undefined && limit!=undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, año, from
 		else if(region!=undefined && year!=undefined && limit==undefined && from!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
-		}	
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda de región, año, from y limit
 		else if(region!=undefined && year!=undefined && limit!=undefined && from!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, año, to
 		else if(region!=undefined && year!=undefined && limit==undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, año, to y limit
 		else if(region!=undefined && year!=undefined && limit!=undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda de región, año, from y to
 		else if(region!=undefined && year!=undefined && limit==undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
-		}													
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda de región, año, from, to y limit
 		else if(region!=undefined && year!=undefined && limit!=undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}															
-		//búsqueda con límite		
+		$http.get('../../../api/v1/spain-births/'+region+'/'+year+'?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
+	}*/
+		//búsqueda con límite
 		else if(limit!=undefined && region==undefined && year==undefined && from==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births?apikey=read&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
-		//búsqueda con límite y from
-		else if(limit!=undefined && region==undefined && year==undefined && from!=undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		//búsqueda con límite y offset
+		else if(limit!=undefined && region==undefined && year==undefined && from==undefined && to==undefined && offset!=undefined){
+		$http.get('../../../api/v1/spain-births?apikey=read&limit='+limit+'&offset='+parseInt((parseInt(offset)-parseInt(1)))*parseInt(limit)).then(successCallbackSearch,errorCallbackSearch);
+		}
+		/*//búsqueda con límite y from
+		else if(limit!=undefined && region==undefined && year==undefined && from!=undefined && to==undefined && offset==undefined && limit!=vLimit){
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda con límite y to
 		else if(limit!=undefined && region==undefined && year==undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births?apikey=read&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda con límite, from y to
 		else if(limit!=undefined && region==undefined && year==undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);				
-		}						
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to+'&limit='+limit).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//búsqueda con from
 		else if(from!=undefined && region==undefined && year==undefined && limit==undefined && to==undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda con to
 		else if(limit==undefined && region==undefined && year==undefined && from==undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&to='+to).then(successCallbackSearch,errorCallbackSearch);				
+		$http.get('../../../api/v1/spain-births?apikey=read&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
 		}
 		//búsqueda con from y to
 		else if(limit==undefined && region==undefined && year==undefined && from!=undefined && to!=undefined && offset==undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to).then(successCallbackSearch,errorCallbackSearch);				
-		}	
+		$http.get('../../../api/v1/spain-births?apikey=read&from='+from+'&to='+to+'&limit='+vLimit).then(successCallbackSearch,errorCallbackSearch);
+	}*/
 		//búsqueda con offset
 		else if(limit==undefined && region==undefined && year==undefined && from==undefined && to==undefined && offset!=undefined){
-		$http.get('../../../api/v1/spain-births?apikey=read&offset='+offset).then(successCallbackSearch,errorCallbackSearch);				
-		}				
+		$http.get('../../../api/v1/spain-births?apikey=read&limit='+vLimit+'&offset='+parseInt((parseInt(offset)-parseInt(1)))*parseInt(vLimit)).then(successCallbackSearch,errorCallbackSearch);
+		}
 		//no hay búsqueda
-		else{
-			$http.get('../../../api/v1/spain-births?apikey=read').success(function (response){			
-				$scope.birthlist=response.data;
-			});
-		}	
-	}		
+		else if(limit==undefined && region==undefined && year==undefined && from==undefined && to==undefined && offset==undefined){
+			$http.get('../../../api/v1/spain-births?apikey=read&limit='+3).then(successCallbackSearch,errorCallbackSearch);
+		}
+	}
 	$scope.getAll = function(){
 		refresh();
 	}
@@ -192,9 +197,15 @@ myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 			$scope.myValue=false;
 			$scope.birthlist = response.data;
 	}
+	var successCallbackSearchL = function(response,limit){
+			console.log('Data received successfully');
+			$scope.myValue=false;
+			$scope.birthlist = response.data;
+			vLimit=limit;
+	}
 	var errorCallbackSearch=function(response, data, status, headers, config){
 			$scope.myValue=true;
 			$scope.birthlist = [];
 			$scope.error=response.status + " " + response.statusText;
-	}	
+	}
 }]);
