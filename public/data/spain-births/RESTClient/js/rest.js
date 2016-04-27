@@ -5,6 +5,7 @@ $(document).ready(function(){
 
   jQuery.support.cors = true;
 
+//Refrescar
   function refresh(){
     var request =$.ajax({
       type: "GET",
@@ -42,7 +43,7 @@ $(document).ready(function(){
       function imprime(data){
           $('#data').empty();
           var trHTML = '';
-              trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th></tr>';
+              trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th><th class="center-align white-text centered">Actions</th></tr>';
                 $.each(data, function(i,item){
                     trHTML += '<tr><td class="center-align">' +
                     data[i].region + '</td><td class="center-align">' +
@@ -56,20 +57,12 @@ $(document).ready(function(){
         }
     }
 
-    $('button').on('click', function(){
-        $(this).closest('tr').fadeOut('slow', function(){
-            $(this).remove();
-            refresh();
-        });
-    });
-
-
-
 
 refresh();
+var url;
+direccion();
 
-    var url;
-    direccion();
+//GET de la lista completa
     console.log("JQuery Ready!");
     $("#GET").click(function(){
       console.log("Handling click");
@@ -153,15 +146,16 @@ refresh();
       function imprime(data){
           $('#data').empty();
           var trHTML = '';
-              trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th></tr>';
-                $.each(data, function(i,item){
-                    trHTML += '<tr><td class="center-align">' +
-                    data[i].region + '</td><td class="center-align">' +
-                    data[i].year + '</td><td class="center-align">' +
-                    data[i].men + '</td><td class="center-align">' +
-                    data[i].women + '</td><td class="center-align">' +
-                    data[i].totalbirth + '</td></tr>';
-                });
+          trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th><th class="center-align white-text centered">Actions</th></tr>';
+            $.each(data, function(i,item){
+                trHTML += '<tr><td class="center-align">' +
+                data[i].region + '</td><td class="center-align">' +
+                data[i].year + '</td><td class="center-align">' +
+                data[i].men + '</td><td class="center-align">' +
+                data[i].women + '</td><td class="center-align">' +
+                data[i].totalbirth + '</td><td class="center-align">' +
+                '<td><button><i class="material-icons">delete</i></button><input type="button" value="'+data[i].region+'/'+data[i].year+'"></input></td></tr>';
+            });
           $('#data').append(trHTML);
         }
     }
@@ -210,15 +204,16 @@ refresh();
       function imprime(data){
           $('#data').empty();
           var trHTML = '';
-              trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th></tr>';
-                $.each(data, function(i,item){
-                    trHTML += '<tr><td class="center-align">' +
-                    data[i].region + '</td><td class="center-align">' +
-                    data[i].year + '</td><td class="center-align">' +
-                    data[i].men + '</td><td class="center-align">' +
-                    data[i].women + '</td><td class="center-align">' +
-                    data[i].totalbirth + '</td></tr>';
-                });
+          trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th><th class="center-align white-text centered">Actions</th></tr>';
+            $.each(data, function(i,item){
+                trHTML += '<tr><td class="center-align">' +
+                data[i].region + '</td><td class="center-align">' +
+                data[i].year + '</td><td class="center-align">' +
+                data[i].men + '</td><td class="center-align">' +
+                data[i].women + '</td><td class="center-align">' +
+                data[i].totalbirth + '</td><td class="center-align">' +
+                '<td><button><i class="material-icons">delete</i></button><input type="button" value="'+data[i].region+'/'+data[i].year+'"></input></td></tr>';
+            });
           $('#data').append(trHTML);
         }
     }
@@ -267,20 +262,21 @@ refresh();
       function imprime(data){
           $('#data').empty();
           var trHTML = '';
-              trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th></tr>';
-                $.each(data, function(i,item){
-                    trHTML += '<tr><td class="center-align">' +
-                    data[i].region + '</td><td class="center-align">' +
-                    data[i].year + '</td><td class="center-align">' +
-                    data[i].men + '</td><td class="center-align">' +
-                    data[i].women + '</td><td class="center-align">' +
-                    data[i].totalbirth + '</td></tr>';
-                });
+          trHTML += '<tr class="#42a5f5 blue lighten-1 z-depth-0"><th class="center-align white-text centered">Region</th><th class="center-align white-text centered">Year</th><th class="center-align white-text centered">Men</th><th class="center-align white-text centered">Women</th><th class="center-align white-text centered">Total Birth</th><th class="center-align white-text centered">Actions</th></tr>';
+            $.each(data, function(i,item){
+                trHTML += '<tr><td class="center-align">' +
+                data[i].region + '</td><td class="center-align">' +
+                data[i].year + '</td><td class="center-align">' +
+                data[i].men + '</td><td class="center-align">' +
+                data[i].women + '</td><td class="center-align">' +
+                data[i].totalbirth + '</td><td class="center-align">' +
+                '<td><button><i class="material-icons">delete</i></button><input type="button" value="'+data[i].region+'/'+data[i].year+'"></input></td></tr>';
+            });
           $('#data').append(trHTML);
         }
     }
 
-
+//Cambio de URL para Search
 $("input[name=param]").keyup(function(){
     direccion();
 });
@@ -342,6 +338,7 @@ function direccion() {
     $('#req').text(url);
   }
 
+//POST de un elemento
     $("#POST").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
@@ -385,6 +382,7 @@ function direccion() {
       });
     });
 
+//PUT de un elemento (inacabado)
     $("#PUT").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
@@ -427,7 +425,7 @@ function direccion() {
       });
     });
 
-
+//Borra todo
     $("#DELETEAll").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
@@ -471,6 +469,7 @@ function direccion() {
       });
     });
 
+//Delete de un elemento (inacabado)
     $("#DELETE").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
@@ -511,6 +510,8 @@ function direccion() {
         }
       });
     });
+
+//loadInitialData
     $("#LOAD").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
