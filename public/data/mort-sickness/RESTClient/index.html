@@ -17,19 +17,13 @@
 <link type="text/css" rel="stylesheet" href="../jqwidgets/styles/jqx.shinyblack.css"/>
 
 <script src="rest.js"></script>
+<script type="text/javascript" src="mort-sickness.js"></script>
 </head>
 
 <body id="body"style="font-family: Verdana; font-size: 15; background-color: #FFCC99">
 
 <div align="center">
 <h1>JQUERY REST CLIENT</h1>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#url').jqxInput({
-			theme:'orange'
-		})
-	});
-</script>
 URL: <input id="url" size="60" value="../../../api/v1/mort-sickness"/>
 <hr />
 </div>
@@ -47,24 +41,10 @@ URL: <input id="url" size="60" value="../../../api/v1/mort-sickness"/>
 
 <div align="center">
 <p>Payload:</p>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#payload').jqxInput({
-			theme:'orange'
-		})
-	});
-</script>
 <textarea id="payload" cols="100" rows="2" value=''></textarea>
 </div>
 
 <div align="right">
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#button').jqxButton({
-			theme:'shinyblack'
-		})
-	});
-</script>
 <input type="button" id="button" value="Send"></value>
 </div>
 
@@ -80,13 +60,6 @@ HTTP Status: <span id="status"></span>
 <hr />
 Log: <span id="log"></span>
 <br /><br />
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#miBoton').jqxButton({
-			theme:'shinyblack'
-		})
-	});
-</script>
 <a href="/about/"><input type=button value="Previous" id="miBoton"/></a>
 </body>
 </html>
