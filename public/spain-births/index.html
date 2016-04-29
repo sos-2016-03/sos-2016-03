@@ -1,11 +1,12 @@
 <html>
 <head>
-<link rel="stylesheet" href="../materialize/css/materialize.min.css">
+<link rel="stylesheet" href="materialize/css/materialize.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="../../../stylesheets/spain-births-rest.css" rel="stylesheet">
 <script src="js/jquery-1.12.2.min.js"></script>
-<script src="../materialize/js/materialize.min.js"></script>
+<script src="materialize/js/materialize.min.js"></script>
 <script src="js/rest.js"></script>
+<!--<script src="js/delete.js"></script>-->
 </head>
 <body class="card-panel #f5f5f5 grey lighten-5 z-depth-0">
 <div>
@@ -13,16 +14,15 @@
     <div class="nav-wrapper #90caf9 blue lighten-3">
       <div>
         <a href="/about/" class="breadcrumb">About</a>
-        <a href="/data/spain-births" class="breadcrumb">Data</a>
-        <a href="/data/spain-births/RESTClient" class="breadcrumb">jQuery REST Client</a>
+        <a href="/spain-births" class="breadcrumb">jQuery REST Client</a>
       </div>
     </div>
   </nav>
 <h4>JQuery REST Client</h4>
 <div class="row">
-<div class="col s8">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
-<div class="col s1"><input type="hidden" name="param" id="apikey" placeholder="apikey" value="read"/></div>
-<div class="col s1">
+<div class="col s4">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
+<div class="col s1">Apikey:</div><div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
+<div class="col s1 offset-s2">
   <select class="form-control" id="region">
     <option value="">Region</option>
     <option value="Andalucia">Andalucia</option>
@@ -72,7 +72,7 @@
 <div class="col s1"><a id="GET" value="GET" class="#4caf50 green btn-floating btn-large waves-effect waves-light"/><i class="material-icons">view_list</i></a></div>
 <div class="col s1"><a id="DELETEAll" value="DELETEAll" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a></div>
 <div class="col s3"><a id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light"/><i class="material-icons">restore</i></a></div>
-<div class="col s3" id="status1">HTTP Status: <span id="status4"></span></div><div class="col s3 #a5d6a7 green lighten-3 z-index 0" id="status2">HTTP Status: <span id="status5"></span></div><div class="col s3 #ef9a9a red lighten-3 z-index 0" id="status3">HTTP Status: <span id="status6"></span></div>
+<div class="col s3" id="status1"><span id="status4"></span></div><div class="col s3 #a5d6a7 green lighten-3 z-index 0" id="status2"><span id="status5"></span></div><div class="col s3 #ef9a9a red lighten-3 z-index 0" id="status3"><span id="status6"></span></div>
 <div class="col s3">Log: <span id="log"></span></div>
 </div>
 <table>
@@ -97,13 +97,13 @@
 <div class="col s1 offset-s6">
   <select class="form-control" id="offset">
     <option value="">Page</option>
-    <option value="0">1</option>
-    <option value="1">2</option>
-    <option value="2">3</option>
-    <option value="3">4</option>
-    <option value="4">5</option>
-    <option value="5">6</option>
-    <option value="6">7</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
   </select>
 </div>
 </div>

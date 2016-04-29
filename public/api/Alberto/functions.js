@@ -126,6 +126,7 @@ function getListaF(array,from){
 
 
 exports.getRegionFTLO=function(array,region,year,from,to,limit,offset){
+	aux=[];
 	if(from && to && limit && offset){
 		aux=getRegionFT(array,region,year,from,to);
 		if(aux.length!=0){
@@ -243,6 +244,7 @@ exports.getRegionFTLO=function(array,region,year,from,to,limit,offset){
 }
 
 function getRegionLO(array,region,year,limit,offset){
+	aux=[];
 	for(i=0;i<array.length;i++){
         if(array[i].region == region || array[i].year == year){
             aux.push(array[i]);
