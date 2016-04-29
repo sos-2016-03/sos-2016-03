@@ -484,14 +484,14 @@ module.exports.postSatitistics = function(req,res){
   if(population_growth.length==0){
     console.log("anita1");
     if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
-      || alb!=6){
+      || alb!=6 || x=='' || x2=='' || x3=='' || x4=='' || x5=='' || x6==''){
       res.sendStatus(400);
     }else{
       population_growth.push(p);
     }
   }else{
     if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
-        || alb!=6){
+        || alb!=6 || x=='' || x2=='' || x3=='' || x4=='' || x5=='' || x6==''){
         res.sendStatus(400);
     }else{
       for(k=0; k<population_growth.length; k++){
@@ -547,7 +547,7 @@ module.exports.putStatistics = function(req,res){
     res.sendStatus(400);
   }else{
     if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined
-      || alb!=6){
+      || alb!=6 || x=='' || x2=='' || x3=='' || x4=='' || x5=='' || x6==''){
       res.sendStatus(400);
     }else{
       if(year!=p.year || region!=p.region){
