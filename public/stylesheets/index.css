@@ -4,20 +4,7 @@ body{
 	margin-left: 7%;
 	font-size:18px;
 }
-table{
-	-moz-border-radius: 10px; /* Firefox */
-	-webkit-border-radius: 10px; /* Google Chrome y Safari */
-	border-radius: 10px;
-	width: 100%;
-}
-table, tr, td{
-	border:1px solid #848484;
-	font-size:20px;
 
-}
-tr{
-	text-align: center;
-}
 .main{
 	border:1px solid #848484;
 	-moz-border-radius: 10px; /* Firefox */
@@ -28,6 +15,11 @@ tr{
 	background-color:#D8D8D8;
 }
 .theme{
-	margin-top:-17px;
-	padding-bottom:10px;
+  border:1px solid #848484;
+	-moz-border-radius: 10px; /* Firefox */
+	-webkit-border-radius: 10px; /* Google Chrome y Safari */
+	border-radius: 10px;
+	padding:5px;
+  margin:20px;
+  background-color:#C0C0C0;
 }
