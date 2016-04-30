@@ -450,9 +450,33 @@ direccion();
       $("#log").text("Sending request...");
 
       var request = $.ajax({
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val(),
+        type: "GET",
+        contentType: "application/json"
+      });
+      request.done(function(data,status,jqXHR){
+        console.log("Handling request (OK)");
+        console.log("Data received: ");
+        console.log(JSON.stringify(data));
+        var statusCode = jqXHR.status;
+        var statusCodeText = jqXHR.statusText;
+        $("#log").text("Data received");
+        $("#status5").text(statusCode+": Correct request");
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
+        console.log(data.length);
+        if(data.length==1){
+          console.log(data.length);
+          $("#offsetAux").hide();
+        }else {
+          $("#offsetAux").show();  
+        }
+        console.log("Status: "+statusCode+ " " +statusCodeText);
+
+      var request = $.ajax({
         url: url,
         type: "GET",
-        data: $("#payload").val(),
         contentType: "application/json"
       });
       request.done(function(data,status,jqXHR){
@@ -514,7 +538,31 @@ direccion();
                 });
           $('#data').append(trHTML);
         }
-    }
+    });
+    request.always(function(jqXHR, status){
+      var statusCode = jqXHR.status;
+      var statusCodeText = jqXHR.statusText;
+      if (status == "error"){
+          $("#status3").show();
+          if(statusCode==401){
+            $("#status6").text(statusCode+": Apikey required");
+          }
+          else if(statusCode==403){
+            $("#status6").text(statusCode+": Invalid apikey");
+          }
+          else if(statusCode==404){
+            $("#status6").text(statusCode+": Data not found");
+          }
+          $("#status2").hide();
+          $("#status1").hide();
+          $("#data").text("");
+          $("#log").text("");
+          console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+      }else{
+          $("#txtStatus").text(status);
+      }
+    });
+  }
 
 //limit
     function entry(){
