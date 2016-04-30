@@ -26,7 +26,7 @@ function WriteAccess(req, res, next) {
     passport.authenticate('localapikey', function(err, user, info) {
         if(user==false)
             return res.sendStatus(401);
-        else if (user!='"write"') {
+        else if (user!='write') {
             return res.sendStatus(401);
         }
         return next();
@@ -37,7 +37,7 @@ function ReadAccess(req, res, next) {
     passport.authenticate('localapikey', function(err, user, info) {
         if(user==false)
             return res.sendStatus(401);
-        else if (user!='"read"') {
+        else if (user!='read') {
             return res.sendStatus(401);
         }
         return next();
@@ -163,7 +163,7 @@ app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth
 //------------------------------------------------------------------------------------------------
 
 app.use('/',express.static(__dirname + '/public'));
-
+app.use('/population-growth',express.static(__dirname + '/public/population-growth'));
 
 app.listen(port, ()=>{
     console.log("Magic happens on port: " + port);
