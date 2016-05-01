@@ -163,6 +163,7 @@ app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth
 //------------------------------------------------------------------------------------------------
 
 app.use('/',express.static(__dirname + '/public'));
+app.use('/mort-sickness', express.static(__dirname + '/mort-sickness'));
 
 
 app.listen(port, ()=>{
