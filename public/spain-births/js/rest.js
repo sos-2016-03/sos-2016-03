@@ -200,7 +200,7 @@ function addBirth(){
         $("#status6").text(statusCode+": Invalid apikey");
       }
       else if(statusCode==409){
-        $("#status6").text(statusCode+": Data exists already");
+        $("#status6").text(statusCode+": Data already exists");
       }
       else if(statusCode==400){
         $("#status6").text(statusCode+": Wrong fields: you need to write something more!");
