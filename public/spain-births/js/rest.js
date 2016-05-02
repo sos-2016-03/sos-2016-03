@@ -7,14 +7,13 @@ function deleteItemAux(j){
   console.log("He llegado hasta aux()",j);
   var request=$.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val(),
+      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
       data: "{}",
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       });
       request.done(function(data,status,jqXHR){
       var valor;
-
           $.each(data, function(i,item){
               if(data[i].region==data[j].region && data[i].year == data[j].year){
                 console.log(data[j]);
@@ -50,11 +49,9 @@ function deleteItemAux(j){
                   if (status == "error"){
                     if(statusCode==401){
                       $("#status6").text(statusCode+": Apikey required");
-                      $("#offsetAux").hide();
                     }
                     else if(statusCode==403){
                       $("#status6").text(statusCode+": Invalid apikey");
-                      $("#offsetAux").hide();
                     }
                       $("#status3").show();
                       $("#status1").hide();
@@ -90,7 +87,7 @@ function putAux(j){
   console.log("He llegado hasta aux()");
   var request = $.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val(),
+      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
       data: "{}",
       contentType: "application/json; charset=utf-8",
       dataType: "json"
@@ -130,15 +127,12 @@ function putAux(j){
                   if (status == "error"){
                     if(statusCode==401){
                       $("#status6").text(statusCode+": Apikey required");
-                      $("#offsetAux").hide();
                     }
                     else if(statusCode==403){
                       $("#status6").text(statusCode+": Invalid apikey");
-                      $("#offsetAux").hide();
                     }
                     else if(statusCode==400){
                       $("#status6").text(statusCode+": Wrong fields: you need to write something more!");
-                      $("#offsetAux").hide();
                     }
                      $("#status3").show();
                       $("#status1").hide();
@@ -201,19 +195,15 @@ function addBirth(){
     if (status == "error"){
       if(statusCode==401){
         $("#status6").text(statusCode+": Apikey required");
-        $("#offsetAux").hide();
       }
       else if(statusCode==403){
         $("#status6").text(statusCode+": Invalid apikey");
-        $("#offsetAux").hide();
       }
       else if(statusCode==409){
-        $("#status6").text(statusCode+": Data exists already");
-        $("#offsetAux").hide();
+        $("#status6").text(statusCode+": Data already exists");
       }
       else if(statusCode==400){
         $("#status6").text(statusCode+": Wrong fields: you need to write something more!");
-        $("#offsetAux").hide();
       }
       $("#status3").show();
         $("#status1").hide();
@@ -230,12 +220,40 @@ function addBirth(){
 function refresh(){
   var request =$.ajax({
     type: "GET",
-    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val(),
+    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read',
+    data: "{}",
+    data: $("#payload").val(),
+    contentType: "application/json"
+  });
+  request.done(function(data,status,jqXHR){
+    console.log("Handling request (OK)");
+    console.log("Data received: ");
+    console.log(JSON.stringify(data));
+    var statusCode = jqXHR.status;
+    var statusCodeText = jqXHR.statusText;
+    $("#log").text("Data received");
+    //$("#status5").text(statusCode+": Correct request");
+    console.log(data.length);
+    if(data.length<=$("#limit").val()){
+      console.log(data.length);
+      $("#offsetAux").hide();
+    }else {
+      $("#offsetAux").show();
+    }
+    $("#status2").show();
+    $("#status3").hide();
+    $("#status1").hide();
+    console.log("Status: "+statusCode+ " " +statusCodeText);
+
+  var request =$.ajax({
+    type: "GET",
+    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
     data: "{}",
     data: $("#payload").val(),
     contentType: "application/json"
   });
     request.done(function(data,status,jqXHR){
+      console.log($("#offset").val());
       console.log("Handling request (OK)");
       console.log("Data received: ");
       console.log(JSON.stringify(data));
@@ -291,7 +309,27 @@ function refresh(){
         $('#data').append(trHTML);
       }
 
-  }
+  });
+  request.always(function(jqXHR, status){
+    var statusCode = jqXHR.status;
+    var statusCodeText = jqXHR.statusText;
+    if (status == "error"){
+      if(statusCode==401){
+        $("#status6").text(statusCode+": Apikey required");
+        $("#offsetAux").hide();
+      }
+      else if(statusCode==403){
+        $("#status6").text(statusCode+": Invalid apikey");
+        $("#offsetAux").hide();
+      }
+        $("#data").text("");
+        $("#log").text("");
+        console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+    }else{
+        $("#txtStatus").text(status);
+    }
+  });
+}
 
 //Llamadas en JavaScript puro
 function put(algo){
@@ -315,6 +353,32 @@ $(document).ready(function(){
 
 //Refrescar
   function refresh(){
+    var request =$.ajax({
+      type: "GET",
+      url: '../../../api/v1/spain-births?apikey=read',
+      data: "{}",
+      data: $("#payload").val(),
+      contentType: "application/json"
+    });
+    request.done(function(data,status,jqXHR){
+      console.log("Handling request (OK)");
+      console.log("Data received: ");
+      console.log(JSON.stringify(data));
+      var statusCode = jqXHR.status;
+      var statusCodeText = jqXHR.statusText;
+      $("#log").text("Data received");
+      console.log(data.length);
+      if(data.length<=$("#limit").val()){
+        console.log(data.length);
+        $("#offsetAux").hide();
+      }else {
+        $("#offsetAux").show();
+      }
+      $("#status2").show();
+      $("#status3").hide();
+      $("#status1").hide();
+      console.log("Status: "+statusCode+ " " +statusCodeText);
+
     var request =$.ajax({
       type: "GET",
       url: '../../../api/v1/spain-births?apikey=read&limit=3',
@@ -380,7 +444,30 @@ $(document).ready(function(){
           $('#data').append(trHTML);
         }
 
-    }
+    });
+    request.always(function(jqXHR, status){
+      var statusCode = jqXHR.status;
+      var statusCodeText = jqXHR.statusText;
+      if (status == "error"){
+          $("#status3").show();
+          if(statusCode==401){
+            $("#status6").text(statusCode+": Apikey required");
+            $("#offsetAux").hide();
+          }
+          else if(statusCode==403){
+            $("#status6").text(statusCode+": Invalid apikey");
+            $("#offsetAux").hide();
+          }
+          $("#status2").hide();
+          $("#status1").hide();
+          $("#data").text("");
+          $("#log").text("");
+          console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+      }else{
+          $("#txtStatus").text(status);
+      }
+    });
+  }
 
 
 refresh();
@@ -392,6 +479,31 @@ direccion();
     $("#GET").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
+      var request = $.ajax({
+        url: '../../../api/v1/spain-births?apikey='+$("#apikey").val(),
+        type: "GET",
+        data: $("#payload").val(),
+        contentType: "application/json"
+      });
+      request.done(function(data,status,jqXHR){
+        console.log("Handling request (OK)");
+        console.log("Data received: ");
+        console.log(JSON.stringify(data));
+        var statusCode = jqXHR.status;
+        var statusCodeText = jqXHR.statusText;
+        $("#log").text("Data received");
+        $("#status5").text(statusCode+": Correct request");
+        console.log(data.length);
+        if(data.length<=$("#limit").val()){
+          console.log(data.length);
+          $("#offsetAux").hide();
+        }else {
+          $("#offsetAux").show();
+        }
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
+        console.log("Status: "+statusCode+ " " +statusCodeText);
 
       var request = $.ajax({
         url: '../../../api/v1/spain-births?apikey='+$("#apikey").val()+'&limit='+$("#limit").val(),
@@ -410,10 +522,8 @@ direccion();
         $("#status2").show();
         $("#status3").hide();
         $("#status1").hide();
-        $("#offsetAux").show();
         $("#data").html(imprime(data));
         console.log("Status: "+statusCode+ " " +statusCodeText);
-        //refresh();
       });
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
@@ -459,13 +569,35 @@ direccion();
           $('#data').append(trHTML);
         }
     });
+  request.always(function(jqXHR, status){
+    var statusCode = jqXHR.status;
+    if (status == "error"){
+        $("#status3").show();
+        if(statusCode==401){
+          $("#status6").text(statusCode+": Apikey required");
+          $("#offsetAux").hide();
+        }
+        else if(statusCode==403){
+          $("#status6").text(statusCode+": Invalid apikey");
+          $("#offsetAux").hide();
+        }
+        $("#status2").hide();
+        $("#status1").hide();
+        $("#data").text("");
+        $("#log").text("");
+        console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+    }else{
+        $("#txtStatus").text(status);
+    }
+  });
+});
 //search (region, year, from, to)
     function search(){
       console.log("Handling click");
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val(),
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
         type: "GET",
         contentType: "application/json"
       });
@@ -490,7 +622,7 @@ direccion();
         console.log("Status: "+statusCode+ " " +statusCodeText);
 
       var request = $.ajax({
-        url: url,
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
         type: "GET",
         contentType: "application/json"
       });
@@ -789,6 +921,9 @@ direccion();
 
 //Cambio de URL para Search
 $("input[name=param]").keyup(function(){
+    direccion();
+});
+$("#apikey").change(function(){
     direccion();
 });
 
