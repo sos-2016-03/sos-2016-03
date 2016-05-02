@@ -21,8 +21,14 @@
   </nav>
 <h4>JQuery REST Client</h4>
 <div class="row">
-<div class="col s4">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
-<div class="col s1">Apikey:</div><div class="col s1"><input type="text" name="param" id="apikey" placeholder="apikey"/></div>
+<div class="col s5">URL: <input type="hidden" id="url" value="../../../api/v1/spain-births"><a id="req">../../../api/v1/spain-births</a></div>
+<div class="col s1">
+  <select id="apikey">
+    <option value="">Apikey</option>
+    <option value="read">Read</option>
+    <option value="write">Write</option>
+  </select>
+</div>
 <div class="col s1 offset-s2">
   <select class="form-control" id="region">
     <option value="">Region</option>
@@ -70,11 +76,10 @@
 </div>
 </div>
 <div class="row">
-<div class="col s1"><a id="GET" value="GET" class="#4caf50 green btn-floating btn-large waves-effect waves-light"/><i class="material-icons">view_list</i></a></div>
-<div class="col s1"><a id="DELETEAll" value="DELETEAll" class="btn-floating btn-large waves-effect waves-light #f44336 red"/><i class="material-icons">delete</i></a></div>
-<div class="col s3"><a id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-floating btn-large waves-effect waves-light"/><i class="material-icons">restore</i></a></div>
-<div class="col s3" id="status1"><span id="status4"></span></div><div class="col s3 #a5d6a7 green lighten-3 z-index 0" id="status2"><span id="status5"></span></div><div class="col s3 #ef9a9a red lighten-3 z-index 0" id="status3"><span id="status6"></span></div>
-<div class="col s3">Log: <span id="log"></span></div>
+<div class="col s2"><button id="GET" value="GET" class="#4caf50 green btn-large waves-effect waves-light"/>All Data</button></div>
+<div class="col s2"><button id="DELETEAll" value="DELETEAll" class="btn-large waves-effect waves-light #f44336 red"/>Reset</button></div>
+<div class="col s2"><button id="LOAD" value="Carga inicial" class="#5d4037 brown darken-2 btn-large waves-effect waves-light"/>Reload</button></div>
+<div class="col s2" id="status1"><span id="status4"></span></div><div class="col s3 #a5d6a7 green lighten-3 z-index 0" id="status2"><span id="status5"></span></div><div class="col s3 #ef9a9a red lighten-3 z-index 0" id="status3"><span id="status6"></span></div>
 </div>
 <table>
 <td></td></tr></table>

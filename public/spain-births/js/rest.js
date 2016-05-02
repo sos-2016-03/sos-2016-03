@@ -880,6 +880,9 @@ direccion();
 $("input[name=param]").keyup(function(){
     direccion();
 });
+$("#apikey").change(function(){
+    direccion();
+});
 
 $("#region").change(function(){
     direccion();
