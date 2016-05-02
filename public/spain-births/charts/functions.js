@@ -6,7 +6,7 @@ $(document).ready(function(){
 
     var request=$.ajax({
         type: "GET",
-        url: 'http://localhost:11000/api/v1/spain-births?apikey=read',
+        url: '../../api/v1/spain-births?apikey=read',
         data: "{}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
