@@ -479,6 +479,31 @@ direccion();
     $("#GET").click(function(){
       console.log("Handling click");
       $("#log").text("Sending request...");
+      var request = $.ajax({
+        url: '../../../api/v1/spain-births?apikey='+$("#apikey").val(),
+        type: "GET",
+        data: $("#payload").val(),
+        contentType: "application/json"
+      });
+      request.done(function(data,status,jqXHR){
+        console.log("Handling request (OK)");
+        console.log("Data received: ");
+        console.log(JSON.stringify(data));
+        var statusCode = jqXHR.status;
+        var statusCodeText = jqXHR.statusText;
+        $("#log").text("Data received");
+        $("#status5").text(statusCode+": Correct request");
+        console.log(data.length);
+        if(data.length<=$("#limit").val()){
+          console.log(data.length);
+          $("#offsetAux").hide();
+        }else {
+          $("#offsetAux").show();
+        }
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
+        console.log("Status: "+statusCode+ " " +statusCodeText);
 
       var request = $.ajax({
         url: '../../../api/v1/spain-births?apikey='+$("#apikey").val()+'&limit='+$("#limit").val(),
@@ -497,10 +522,8 @@ direccion();
         $("#status2").show();
         $("#status3").hide();
         $("#status1").hide();
-        $("#offsetAux").show();
         $("#data").html(imprime(data));
         console.log("Status: "+statusCode+ " " +statusCodeText);
-        //refresh();
       });
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
@@ -546,6 +569,28 @@ direccion();
           $('#data').append(trHTML);
         }
     });
+  request.always(function(jqXHR, status){
+    var statusCode = jqXHR.status;
+    if (status == "error"){
+        $("#status3").show();
+        if(statusCode==401){
+          $("#status6").text(statusCode+": Apikey required");
+          $("#offsetAux").hide();
+        }
+        else if(statusCode==403){
+          $("#status6").text(statusCode+": Invalid apikey");
+          $("#offsetAux").hide();
+        }
+        $("#status2").hide();
+        $("#status1").hide();
+        $("#data").text("");
+        $("#log").text("");
+        console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+    }else{
+        $("#txtStatus").text(status);
+    }
+  });
+});
 //search (region, year, from, to)
     function search(){
       console.log("Handling click");
