@@ -7,12 +7,13 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css"></link>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.4.1/css/alertify.min.css"></link>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.4.1/css/themes/bootstrap.min.css"></link>
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
 <script src="//cdn.jsdelivr.net/alertifyjs/1.4.1/alertify.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 <script type="text/javascript" src="rest.js"></script>
 <script type="text/javascript">
+
 
 
 alertify.defaults.theme.ok = "btn btn-primary";
@@ -32,12 +33,10 @@ $(document).ready(function() {
 <div class="jumbotron">
 <div><h1 align="center">Population growth</h1></div>
     <div class="container-fluid">
-          <input onclick="botonMenu()" type="button" name="Datos" value="Datos"></input>       
-          <input onclick="botonAnadirDato()" type="button" name="Añadir dato" value="Añadir dato"></input>
-          <input onclick="botonEditarDato()" type="button" name="Editar dato" value="Editar dato"></input>
-          <input onclick="botonEliminarDato()" type="button" name="Eliminar dato seleccionado" value="Eliminar dato seleccionado"></input> 
-          <input onclick="botonEliminarTodo()" type="button" name="Eliminar todos los datos" value="Eliminar todos los datos"></input>
-          <input onclick="cargaInicial()" type="button" name="Carga inicial" value="Carga inicial"></input>
+          <input onclick="botonMenu()" type="button" name="Datos" value="Datos" class="btn btn-default"></input>       
+          <input onclick="botonAnadirDato()" type="button" name="Añadir dato" class="btn btn-primary" value="Añadir dato"></input>
+          <input onclick="botonEliminarTodo()" type="button" name="Eliminar todos los datos" class="btn btn-warning" value="Eliminar todos los datos"></input>
+          <input onclick="cargaInicial()" type="button" name="Carga inicial" class="btn btn-danger" value="Carga inicial"></input>
     </div>
 </br>
 </br>
@@ -79,10 +78,40 @@ $(document).ready(function() {
     
   </form>
 </div>
+  
+</br>
 
 </br>
+
+<div class="container" id="formularioEliminar">
+<label>Eliminar un recurso: </label>
+<input type="text" class="form-control" id="reg" placeholder="region" required="true">
+<input type="text" class="form-control" id="yea" placeholder="year" required="true">
+<form role="form">
+  <input type="button" class="btn btn-info" onclick="eliminardato()" name="Elimdato" value="Eliminar"></input>
+</form>
+</div>
+
 </br>
 
+<div class="container" id="formularioEditar">
+<label>Editar un recurso: </label>
+<input type="text" class="form-control" id="reg2" placeholder="region" required="true">
+<input type="text" class="form-control" id="yea2" placeholder="year" required="true">
+<form role="form">
+  <input type="button" class="btn btn-success" onclick="editardato()" name="Editdato" value="Editar"></input>
+</form>
+</div>
+
+</br>
+
+<div class="container" id="formularioBusqueda">
+<label>Búsqueda: </label>
+<input type="text" class="form-control" id="busqueda" placeholder="Introduce region" >
+<form role="form">
+  <input type="button" onclick="busqueda()" name="Buscar" value="Buscar"></input>
+</form>
+</div>
 
 <div>
   <label>Mostrar </label><select id="limit" onchange="paginacion()">
@@ -96,6 +125,18 @@ $(document).ready(function() {
 <div id="tabla">
  <table id="tablaid" class="display" width="100%">
 </table></div>
+
+</br>
+
+<div>
+  <label>Página: </label><select id="pag" onchange="paginacion2()">
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select>
+</div>
 
 </div>
 </div>
