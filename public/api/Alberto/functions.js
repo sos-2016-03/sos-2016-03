@@ -10,50 +10,69 @@ exports.getRegionAño=function(array,region,year){
 };
 
 exports.getListaFTLO=function(array,from,to,limit,offset){
+	aux=[];
 	if(from && to && limit && offset){
 		aux=getListaFT(array,from,to);
 		if(aux.length!=0){
 			res=getListaLO(aux,limit,offset);
+		}else{
+			res=aux;
 		}
 	}else if(from && limit && offset){
 		aux=getListaF(array,from);
       	if(aux.length!=0){
       		res=getListaLO(aux,limit,offset);
-        }
+        }else{
+					res=aux;
+				}
 	}else if(to && limit && offset){
 		aux=getListaT(array,to);
 		if(aux.length!=0){
       		res=getListaLO(aux,limit,offset);
-        }
+        }else{
+					res=aux;
+				}
 	}else if(from && to && limit){
 		aux=getListaFT(array,from,to);
 		if(aux.length!=0){
 			res=getListaL(aux,limit);
+		}else{
+			res=aux;
 		}
 	}else if(from && limit){
 		aux=getListaF(array,from);
 		if(aux.length!=0){
 			res=getListaL(aux,limit);
+		}else{
+			res=aux;
 		}
 	}else if(to && limit){
 		aux=getListaT(array,to);
 		if(aux.length!=0){
 			res=getListaL(aux,limit);
+		}else{
+			res=aux;
 		}
 	}else if(from && to && offset){
 		aux=getListaFT(array,from,to);
 		if(aux.length!=0){
 			res=getListaO(aux,offset);
+		}else{
+			res=aux;
 		}
 	}else if(from && offset){
 		aux=getListaF(array,from);
 		if(aux.length!=0){
 			res=getListaO(aux,offset);
+		}else{
+			res=aux;
 		}
 	}else if(to && offset){
 		aux=getListaT(array,to);
 		if(aux.length!=0){
 			res=getListaO(aux,offset);
+		}else{
+			res=aux;
 		}
 	}else if(limit && offset){
 		res=getListaLO(array,limit,offset);
@@ -74,6 +93,7 @@ exports.getListaFTLO=function(array,from,to,limit,offset){
 }
 
 function getListaLO(array,limit,offset){
+				aux=[];
         aux=array.slice(offset,array.length);
         aux.splice(limit,aux.length);
         return aux;

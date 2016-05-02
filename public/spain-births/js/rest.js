@@ -7,14 +7,13 @@ function deleteItemAux(j){
   console.log("He llegado hasta aux()",j);
   var request=$.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val(),
+      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
       data: "{}",
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       });
       request.done(function(data,status,jqXHR){
       var valor;
-
           $.each(data, function(i,item){
               if(data[i].region==data[j].region && data[i].year == data[j].year){
                 console.log(data[j]);
@@ -88,7 +87,7 @@ function putAux(j){
   console.log("He llegado hasta aux()");
   var request = $.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val(),
+      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
       data: "{}",
       contentType: "application/json; charset=utf-8",
       dataType: "json"
@@ -234,6 +233,7 @@ function refresh(){
     var statusCodeText = jqXHR.statusText;
     $("#log").text("Data received");
     //$("#status5").text(statusCode+": Correct request");
+    console.log(data.length);
     if(data.length<=$("#limit").val()){
       console.log(data.length);
       $("#offsetAux").hide();
@@ -243,17 +243,17 @@ function refresh(){
     $("#status2").show();
     $("#status3").hide();
     $("#status1").hide();
-    $("#data").html(imprime(data));
     console.log("Status: "+statusCode+ " " +statusCodeText);
 
   var request =$.ajax({
     type: "GET",
-    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val(),
+    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
     data: "{}",
     data: $("#payload").val(),
     contentType: "application/json"
   });
     request.done(function(data,status,jqXHR){
+      console.log($("#offset").val());
       console.log("Handling request (OK)");
       console.log("Data received: ");
       console.log(JSON.stringify(data));
@@ -261,7 +261,6 @@ function refresh(){
       var statusCodeText = jqXHR.statusText;
       $("#log").text("Data received");
       //$("#status5").text(statusCode+": Correct request");
-      console.log(data.length);
       $("#status2").show();
       $("#status3").hide();
       $("#status1").hide();
@@ -378,7 +377,6 @@ $(document).ready(function(){
       $("#status2").show();
       $("#status3").hide();
       $("#status1").hide();
-      $("#data").html(imprime(data));
       console.log("Status: "+statusCode+ " " +statusCodeText);
 
     var request =$.ajax({
@@ -554,7 +552,7 @@ direccion();
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val(),
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
         type: "GET",
         contentType: "application/json"
       });
@@ -579,7 +577,7 @@ direccion();
         console.log("Status: "+statusCode+ " " +statusCodeText);
 
       var request = $.ajax({
-        url: url,
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
         type: "GET",
         contentType: "application/json"
       });
