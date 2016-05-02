@@ -12,39 +12,119 @@
 <script src="jqwidgets/jqxbuttons.js"></script>
 <script src="jqwidgets/jqxgrid.js"></script>
 <script src="jqwidgets/jqxinput.js"></script>
+<script src="jqwidgets/jqxgrid.edit.js"></script>
+<script src="jqwidgets/jqxgrid.selection.js"></script>
+
 <link type="text/css" rel="stylesheet" href="jqwidgets/styles/jqx.orange.css"/>
 <link type="text/css" rel="stylesheet" href="jqwidgets/styles/jqx.shinyblack.css"/>
 <link type="text/css" rel="stylesheet" href="jqwidgets/styles/jqx.darkblue.css"/>
 
 <script src="mort-sickness.js"></script>
 
-</head>
 <body style="font-family: Verdana">
 <div id=title align="center">
 <h1>MORT SICKNESS DATA</h1>
 </div>
 </br>
+<div class="col1">
+Apikey:<input id="apikey" align="left" width="50"></input>
+</div>
+</br>
 <div>
-Apikey:<input id="apikey"></input>
+<label>Mostrar </label><select id="limit">
+  <option value="3">3</option>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+</select><label> datos</label>
+
+</div>
+</br>
+<div>
+<label>Mostrar a partir del dato</label><select id="offset">
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>
+</div>
+</br>
+<div>
+Desde el año:<input id="from" align="left" width="50"></input> Hasta el año:<input id="to" align="left" width="50"></input> <input type="button" value="Buscar" id="entreAños" onclick="buscaEntreAños()"></input>
 </div>
 
-<div align="right">
-	<input type="button" id="GET" value="Ver todos" />
-	<input type="button" id="miBotonInicial" value="Carga Inicial" />
+
+</br>
+<div>
+	BÚSQUEDA:
+	</br>
+	Region:<input type="text" id="region1"> <input type="button" value="Buscar región" id="buscaRegion1" onclick="buscaPorRegion()"></input>
+	</br>
+	Año:<input type="text" id="year1"> <input type="button" value="Buscar año" id="buscaAño1" onclick="buscaPorAño()"></input>
+	</br>
+
+</div>
+
+--------------------------------------------------------------------------------------------------
+<div class="container" id="formulario">
+ <h2 id="tituloFormulario">Dato a insertar o actualizar:</h2>
+  <form role="form">
+    <div class="form-group">
+      <label for="region">Region:</label>
+      <input type="text" class="form-control" id="region" >
+    </div>
+    <div class="form-group">
+      <label for="sickness">Sickness:</label>
+      <input type="text" class="form-control" id="sick" >
+    </div>
+    <div class="form-group">
+      <label for="year">Year:</label>
+      <input type="text" class="form-control" id="year"  >
+    </div>
+    <div class="form-group">
+      <label for="mortalityInMen">Mortality in men:</label>
+      <input type="text" class="form-control" id="mortalityInMen">
+    </div>
+     <div class="form-group">
+      <label for="mortalityInWomen">Mortality in women:</label>
+      <input type="text" class="form-control" id="mortalityInWomen">
+    </div>
+    <div class="form-group">
+      <label for="totalMortality">Total mortality:</label>
+      <input type="text" class="form-control" id="totalMortality">
+    </div>
+    </br>
+  </form>
+</div>
+
+--------------------------------------------------------------------------------------------------
+
+<div align="left">
+	<input type="button" id="POST" value="Nuevo" onclick="nuevo()"/>
+	<input type="button" id="PUT" value="Actualizar" onclick="actualizar()"/>
+	<input type="button" id="GET" value="Ver todos" onclick="verTodos()" />
+	<input type="button" id="miBotonInicial" value="Carga Inicial" onclick="cargaInicial()" />
+	<input type="button" id="DELETE" value="Eliminar todo" onclick="eliminarTodo()" />
+	<input type="button" id="DELETEDATO" value="Eliminar dato" onclick="eliminarDato()" />
 </div>
 </br>
-<table id="sickness">
+</br>
+<div>
+<table id="sickness"  border='1' rules="all" cellpadding="5">
 <tr>
-<th align="center">Region</th>
-<th align="center">Sickness</th>
-<th align="center">Year</th>
-<th align="center">MortalityInMen</th>
-<th align="center">MortalityInWomen</th>
-<th align="center">TotalMortality</th>
+<th align="center" bgcolor="orange" id="region">Region</th>
+<th align="center" bgcolor="orange" id="sickness">Sickness</th>
+<th align="center" bgcolor="orange" id="year">Year</th>
+<th align="center" bgcolor="orange" id="mortalityinMen">MortalityInMen</th>
+<th align="center" bgcolor="orange" id="mortalityInWomen">MortalityInWomen</th>
+<th align="center" bgcolor="orange" id="totalMortality">TotalMortality</th>
 </tr>
 </table>
+</div>
 </br>
-</b
+</br>
 <div>
 Http status: <span id="status"></span>
 </br>

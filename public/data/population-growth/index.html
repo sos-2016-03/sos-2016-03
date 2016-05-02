@@ -55,10 +55,13 @@ $(document).ready(function(){
 
         success: function (data) {
           var trHTML = '';
+
       
         
 
       $.each(data, function (i, item) {
+        console.log(data[i]);
+        
           trHTML += "<tr class='info'><td>" + data[i].region + '</td><td>' + data[i].year + '</td><td>' + data[i].age + '</td><td>' + data[i].men + '</td><td>' + data[i].women + '</td><td>' + data[i].total_population + '</td></tr>';
       });
 

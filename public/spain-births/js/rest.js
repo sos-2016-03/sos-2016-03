@@ -50,9 +50,11 @@ function deleteItemAux(j){
                   if (status == "error"){
                     if(statusCode==401){
                       $("#status6").text(statusCode+": Apikey required");
+                      $("#offsetAux").hide();
                     }
                     else if(statusCode==403){
                       $("#status6").text(statusCode+": Invalid apikey");
+                      $("#offsetAux").hide();
                     }
                       $("#status3").show();
                       $("#status1").hide();
@@ -128,12 +130,15 @@ function putAux(j){
                   if (status == "error"){
                     if(statusCode==401){
                       $("#status6").text(statusCode+": Apikey required");
+                      $("#offsetAux").hide();
                     }
                     else if(statusCode==403){
                       $("#status6").text(statusCode+": Invalid apikey");
+                      $("#offsetAux").hide();
                     }
                     else if(statusCode==400){
                       $("#status6").text(statusCode+": Wrong fields: you need to write something more!");
+                      $("#offsetAux").hide();
                     }
                      $("#status3").show();
                       $("#status1").hide();
@@ -196,15 +201,19 @@ function addBirth(){
     if (status == "error"){
       if(statusCode==401){
         $("#status6").text(statusCode+": Apikey required");
+        $("#offsetAux").hide();
       }
       else if(statusCode==403){
         $("#status6").text(statusCode+": Invalid apikey");
+        $("#offsetAux").hide();
       }
       else if(statusCode==409){
         $("#status6").text(statusCode+": Data exists already");
+        $("#offsetAux").hide();
       }
       else if(statusCode==400){
         $("#status6").text(statusCode+": Wrong fields: you need to write something more!");
+        $("#offsetAux").hide();
       }
       $("#status3").show();
         $("#status1").hide();
@@ -246,9 +255,11 @@ function refresh(){
       if (status == "error"){
         if(statusCode==401){
           $("#status6").text(statusCode+": Apikey required");
+          $("#offsetAux").hide();
         }
         else if(statusCode==403){
           $("#status6").text(statusCode+": Invalid apikey");
+          $("#offsetAux").hide();
         }
           $("#data").text("");
           $("#log").text("");
@@ -318,7 +329,6 @@ $(document).ready(function(){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         $("#log").text("Data received");
-        //$("#status5").text(statusCode+": Correct request");
         $("#status2").show();
         $("#status3").hide();
         $("#status1").hide();
@@ -332,9 +342,11 @@ $(document).ready(function(){
             $("#status3").show();
             if(statusCode==401){
               $("#status6").text(statusCode+": Apikey required");
+              $("#offsetAux").hide();
             }
             else if(statusCode==403){
               $("#status6").text(statusCode+": Invalid apikey");
+              $("#offsetAux").hide();
             }
             $("#status2").hide();
             $("#status1").hide();
@@ -382,7 +394,7 @@ direccion();
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: '../../../api/v1/spain-births?apikey='+$("#apikey").val(),
+        url: '../../../api/v1/spain-births?apikey='+$("#apikey").val()+'&limit='+$("#limit").val(),
         type: "GET",
         data: $("#payload").val(),
         contentType: "application/json"
@@ -398,6 +410,7 @@ direccion();
         $("#status2").show();
         $("#status3").hide();
         $("#status1").hide();
+        $("#offsetAux").show();
         $("#data").html(imprime(data));
         console.log("Status: "+statusCode+ " " +statusCodeText);
         //refresh();
@@ -408,9 +421,11 @@ direccion();
             $("#status3").show();
             if(statusCode==401){
               $("#status6").text(statusCode+": Apikey required");
+              $("#offsetAux").hide();
             }
             else if(statusCode==403){
               $("#status6").text(statusCode+": Invalid apikey");
+              $("#offsetAux").hide();
             }
             $("#status2").hide();
             $("#status1").hide();
@@ -450,9 +465,33 @@ direccion();
       $("#log").text("Sending request...");
 
       var request = $.ajax({
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val(),
+        type: "GET",
+        contentType: "application/json"
+      });
+      request.done(function(data,status,jqXHR){
+        console.log("Handling request (OK)");
+        console.log("Data received: ");
+        console.log(JSON.stringify(data));
+        var statusCode = jqXHR.status;
+        var statusCodeText = jqXHR.statusText;
+        $("#log").text("Data received");
+        $("#status5").text(statusCode+": Correct request");
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
+        console.log(data.length);
+        if(data.length<=$("#limit").val()){
+          console.log(data.length);
+          $("#offsetAux").hide();
+        }else {
+          $("#offsetAux").show();
+        }
+        console.log("Status: "+statusCode+ " " +statusCodeText);
+
+      var request = $.ajax({
         url: url,
         type: "GET",
-        data: $("#payload").val(),
         contentType: "application/json"
       });
       request.done(function(data,status,jqXHR){
@@ -476,12 +515,15 @@ direccion();
             $("#status3").show();
             if(statusCode==401){
               $("#status6").text(statusCode+": Apikey required");
+              $("#offsetAux").hide();
             }
             else if(statusCode==403){
               $("#status6").text(statusCode+": Invalid apikey");
+              $("#offsetAux").hide();
             }
             else if(statusCode==404){
               $("#status6").text(statusCode+": Data not found");
+              $("#offsetAux").hide();
             }
             $("#status2").hide();
             $("#status1").hide();
@@ -514,14 +556,65 @@ direccion();
                 });
           $('#data').append(trHTML);
         }
-    }
+    });
+    request.always(function(jqXHR, status){
+      var statusCode = jqXHR.status;
+      var statusCodeText = jqXHR.statusText;
+      if (status == "error"){
+          $("#status3").show();
+          if(statusCode==401){
+            $("#status6").text(statusCode+": Apikey required");
+            $("#offsetAux").hide();
+          }
+          else if(statusCode==403){
+            $("#status6").text(statusCode+": Invalid apikey");
+            $("#offsetAux").hide();
+          }
+          else if(statusCode==404){
+            $("#status6").text(statusCode+": Data not found");
+            $("#offsetAux").hide();
+          }
+          $("#status2").hide();
+          $("#status1").hide();
+          $("#data").text("");
+          $("#log").text("");
+          console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+      }else{
+          $("#txtStatus").text(status);
+      }
+    });
+  }
 
 //limit
     function entry(){
       console.log("Handling click");
       $("#log").text("Sending request...");
 
-      var method=$("input[type=button]").val();
+      var request = $.ajax({
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val(),
+        type: "GET",
+        contentType: "application/json"
+      });
+      request.done(function(data,status,jqXHR){
+        console.log("Handling request (OK)");
+        console.log("Data received: ");
+        console.log(JSON.stringify(data));
+        var statusCode = jqXHR.status;
+        var statusCodeText = jqXHR.statusText;
+        $("#log").text("Data received");
+        $("#status5").text(statusCode+": Correct request");
+        $("#status2").show();
+        $("#status3").hide();
+        $("#status1").hide();
+        console.log(data.length);
+        if(data.length<=$("#limit").val()){
+          console.log(data.length);
+          $("#offsetAux").hide();
+        }else {
+          $("#offsetAux").show();
+        }
+        console.log("Status: "+statusCode+ " " +statusCodeText);
+
       var request = $.ajax({
         url: url,
         type: "GET",
@@ -549,12 +642,15 @@ direccion();
             $("#status3").show();
             if(statusCode==401){
               $("#status6").text(statusCode+": Apikey required");
+              $("#offsetAux").show();
             }
             if(statusCode==403){
               $("#status6").text(statusCode+": Invalid apikey");
+              $("#offsetAux").show();
             }
             if(statusCode==404){
               $("#status6").text(statusCode+": Data not found");
+              $("#offsetAux").show();
             }
             $("#status2").hide();
             $("#status1").hide();
@@ -587,7 +683,34 @@ direccion();
                 });
           $('#data').append(trHTML);
         }
-    }
+    });
+    request.always(function(jqXHR, status){
+      var statusCode = jqXHR.status;
+      var statusCodeText = jqXHR.statusText;
+      if (status == "error"){
+          $("#status3").show();
+          if(statusCode==401){
+            $("#status6").text(statusCode+": Apikey required");
+            $("#offsetAux").hide();
+          }
+          if(statusCode==403){
+            $("#status6").text(statusCode+": Invalid apikey");
+            $("#offsetAux").hide();
+          }
+          if(statusCode==404){
+            $("#status6").text(statusCode+": Data not found");
+            $("#offsetAux").hide();
+          }
+          $("#status2").hide();
+          $("#status1").hide();
+          $("#data").text("");
+          $("#log").text("");
+          console.log("Status: "+jqXHR.status+ " " +jqXHR.statusText);
+      }else{
+          $("#txtStatus").text(status);
+      }
+    });
+  }
 
 //offset
     function pagination(){
@@ -622,9 +745,11 @@ direccion();
             $("#status3").show();
             if(statusCode==401){
               $("#status6").text(statusCode+": Apikey required");
+              $("#offsetAux").hide();
             }
             else if(statusCode==403){
               $("#status6").text(statusCode+": Invalid apikey");
+              $("#offsetAux").hide();
             }
             else if(statusCode==404){
               $("#status6").text(statusCode+": Data not found");
@@ -756,9 +881,11 @@ function direccion() {
         if (status == "error"){
           if(statusCode==401){
             $("#status6").text(statusCode+": Apikey required");
+            $("#offsetAux").hide();
           }
           if(statusCode==403){
             $("#status6").text(statusCode+": Invalid apikey");
+            $("#offsetAux").hide();
           }
             $("#status3").show();
             $("#status1").hide();
@@ -802,9 +929,11 @@ function direccion() {
         if (status == "error"){
           if(statusCode==401){
             $("#status6").text(statusCode+": Apikey required");
+            $("#offsetAux").hide();
           }
           if(statusCode==403){
             $("#status6").text(statusCode+": Invalid apikey");
+            $("#offsetAux").hide();
           }
             $("#status3").show();
             $("#status1").hide();

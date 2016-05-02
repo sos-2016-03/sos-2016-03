@@ -586,7 +586,8 @@ module.exports.postSickness = function(req,res){
 	var buscado = 0;
 	if(sickness.length==0){
 		if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-		&& totalMort!=undefined){
+		&& totalMort!=undefined && region!='' && year!='' && sic!='' && mortMen!='' && mortWomen!='' 
+		&& totalMort!=''){
 			sickness.push(sick);
 			res.sendStatus(201);
 		}else{
@@ -594,7 +595,8 @@ module.exports.postSickness = function(req,res){
 		}
 	}else{
 		if(Object.keys(sick).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-		&& totalMort!=undefined){
+		&& totalMort!=undefined && region!='' && year!='' && sic!='' && mortMen!='' && mortWomen!='' 
+		&& totalMort!=''){
 			for(var i=0; i<sickness.length; i++){
 				if(sickness[i].region==sick.region &&  sickness[i].year ==sick.year){
 					buscado=1;//Error porque ya existe
@@ -629,35 +631,50 @@ module.exports.putSickness = function(req,res){
 }
 
 module.exports.putSicknessRegionYear = function(req,res){
-	var region = req.body.region;
-	var year = req.body.year;
-	var sic = req.body.sickness;
-	var mortMen = req.body.mortalityInMen;
-	var mortWomen = req.body.mortalityInWomen;
-	var totalMort = req.body.totalMortality;
-	var nueva = req.body;
-	var regN = req.params.region;
-	var yearN = req.params.year;
-	if(Object.keys(nueva).length==6 && region!=undefined && year!=undefined && sic!=undefined && mortMen!=undefined && mortWomen!=undefined 
-		&& totalMort!=undefined){
-			for(var i=0; i<sickness.length; i++){
-				 var t = sickness[i];
-				if(regN==region && yearN==year){
-					sickness[i]=nueva;
-					console.log("Modified");
-					res.sendStatus(200);
-					break;
-				}else if(t.region!=region || t.year!=year){
-					res.sendStatus(400);
-					break;
-				}else{
-					res.sendStatus(404);
-				}
-			}
-	}else{
-		console.log("Bad Request");
-		res.sendStatus(400);
-	}
+	var encontrado = -1;
+  var region = req.params.region;
+  var year = req.params.year;
+  var p = req.body;
+  console.log(region + "," + year);
+  var x = p.region;
+  var x2 = p.sickness;
+  var x3 = p.year;
+  var x4 = p.mortalityInMen;
+  var x5 = p.mortalityInWomen;
+  var x6 = p.totalMortality;
+  
+  var alb = Object.keys(p).length;
+
+  if(sickness.length==0){
+    res.sendStatus(400);
+  }else{
+    if(x==undefined || x2==undefined || x3==undefined || x4==undefined || x5==undefined || x6==undefined 
+      || alb!=6 || x=='' || x2=='' || x3=='' || x4=='' || x5=='' || x6==''){
+      res.sendStatus(400);
+    }else{
+      if(year!=p.year || region!=p.region){
+        res.sendStatus(400);
+      }else{
+        for(var i = 0; i< sickness.length; i++){
+          if(region == sickness[i].region){
+            var t = sickness[i];
+            if(t.year == year){
+              encontrado = i;
+              console.log("New PUT of resource " + t.region + "/" + t.year);
+              sickness[i] = p;
+              res.sendStatus(200);
+            }
+          }
+        }
+        if (encontrado == -1){
+          console.log("Operation PUT not permitted because the object is not found");
+          res.sendStatus(404);
+        }
+      }
+
+    }
+  }
+
 }
 
 
