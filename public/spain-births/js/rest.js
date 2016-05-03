@@ -220,7 +220,7 @@ function addBirth(){
 function refresh(){
   var request =$.ajax({
     type: "GET",
-    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read',
+    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&from='+$("#from").val()+'&to='+$("#to").val(),
     data: "{}",
     data: $("#payload").val(),
     contentType: "application/json"
@@ -239,6 +239,14 @@ function refresh(){
       $("#offsetAux").hide();
     }else {
       $("#offsetAux").show();
+      var offsetOptions = '';
+      $('#offset').empty();
+      for(i=0;i<(data.length/$("#limit").val());i++){
+        console.log("Entro al bucle de pagination");
+        offsetOptions+='<option value="'+i+'">'+(i+1)+'</option>';
+      }
+      $('#offset').append(offsetOptions);
+      $("#offset").css("display", "block");
     }
     $("#status2").show();
     $("#status3").hide();
@@ -253,7 +261,6 @@ function refresh(){
     contentType: "application/json"
   });
     request.done(function(data,status,jqXHR){
-      console.log($("#offset").val());
       console.log("Handling request (OK)");
       console.log("Data received: ");
       console.log(JSON.stringify(data));
@@ -345,9 +352,12 @@ function add(){
 
 //Código jQuery!
 $(document).ready(function(){
-  $('select').material_select();
   $("#status2").hide();
   $("#status3").hide();
+  $("#limit").css("display","block");
+  $('select').material_select('destroy');
+  
+
 
   jQuery.support.cors = true;
 
@@ -373,6 +383,14 @@ $(document).ready(function(){
         $("#offsetAux").hide();
       }else {
         $("#offsetAux").show();
+        var offsetOptions = '';
+        $('#offset').empty();
+        for(i=0;i<(data.length/$("#limit").val());i++){
+          console.log("Entro al bucle de pagination");
+          offsetOptions+='<option value="'+i+'">'+(i+1)+'</option>';
+        }
+        $('#offset').append(offsetOptions);
+        $("#offset").css("display", "block");
       }
       $("#status2").show();
       $("#status3").hide();
@@ -441,6 +459,7 @@ $(document).ready(function(){
                     '<button class="btn-floating btn-large waves-effect waves-light #f44336 red" onclick="deleteItem(' + i + ')"><i class="material-icons">delete</i></button></td>' +
                     '<td class="center-align"><button class="btn-floating btn-large waves-effect waves-light purple" onclick="put(' + i + ')"><i class="material-icons">mode_edit</i></button></td></tr>';
                 });
+
           $('#data').append(trHTML);
         }
 
@@ -499,6 +518,14 @@ direccion();
           $("#offsetAux").hide();
         }else {
           $("#offsetAux").show();
+          var offsetOptions = '';
+          $('#offset').empty();
+          for(i=0;i<(data.length/$("#limit").val());i++){
+            console.log("Entro al bucle de pagination");
+            offsetOptions+='<option value="'+i+'">'+(i+1)+'</option>';
+          }
+          $('#offset').append(offsetOptions);
+          $("#offset").css("display", "block");
         }
         $("#status2").show();
         $("#status3").hide();
@@ -618,6 +645,14 @@ direccion();
           $("#offsetAux").hide();
         }else {
           $("#offsetAux").show();
+          var offsetOptions = '';
+          $('#offset').empty();
+          for(i=0;i<(data.length/$("#limit").val());i++){
+            console.log("Entro al bucle de pagination");
+            offsetOptions+='<option value="'+i+'">'+(i+1)+'</option>';
+          }
+          $('#offset').append(offsetOptions);
+          $("#offset").css("display", "block");
         }
         console.log("Status: "+statusCode+ " " +statusCodeText);
 
@@ -744,6 +779,14 @@ direccion();
           $("#offsetAux").hide();
         }else {
           $("#offsetAux").show();
+          var offsetOptions = '';
+          $('#offset').empty();
+          for(i=0;i<(data.length/$("#limit").val());i++){
+            console.log("Entro al bucle de pagination");
+            offsetOptions+='<option value="'+i+'">'+(i+1)+'</option>';
+          }
+          $('#offset').append(offsetOptions);
+          $("#offset").css("display", "block");
         }
         console.log("Status: "+statusCode+ " " +statusCodeText);
 
@@ -920,21 +963,38 @@ direccion();
     }
 
 //Cambio de URL para Search
-$("input[name=param]").keyup(function(){
-    direccion();
-});
-$("#apikey").change(function(){
+$("input[name=apikey]").keyup(function(){
     direccion();
 });
 
-$("#region").change(function(){
+$("input[name=region]").keyup(function(){
+    direccion();
+    search();
+});
+
+$("input[name=year]").keyup(function(){
+    direccion();
+    search();
+});
+
+$("input[name=from]").keyup(function(){
+    direccion();
+    search();
+});
+
+$("input[name=to]").keyup(function(){
+    direccion();
+    search();
+});
+
+/*$("#region").change(function(){
     direccion();
     search();
 });
 $("#year").change(function(){
     direccion();
     search();
-});
+});*/
 $("#offset").change(function(){
     direccion();
     pagination();
@@ -943,14 +1003,14 @@ $("#limit").change(function(){
     direccion();
     entry();
 });
-$("#from").change(function(){
+/*$("#from").change(function(){
     direccion();
     search();
 });
 $("#to").change(function(){
     direccion();
     search();
-});
+});*/
 
 function direccion() {
     url=$("#url").val();
