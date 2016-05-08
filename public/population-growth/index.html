@@ -23,7 +23,7 @@ alertify.defaults.theme.input = "form-control";
 $(document).ready(function() {
   var date = procesarDatos();
   var table = IniciarTabla(date);
-  seleccionarCelda(table);
+  //seleccionarCelda(table);
 });
 
 </script>
@@ -40,8 +40,16 @@ $(document).ready(function() {
     </div>
 </br>
 </br>
-<div>Apikey:<input type="text" name="apieky" id="apikey" placeholder="Apikey"/></div>
-<label>(Para los métodos: Eliminar dato seleccionado, Eliminar todos los datos, Carga inicial)</label>
+
+<div>
+  <select id="apikey">
+    <option value="read" selected="selected">Read</option>
+    <option value="write">Write</option>
+  </select>
+</div>
+
+<!--<div>Apikey:<input type="text" name="apikey" id="apikey" placeholder="Apikey"/></div>
+<label>(Para los métodos: Eliminar dato seleccionado, Eliminar todos los datos, Carga inicial)</label>-->
   
 <div class="container" id="formulario2">
  <h2 id="tituloFormulario">Añadir un nuevo dato:</h2>

@@ -58,7 +58,7 @@ function procesarDatos(){
   });
   return res; //Devuelve un array(res) de arrays(dato) con los datos que hay en ese momento en la api
 }
-
+/*
 function seleccionarCelda(data){
   var table = data;
   $('#tablaid tbody').on( 'click', 'tr', function () {
@@ -73,7 +73,7 @@ function seleccionarCelda(data){
     console.log(table.$('tr.selected'));
   } );  
 }
-
+*/
 function vaciarCajas(){
   document.getElementById("region2").value = "";
   document.getElementById("year2").value = "";
@@ -85,7 +85,7 @@ function vaciarCajas(){
 }
 
 //La utilizo para saber que recurso tengo que borrar o editar de la api
-function conseguirDato(){
+/*function conseguirDato(){
   var table =  $('#tablaid').DataTable();
   var dato = table.row('.selected').data().toString();
   console.log("Fila sin trocear: "+dato);
@@ -93,7 +93,7 @@ function conseguirDato(){
   console.log("Fila troceada: "+campos);
   return campos;
 }
-
+*/
 //Se ejecuta segundo
 function enviarDato(){
   var r= $("#region2").val()
@@ -127,8 +127,6 @@ function enviarDato(){
 function botonMenu(){
   $("#formulario2").slideUp();
   $("#tabla").slideDown();
-  
-  //$("#nav li").removeClass("active");
   $("#botonDatos").addClass("active");
   vaciarCajas();  
 }
@@ -150,7 +148,7 @@ function botonAnadirDato(){
   $("#botonAnadirDato").addClass("active");
   vaciarCajas();
 }
-
+/*
 function botonEditarDato(){
   nuevoDato = false;
   console.log("¿Es un nuevo Dato?: "+nuevoDato);
@@ -250,7 +248,7 @@ function botonEliminarDato(){
   alertify.alert("No has seleccionado ningún dato");
 }
 }
-
+*/
 function botonEliminarTodo(){
  
   var x;
@@ -375,7 +373,8 @@ function solicitudAjax(metodo, url, datos){
 }
 
 function cargaInicial(){
-  var urlstring = '/api/v1/population-growth/loadInitialData?apikey=' + $("#apikey").val();
+  var apikey = document.getElementById("apikey").value;
+  var urlstring = '/api/v1/population-growth/loadInitialData?apikey=' + apikey
   var method = "GET";
   var request = $.ajax({
     url: urlstring,

@@ -174,12 +174,21 @@ module.exports.getStatisticsId = function(req,res){
   if(id=='loadInitialData'){
     encontrado = 1;
     initial_array = [
-    {region:"Andalucia", year: "2009", age:"20-24", men: "273183", women: "259946", total_population: "533129"},
-    {region:"Madrid", year: "2010", age:"20-24", men: "176043", women: "174849", total_population: "350892"},
-    {region:"Cataluña", year: "2011", age:"45-49", men: "271109", women: "270808", total_population: "541917"},
-    {region:"Galicia", year: "2012", age:"65-69", men: "72977", women: "82399", total_population: "155376"},
-    {region:"Pais Vasco", year: "2013", age:"00-04", men: "53971", women: "51188", total_population: "105159"},
-    {region:"Andalucia", year: "2012", age:"20-24", men: "252799", women: "241437", total_population: "494236"}
+    
+
+    {region:"Andalucia", year: "2001", age:"20-24", men: "313710", women: "298771", total_population: 612481},
+    {region:"Andalucia", year: "2005", age:"20-24", men: "296769", women: "282956", total_population: 579725},
+    {region:"Andalucia", year: "2009", age:"20-24", men: "273183", women: "259946", total_population: 533129},
+    {region:"Andalucia", year: "2013", age:"20-24", men: "253228", women: "240955", total_population: 494183},
+    {region:"Galicia", year: "2001", age:"20-24", men: "158947", women: "159166", total_population: 299941},
+    {region:"Galicia", year: "2013", age:"20-24", men: "158947", women: "159166", total_population: 165745},
+    {region:"Galicia", year: "2005", age:"20-24", men: "158947", women: "159166", total_population: 274135},
+    {region:"Galicia", year: "2009", age:"20-24", men: "158947", women: "159166", total_population: 222941},
+    {region:"Madrid", year: "2001", age:"20-24", men: "217858", women: "213317", total_population: 431175},
+    {region:"Madrid", year: "2005", age:"20-24", men: "199460", women: "194353", total_population: 393813},
+    {region:"Madrid", year: "2009", age:"20-24", men: "184504", women: "179891", total_population: 364395},
+    {region:"Madrid", year: "2013", age:"20-24", men: "158947", women: "159166", total_population: 318113}
+    
     ];
     population_growth = initial_array;
     //console.log(population_growth);
