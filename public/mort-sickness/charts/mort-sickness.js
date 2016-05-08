@@ -39,3 +39,15 @@ function drawVisualization(){
 		})
 	})
 }
+
+$(document).ready(function(){
+	$('#select').jqxButton({
+		theme:'darkblue'
+	})
+});
+
+$(document).ready(function(){
+	$('#miBoton').jqxButton({
+		theme:'darkblue'
+	})
+});
