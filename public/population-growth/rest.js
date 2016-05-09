@@ -139,7 +139,7 @@ function botonAnadirDato(){
   
   seleccionado = false;
   $('tr.selected').removeClass('selected');
-  $("#tituloFormulario").text("Añadir un nuevo dato:");
+  $("#tituloFormulario").text("Add new data:");
   nuevoDato = true;
   console.log("¿Es un nuevo dato?: "+nuevoDato);
   $("#region2").prop('disabled', false);
@@ -272,25 +272,22 @@ function botonEliminarTodo(){
     console.log("jqXHR always: "+jqXHR);
     console.log("jqXHR status always: "+jqXHR.status);
     if(jqXHR.status == 0){
-      alertify.alert("¡Dato añadido con exito!");
+      alertify.alert("Data added successfully!");
     }
     if(jqXHR.status == 401){
-      alertify.alert("La clave introducida no es correcta");
+      alertify.alert("Incorrect key");
     }
     if(jqXHR.status == 404){
-      alertify.alert("Dato no encontrado");
+      alertify.alert("Not found");
     }
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+" Falta algún parámetro para rellenar o el tipo esta mal.");
+      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+" La entrada ya existe.");
-    }
-    if(jqXHR.status == 403){
-      alertify.alert("ERROR: "+jqXHR.status+" NO coincide el parametro para editar.");
+      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
     }
     if(jqXHR.status == 500){
-      alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
     }
     console.log("texto codigo always:"+jqXHR.statusText);
     console.log("status: "+status);
@@ -328,7 +325,7 @@ function solicitudAjax(metodo, url, datos){
     console.log("jqXHR status : "+jqXHR.status);
     console.log("texto codigo :"+jqXHR.statusText);
     console.log("status : "+status);
-    alertify.alert("Datos cargados con éxito. Pulsa aceptar para recargar la página.", function () {
+    alertify.alert("Data loaded", function () {
       location.reload();
   });
     actualizarTabla();
@@ -344,27 +341,24 @@ function solicitudAjax(metodo, url, datos){
     console.log("jqXHR always: "+jqXHR);
     console.log("jqXHR status always: "+jqXHR.status);
     if(jqXHR.status == 0){
-      alertify.alert("Datos cargados con éxito. Pulsa aceptar para recargar la página.", function () {
+      alertify.alert("Data loaded", function () {
       location.reload();
   });
     }
     if(jqXHR.status == 401){
-      alertify.alert("La clave introducida no es correcta");
+      alertify.alert("Incorrect key");
     }
     if(jqXHR.status == 404){
-      alertify.alert("Dato no encontrado");
+      alertify.alert("Not found");
     }
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+" Falta algún parámetro para rellenar o el tipo esta mal.");
+      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+" La entrada ya existe.");
-    }
-    if(jqXHR.status == 403){
-      alertify.alert("ERROR: "+jqXHR.status+" NO coincide el parametro para editar.");
+      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
     }
     if(jqXHR.status == 500){
-      alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
     }
     console.log("texto codigo always:"+jqXHR.statusText);
     console.log("status: "+status);
@@ -386,10 +380,10 @@ function cargaInicial(){
     console.log("jqXHR always: "+jqXHR);
     console.log("jqXHR status always: "+jqXHR.status);
     if(jqXHR.status == 401){
-      alertify.alert("La clave introducida no es correcta");
+      alertify.alert("Incorrect key");
     }
     if(jqXHR.status == 500){
-      alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
     }
     console.log("texto codigo always:"+jqXHR.statusText);
     console.log("status: "+status);
@@ -397,7 +391,7 @@ function cargaInicial(){
   });
   request.success(function(status,jqXHR) {
     console.log("Datos cargados");
-    alertify.alert("Datos cargados con éxito. Pulsa aceptar para recargar la página.", function () {
+    alertify.alert("Data loaded", function () {
       location.reload();
   });
   });
@@ -440,13 +434,13 @@ function paginacion() {
         error: function(jqXHR,status){
           console
           if(jqXHR.status == 401){
-              alertify.alert("La clave introducida no es correcta");
+              alertify.alert("Incorrect key");
           }
           if(jqXHR.status == 404){
-              alertify.alert("No se encontraron resultados");
+              alertify.alert("Not found. Not more data.");
           }
           if(jqXHR.status == 500){
-            alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+            alertify.alert("ERROR: "+jqXHR.status+"Server error");
            }
             console.log("texto codigo always:"+jqXHR.statusText);
             console.log("status: "+status);
@@ -496,13 +490,13 @@ var busqueda= document.getElementById("busqueda").value;
         error: function(jqXHR,status){
           console
           if(jqXHR.status == 401){
-              alertify.alert("La clave introducida no es correcta");
+              alertify.alert("Incorrect key");
           }
           if(jqXHR.status == 404){
-              alertify.alert("No se encontraron resultados");
+              alertify.alert("Not found. Not more data");
           }
           if(jqXHR.status == 500){
-            alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+            alertify.alert("ERROR: "+jqXHR.status+"Server error");
            }
             console.log("texto codigo always:"+jqXHR.statusText);
             console.log("status: "+status);
@@ -515,13 +509,30 @@ var busqueda= document.getElementById("busqueda").value;
 }
 
 function busqueda(){
-    var busqueda = document.getElementById("busqueda").value;
 
-
+    var busqueda_region = document.getElementById("busqueda").value;
+    var busqueda_from = document.getElementById("busqueda2").value;
+    var busqueda_to = document.getElementById("busqueda3").value;
+    if(busqueda_from=='' && busqueda_to==''){
+        urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val();
+    }else if(busqueda_from=='' && busqueda_to!=''){
+       urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&to=" + busqueda_to;
+    }else if(busqueda_from!='' && busqueda_to==''){
+       urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&from=" + busqueda_from;
+    }else if(busqueda_from!='' && busqueda_to!='' && busqueda_region!=''){
+      urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&from=" + busqueda_from + "&to=" + busqueda_to;
+    }else if(busqueda_from!='' && busqueda_to!='' && busqueda_region==''){
+      urlaux='/api/v1/population-growth/?apikey=' + $("#apikey").val() + "&from=" + busqueda_from + "&to=" + busqueda_to;
+    }else if(busqueda_from=='' && busqueda_to!='' && busqueda_region==''){
+      urlaux='/api/v1/population-growth/?apikey=' + $("#apikey").val() +  "&to=" + busqueda_to;
+    }else{
+      urlaux='/api/v1/population-growth/?apikey=' + $("#apikey").val() + "&from=" + busqueda_from ;
+    }
     $.ajax(
     {
         type: "GET",
-        url: '/api/v1/population-growth/'+busqueda+'?apikey=' + $("#apikey").val() ,
+        //url: '/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&from=" + busqueda_from + "&to=" + busqueda_to,
+        url: urlaux,
         data: "{}",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -544,13 +555,13 @@ function busqueda(){
         error: function(jqXHR,status){
           console
           if(jqXHR.status == 401){
-              alertify.alert("La clave introducida no es correcta");
+              alertify.alert("Incorrect key");
           }
           if(jqXHR.status == 404){
-              alertify.alert("No se encontraron resultados");
+              alertify.alert("Not found");
           }
           if(jqXHR.status == 500){
-            alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+            alertify.alert("ERROR: "+jqXHR.status+"Server error");
            }
             console.log("texto codigo always:"+jqXHR.statusText);
             console.log("status: "+status);
@@ -575,7 +586,7 @@ function eliminardato(){
   request.success(function(status,jqXHR){
   var x;
  
-    alertify.confirm("¿Esta seguro de Eliminar el dato?", function (e) {
+    alertify.confirm("Are you sure?", function (e) {
         if (e) {
       var table =  $('#tablaid').DataTable();
       console.log(x);
@@ -589,11 +600,11 @@ function eliminardato(){
       });
       seleccionado = false;
       x = "Se ha aceptado";
-      alertify.alert("Dato borrado con exito.", function(){
+      alertify.alert("Deleted", function(){
         location.reload();
       });
         }else{
-      x = "Se ha cancelado";
+      x = "Cancelled";
         }});
  
   console.log(x);
@@ -604,32 +615,29 @@ function eliminardato(){
     console.log("jqXHR always: "+jqXHR);
     console.log("jqXHR status always: "+jqXHR.status);
     if(jqXHR.status == 0){
-      alertify.alert("¡Dato añadido con exito!");
+      alertify.alert("Data added successfully!");
     }
     if(jqXHR.status == 401){
-      alertify.alert("La clave introducida no es correcta");
+      alertify.alert("Incorrect key");
     }
     if(jqXHR.status == 404){
-      alertify.alert("Dato no encontrado");
+      alertify.alert("Not found");
     }
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+" Falta algún parámetro para rellenar o el tipo esta mal.");
+      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+" La entrada ya existe.");
-    }
-    if(jqXHR.status == 403){
-      alertify.alert("ERROR: "+jqXHR.status+" NO coincide el parametro para editar.");
+      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
     }
     if(jqXHR.status == 500){
-      alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
     }
     console.log("texto codigo always:"+jqXHR.statusText);
     console.log("status: "+status);
     }
   });
 }else{
-  alertify.alert("No has seleccionado ningún dato");
+  alertify.alert("Data no selected");
 }
 
 }
@@ -658,27 +666,24 @@ function editardato(){
     console.log("jqXHR always: "+jqXHR);
     console.log("jqXHR status always: "+jqXHR.status);
     if(jqXHR.status == 0){
-      alertify.alert("¡Dato añadido con éxito!");
+      alertify.alert("Data added successfully!");
 
     }
     if(jqXHR.status == 401){
-      alertify.alert("Clave incorrecta");
+      alertify.alert("Incorrect key");
     }
     if(jqXHR.status == 404){
-      alertify.alert("Dato no encontrado");
+      alertify.alert("Not found");
     }
     
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+" Falta algún parámetro para rellenar o el tipo esta mal.");
+      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is Incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+" La entrada ya existe.");
-    }
-    if(jqXHR.status == 403){
-      alertify.alert("ERROR: "+jqXHR.status+" NO coincide el parametro para editar.");
+      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
     }
     if(jqXHR.status == 500){
-      alertify.alert("ERROR: "+jqXHR.status+" Error interno del Servidor");
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
     }
     console.log("texto codigo always:"+jqXHR.statusText);
     console.log("status: "+status);
