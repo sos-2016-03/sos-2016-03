@@ -231,7 +231,6 @@ function refresh(){
     var statusCode = jqXHR.status;
     var statusCodeText = jqXHR.statusText;
     $("#log").text("Data received");
-    //$("#status5").text(statusCode+": Correct request");
     console.log(data.length);
     if(data.length<=$("#limit").val()){
       console.log(data.length);
@@ -514,6 +513,10 @@ direccion();
         $("#log").text("Data received");
         $("#status5").text("Correct request");
         console.log(data.length);
+        $("#region").val("");
+        $("#year").val("");
+        $("#from").val("");
+        $("#to").val("");
         if(data.length<=$("#limit").val()){
           console.log(data.length);
           $("#offsetAux").hide();
@@ -759,7 +762,7 @@ direccion();
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val(),
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
         type: "GET",
         contentType: "application/json"
       });
@@ -792,7 +795,7 @@ direccion();
         console.log("Status: "+statusCode+ " " +statusCodeText);
 
       var request = $.ajax({
-        url: url,
+        url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey='+$("#apikey").val()+'&from='+$("#from").val()+'&to='+$("#to").val()+'&limit='+$("#limit").val(),
         type: "GET",
         data: $("#payload").val(),
         contentType: "application/json"
