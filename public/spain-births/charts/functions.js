@@ -32,8 +32,11 @@ $(document).ready(function(){
 
   var options = {
     region: 'ES',
+    colorAxis: {colors: ['#00853f', 'black', '#e31b23']},
+    backgroundColor: '#81d4fa',
+    datalessRegionColor: '#f8bbd0',
+    defaultColor: '#f5f5f5',
     displayMode: 'markers',
-    colorAxis: {colors: ['green', 'blue']}
   };
 
 
