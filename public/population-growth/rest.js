@@ -139,7 +139,7 @@ function botonAnadirDato(){
   
   seleccionado = false;
   $('tr.selected').removeClass('selected');
-  $("#tituloFormulario").text("Add new data:");
+  $("#tituloFormulario").text("Add new:");
   nuevoDato = true;
   console.log("¿Es un nuevo dato?: "+nuevoDato);
   $("#region2").prop('disabled', false);
@@ -281,10 +281,10 @@ function botonEliminarTodo(){
       alertify.alert("Not found");
     }
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is incorrect");
+      alertify.alert("ERROR: Missing parameter or the type is incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
+      alertify.alert("ERROR: The entry exists");
     }
     if(jqXHR.status == 500){
       alertify.alert("ERROR: "+jqXHR.status+"Server error");
@@ -352,10 +352,10 @@ function solicitudAjax(metodo, url, datos){
       alertify.alert("Not found");
     }
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is incorrect");
+      alertify.alert("ERROR: Missing parameter or the type is incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
+      alertify.alert("ERROR: The entry exists");
     }
     if(jqXHR.status == 500){
       alertify.alert("ERROR: "+jqXHR.status+"Server error");
@@ -624,10 +624,10 @@ function eliminardato(){
       alertify.alert("Not found");
     }
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is incorrect");
+      alertify.alert("ERROR: Missing parameter or the type is incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
+      alertify.alert("ERROR: The entry exists");
     }
     if(jqXHR.status == 500){
       alertify.alert("ERROR: "+jqXHR.status+"Server error");
@@ -677,10 +677,10 @@ function editardato(){
     }
     
     if(jqXHR.status == 400){
-      alertify.alert("ERROR: "+jqXHR.status+"Missing parameter or the type is Incorrect");
+      alertify.alert("ERROR: Missing parameter or the type is Incorrect");
     }
     if(jqXHR.status == 409){
-      alertify.alert("ERROR: "+jqXHR.status+"The entry exists");
+      alertify.alert("ERROR: The entry exists");
     }
     if(jqXHR.status == 500){
       alertify.alert("ERROR: "+jqXHR.status+"Server error");
