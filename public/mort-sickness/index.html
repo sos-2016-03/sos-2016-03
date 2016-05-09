@@ -26,75 +26,45 @@
 <h1>MORT SICKNESS DATA</h1>
 </div>
 </br>
-<div class="col1">
-Apikey:<input id="apikey" align="left" width="50"></input>
-</div>
-</br>
 <div>
-<label>Mostrar </label><select id="limit">
-  <option value="3">3</option>
-  <option value="5">5</option>
-  <option value="10">10</option>
-  <option value="15">15</option>
-</select><label> datos</label>
-
-</div>
+<b>If you select <i>"patriR"</i> you can view all and search.
+If you select <i>"patriW"</i> you can insert, update, delete, delete all and load initial data.</b>
 </br>
-<div>
-<label>Mostrar a partir del dato</label><select id="offset">
-  <option value="0">0</option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
+</br>
+Apikey options: 
+<select id="apikey">
+  <option value="patriR">patriR</option>
+  <option value="patriW">patriW</option>
 </select>
 </div>
 </br>
-<div>
-Desde el año:<input id="from" align="left" width="50"></input> Hasta el año:<input id="to" align="left" width="50"></input> <input type="button" value="Buscar" id="entreAños" onclick="buscaEntreAños()"></input>
-</div>
-
-
+Estado: <span id="status" ></span>
+</br>
 </br>
 <div>
-	BÚSQUEDA:
-	</br>
-	Region:<input type="text" id="region1"> <input type="button" value="Buscar región" id="buscaRegion1" onclick="buscaPorRegion()"></input>
-	</br>
-	Año:<input type="text" id="year1"> <input type="button" value="Buscar año" id="buscaAño1" onclick="buscaPorAño()"></input>
-	</br>
-
-</div>
-
+--------------------------------------------------------------------------------------------------
+</br>
+</br>
+  <b>SEARCH:</b>
+  </br>
+  <input type="text" id="region1" placeholder="Region or Year" />
+  <input type="text" id="from"  placeholder="From" />
+  <input type="text" id="to" placeholder="To" />
+  <input type="button" value="Search" id="buscar" onclick="buscar()"/>
+  </br>
 --------------------------------------------------------------------------------------------------
 <div id="formulario">
- <h2 id="tituloFormulario">Dato a insertar o actualizar:</h2>
+ <h2 id="tituloFormulario">Insert or update data:</h2>
   <form role="form">
-    <div >
-      <label for="region">Region:</label>
-      <input type="text" id="region" >
-    </div>
-    <div >
-      <label for="sickness">Sickness:</label>
-      <input type="text" id="sick" >
-    </div>
-    <div >
-      <label for="year">Year:</label>
-      <input type="text" id="year"  >
-    </div>
-    <div >
-      <label for="mortalityInMen">Mortality in men:</label>
-      <input type="text" id="mortalityInMen">
-    </div>
-     <div >
-      <label for="mortalityInWomen">Mortality in women:</label>
-      <input type="text" id="mortalityInWomen">
-    </div>
-    <div >
-      <label for="totalMortality">Total mortality:</label>
-      <input type="text" id="totalMortality">
-    </div>
+      <input type="text" id="region" placeholder="Region">
+      <input type="text" id="sick" placeholder="Sickness">
+      <input type="text" id="year"  placeholder="Year">
+      <input type="text" id="mortalityInMen" placeholder="Mortality in men">
+      <input type="text" id="mortalityInWomen" placeholder="Mortality un women">
+      <input type="text" id="totalMortality" placeholder="Total mortality">
+      <input type="button" id="POST" value="New data" onclick="nuevo()"/>
+      <input type="button" id="PUT" value="Update data" onclick="actualizar()"/>
+      <input type="button" id="DELETEDATO" value="Delete data" onclick="eliminarDato()" />
     </br>
   </form>
 </div>
@@ -102,16 +72,12 @@ Desde el año:<input id="from" align="left" width="50"></input> Hasta el año:<i
 --------------------------------------------------------------------------------------------------
 
 <div align="left">
-	<input type="button" id="POST" value="Nuevo" onclick="nuevo()"/>
-	<input type="button" id="PUT" value="Actualizar" onclick="actualizar()"/>
-	<input type="button" id="GET" value="Ver todos" onclick="verTodos()" />
-	<input type="button" id="miBotonInicial" value="Carga Inicial" onclick="cargaInicial()" />
-	<input type="button" id="DELETE" value="Eliminar todo" onclick="eliminarTodo()" />
-	<input type="button" id="DELETEDATO" value="Eliminar dato" onclick="eliminarDato()" />
+	<input type="button" id="GET" value="View all" onclick="verTodos()" />
+	<input type="button" id="miBotonInicial" value="Load initial Data" onclick="cargaInicial()" />
+	<input type="button" id="DELETE" value="Delete all" onclick="eliminarTodo()" />
 </div>
 </br>
-</br>
-<div>
+</br><div>
 <table id="sickness"  border='1' rules="all" cellpadding="5">
 <tr>
 <th align="center" bgcolor="orange" id="region">Region</th>
@@ -125,12 +91,26 @@ Desde el año:<input id="from" align="left" width="50"></input> Hasta el año:<i
 </div>
 </br>
 </br>
+
 <div>
-Http status: <span id="status"></span>
+<label>Show </label><select id="limit" onchange="pagination()">
+  <option value="3">3</option>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+</select><label> data</label>
 </br>
-</br>
-Log: <span id="log"></span>
+<label>Page</label><select id="offset" onchange="pagination()">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>
 </div>
+</br>
+</br>
+--------------------------------------------------------------------------------------------------
 </br>
 </br>
 <a href="/"><input type="button" value="Previous" id="miBoton"/></a>
