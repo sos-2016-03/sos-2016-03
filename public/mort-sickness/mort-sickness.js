@@ -3,8 +3,7 @@ var service = '../../../api/v1/mort-sickness';
 
 //GET
 function verTodos(){
-    console.log("JQuery Ready!");
-    $("#GET").click(function(){     
+    console.log("JQuery Ready!");    
       $("#log").text("Sending request...");
       var dir="";
       if($("#limit").val()!='' && $("#offset").val()!=''){
@@ -16,14 +15,10 @@ function verTodos(){
         type: "GET",
         data: "{}",
         contentType: "application/json"
-      });
+      })
       request.done(function(data,status,jqXHR){       
-        var statusCode = jqXHR.status;
-        var statusCodeText = jqXHR.statusText;
-        $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
         $("#sickness").html(imprime(data));
-      });
+      })
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
@@ -36,7 +31,7 @@ function verTodos(){
         }else{
             $("#status").text("OK");
         }
-      });
+      })
        function imprime(data){
        	$.each(data,function(i,item){
           $('#sickness').empty();
@@ -53,25 +48,19 @@ function verTodos(){
                     });
                  $('#sickness').append(trHTML); 
                })
-            }
-        })    
+            }   
     }
    
 //LoadInitialData
 function cargaInicial(){
-$('#miBotonInicial').click(function(){
 	$('#log').text("Sending request...");
 	var request = $.ajax({
 		url: service + '/loadInitialData?apikey=' + $('#apikey').val(),
 		type: "GET",
 		contentType: "application/json"
-	});
+	})
 	request.done(function(data, status, jqXHR){
-		var statusCode = jqXHR.status;
-		var statusCodeText = jqXHR.statusText;
-		$('#log').text("Data received");
-		$('#status').text(statusCode + " " + statusCodeText);
-	});
+	})
 	request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
@@ -84,9 +73,7 @@ $('#miBotonInicial').click(function(){
         }else{
             $("#status").text("OK");
         }
-      });
-  
-})
+      })
 };
 
 //POST
@@ -99,11 +86,7 @@ function nuevo(){
         data: '{"region":"'+$("#region").val()+'","sickness":"'+$("#sick").val()+'","year":"'+$("#year").val()+'","mortalityInMen":"'+$("#mortalityInMen").val()+'","mortalityInWomen":"'+$("#mortalityInWomen").val()+ '","totalMortality":"'+$("#totalMortality").val() + '"}',
         contentType: "application/json"
       });
-      request.done(function(data,status,jqXHR){       
-        var statusCode = jqXHR.status;
-        var statusCodeText = jqXHR.statusText;
-        $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+      request.done(function(data,status,jqXHR){    
       });
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
@@ -134,11 +117,7 @@ function actualizar(){
         data: '{"region":"'+$("#region").val()+'","sickness":"'+$("#sick").val()+'","year":"'+$("#year").val()+'","mortalityInMen":"'+$("#mortalityInMen").val()+'","mortalityInWomen":"'+$("#mortalityInWomen").val()+ '","totalMortality":"'+$("#totalMortality").val() + '"}',
         contentType: "application/json"
       });
-      request.done(function(data,status,jqXHR){       
-        var statusCode = jqXHR.status;
-        var statusCodeText = jqXHR.statusText;
-        $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+      request.done(function(data,status,jqXHR){ 
       });
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
@@ -159,21 +138,15 @@ function actualizar(){
       })   
 }
 //DELETE UN DATO
-function eliminarDato(){    
-      $("#log").text("Sending request...");
-     
+function eliminarDato(){     
       var request = $.ajax({
         url: service + "/" + $("#region").val() + "/" + $("#year").val() + "/" + "?apikey=" + $('#apikey').val(),
         type: "DELETE",
-		data: "{}",
+		    data: "{}",
         contentType: "application/json"
-      });
-      request.done(function(data,status,jqXHR){    
-        var statusCode = jqXHR.status;
-        var statusCodeText = jqXHR.statusText;
-        $("#log").text("Deleted");
-        $("#status").text(statusCode +" "+statusCodeText);
-      });
+      })
+      request.done(function(data,status,jqXHR){  
+      })
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
@@ -187,27 +160,22 @@ function eliminarDato(){
             }
         }else{
             $("#status").text("OK");
+            
         }
-      });    
+      })  
 }
 
 //Eliminar todo
-function eliminarTodo(){
-      $("#log").text("Sending request...");
-     
+function eliminarTodo(){    
       var request = $.ajax({
         url: service + "/" + "?apikey=" + $('#apikey').val(),
         type: "DELETE",
-		data: "{}",
+		    data: "{}",
         contentType: "application/json"
-      });
-      request.done(function(data,status,jqXHR){    
-        var statusCode = jqXHR.status;
-        var statusCodeText = jqXHR.statusText;
-        $("#log").text("Deleted");
-        $("#status").text(statusCode +" "+statusCodeText);
-        $("#sickness").html(imprime(data));
-      });
+      })
+      request.done(function(data,status,jqXHR){ 
+      $("#sickness").html(imprime(data));   
+      })
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
@@ -219,17 +187,17 @@ function eliminarTodo(){
             }
         }else{
             $("#status").text("OK");
+
+
         }
       })
       function imprime(data){
-       	$.each(data,function(i,item){
           $('#sickness').empty();
-          /*var trHTML = '';
+          var trHTML = '';
                trHTML += '<tr bgcolor="orange"><th>Region</th><th>Sickness</th><th>Year</th><th>MortalityInMen</th><th>MortalityInWomen</th><th>TotalMortality</th></tr>';
-             
-                 $('#sickness').append(trHTML); */
-               })
+              $("#sickness").append(trHTML);
             }
+      
 }
 
 //Busqueda
@@ -252,15 +220,11 @@ function buscar(){
         type: "GET",
         data: "{}",
         contentType: "application/json"
-      });
+      })
 
-      request.done(function(data,status,jqXHR){      
-        var statusCode = jqXHR.status;
-        var statusCodeText = jqXHR.statusText;
-        $("#log").text("Data received");
-        $("#status").text(statusCode +" "+statusCodeText);
+      request.done(function(data,status,jqXHR){    
         $("#sickness").html(imprime(data));
-      });
+      })
       request.always(function(jqXHR, status){
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
@@ -271,11 +235,15 @@ function buscar(){
             $("#status").text("Incorrect apikey");
             }else if(statusCode==404){
               $("#status").text("Data not exist");
+              $("#sickness").empty();
+               var trHTML = '';
+               trHTML += '<tr bgcolor="orange"><th>Region</th><th>Sickness</th><th>Year</th><th>MortalityInMen</th><th>MortalityInWomen</th><th>TotalMortality</th></tr>';
+              $("#sickness").append(trHTML);
             }
         }else{
             $("#status").text("OK");
         }
-      });
+      })
        function imprime(data){
         $.each(data,function(i,item){
           $('#sickness').empty();
@@ -313,24 +281,20 @@ function pagination(){
                 $("#status").text("Incorrect apikey");
             }else if(jqXHR.status == 404){
                $("#status").text("Data not found");
+               $("#sickness").empty();
+                var trHTML = '';
+               trHTML += '<tr bgcolor="orange"><th>Region</th><th>Sickness</th><th>Year</th><th>MortalityInMen</th><th>MortalityInWomen</th><th>TotalMortality</th></tr>';
+              $("#sickness").append(trHTML);
             }
           }else if(jqXHR.status == 200){
                $("#status").text("OK");
-            }
-        })
-     request.done(function (data) {
-       $.each(data, function (i, item) {
-          var trHTML='';
-         if($("#status").val()==404){
-          trHTML="";
-         }else{
-          console.log(data[i]);
-          trHTML= "<tr><td>" + data[i].region + '</td><td>' + data[i].sickness + '</td><td>' + data[i].year + '</td><td>' + data[i].mortalityInMen + '</td><td>' + data[i].mortalityInWomen + '</td><td>' + data[i].totalMortality + '</td></tr>';
-          }
+               $.each(data, function (i, item) {
+                var trHTML='';
+                trHTML+= "<tr><td>" + data[i].region + '</td><td>' + data[i].sickness + '</td><td>' + data[i].year + '</td><td>' + data[i].mortalityInMen + '</td><td>' + data[i].mortalityInWomen + '</td><td>' + data[i].totalMortality + '</td></tr>';
           
           })
-        })
-    
+            }
+        })   
 }
 
 //Estilo
