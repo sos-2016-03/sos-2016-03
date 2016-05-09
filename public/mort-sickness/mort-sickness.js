@@ -284,14 +284,13 @@ function pagination(){
                $("#sickness").empty();
                 var trHTML = '';
                trHTML += '<tr bgcolor="orange"><th>Region</th><th>Sickness</th><th>Year</th><th>MortalityInMen</th><th>MortalityInWomen</th><th>TotalMortality</th></tr>';
-              $("#sickness").append(trHTML);
+                $("#sickness").append(trHTML);
             }
           }else if(jqXHR.status == 200){
                $("#status").text("OK");
                $.each(data, function (i, item) {
                 var trHTML='';
                 trHTML+= "<tr><td>" + data[i].region + '</td><td>' + data[i].sickness + '</td><td>' + data[i].year + '</td><td>' + data[i].mortalityInMen + '</td><td>' + data[i].mortalityInWomen + '</td><td>' + data[i].totalMortality + '</td></tr>';
-          
           })
             }
         })   
