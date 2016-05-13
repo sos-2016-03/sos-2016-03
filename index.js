@@ -1,9 +1,28 @@
 var express=require("express");
-var fs=require("fs");
+var request = require("request");
+
 var app=express();
+
+//PROXY ALBERTO
+var pathAlbrodpul = '/api/v1/oil';
+var apiServerHostAlbrodpul = 'http://sos-2016-01.herokuapp.com';
+app.use(pathAlbrodpul, function(req,res){
+  var url = apiServerHostAlbrodpul + pathAlbrodpul + req.url;
+  console.log("Piped: "+ req.baseUrl + req.url);
+  console.log("URL Accesed: "+ url);
+
+  req.pipe(request(url,(error,response,body)=>{
+    if(error){
+      console.error(error);
+      res.sendStatus(503);
+    }
+  })).pipe(res);
+});
+
+
+var fs=require("fs");
 var bodyParser=require("body-parser");
 var cors=require("cors");
-var request = require("request");
 var time=require("./time.js");
 var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
@@ -13,24 +32,6 @@ var musics = require("./public/api/Patricia/musics.js");
 app.use(bodyParser.json());
 
 //----
-
-//PROXY ALBERTO
-var pathAlbrodpul = '/api/v1/oil';
-var apiServerHostAlbrodpul = 'http://sos-2016-01.herokuapp.com';
-
-  app.use(pathAlbrodpul,function(req,res){
-    var url = apiServerHostAlbrodpul + req.baseUrl + req.url;
-    console.log("Piped: "+ req.baseUrl + req.url);
-    console.log("URL Accesed: "+ url);
-
-    req.pipe(request(url,(error,response,body)=>{
-      if(error){
-        console.error(error);
-        res.sendStatus(503);
-      }
-    })).pipe(res);
-  });
-
 
 var passport = require('passport');
 var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
@@ -96,10 +97,6 @@ function keyR(req, res, next) {
     })(req, res, next);
 };
 
-
-
-
-var port = (process.env.PORT || 11000);
 
 //Time
 app.get("/time",time.getTime);
@@ -182,6 +179,8 @@ app.delete("/api/v1/population-growth/:region/:year", WriteAccess,populationgrow
 app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth.getStatisticsId);
 //------------------------------------------------------------------------------------------------
 
+
+
 app.use('/',express.static(__dirname + '/public'));
 
 app.use('/mort-sickness', express.static(__dirname + '/mort-sickness'));
@@ -189,6 +188,8 @@ app.use('/mort-sickness', express.static(__dirname + '/mort-sickness'));
 
 app.use('/population-growth',express.static(__dirname + '/public/population-growth'));
 
+
+var port = (process.env.PORT || 11000);
 app.listen(port, ()=>{
     console.log("Magic happens on port: " + port);
 });
