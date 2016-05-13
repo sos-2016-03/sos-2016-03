@@ -2,6 +2,8 @@ var express=require("express");
 var fs=require("fs");
 var app=express();
 var bodyParser=require("body-parser");
+var cors=require("cors");
+var request = require("request");
 var time=require("./time.js");
 var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
@@ -12,13 +14,31 @@ app.use(bodyParser.json());
 
 //----
 
+//PROXY ALBERTO
+var pathAlbrodpul = '/api/v1/oil';
+var apiServerHostAlbrodpul = 'http://sos-2016-01.herokuapp.com';
+
+  app.use(pathAlbrodpul,function(req,res){
+    var url = apiServerHostAlbrodpul + req.baseUrl + req.url;
+    console.log("Piped: "+ req.baseUrl + req.url);
+    console.log("URL Accesed: "+ url);
+
+    req.pipe(request(url,(error,response,body)=>{
+      if(error){
+        console.error(error);
+        res.sendStatus(503);
+      }
+    })).pipe(res);
+  });
+
+
 var passport = require('passport');
 var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
 app.use(passport.initialize());
 
 passport.use(new LocalAPIKeyStrategy(
-  function(apikey, done) { 
-    done(null,apikey); 
+  function(apikey, done) {
+    done(null,apikey);
   }
 ));
 
@@ -30,7 +50,7 @@ function WriteAccess(req, res, next) {
             return res.sendStatus(401);
         }
         return next();
-    })(req, res, next);   
+    })(req, res, next);
 };
 
 function ReadAccess(req, res, next) {
@@ -41,7 +61,7 @@ function ReadAccess(req, res, next) {
             return res.sendStatus(401);
         }
         return next();
-    })(req, res, next);   
+    })(req, res, next);
 };
 //---
 var passportKey = require('passport');
@@ -49,10 +69,10 @@ var LocalAPIKey = require('passport-localapikey-update').Strategy;
 app.use(passportKey.initialize());
 
 passportKey.use(new LocalAPIKey(
-  function(apikey, done) { 
-    done(null,apikey); 
+  function(apikey, done) {
+    done(null,apikey);
   }
-)); 
+));
 
 function keyW(req, res, next) {
     passportKey.authenticate('localapikey', function(err, user, info) {
@@ -62,7 +82,7 @@ function keyW(req, res, next) {
             return res.sendStatus(403);
         }
         return next();
-    })(req, res, next);   
+    })(req, res, next);
 };
 
 function keyR(req, res, next) {
@@ -73,7 +93,7 @@ function keyR(req, res, next) {
             return res.sendStatus(403);
         }
         return next();
-    })(req, res, next);   
+    })(req, res, next);
 };
 
 
