@@ -35,6 +35,25 @@ app.use(pathsPatri, function(req, res) {
 
 });
 //
+/*******************************/
+//PROXY ANA
+var pathsAna='/api/v1/population';
+//var apiServerHost = 'http://sos-contacts.herokuapp.com'; //el proxy hacia donde tiene que ir
+var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
+app.use(pathsAna, function(req, res) {
+  var url = apiServerHostAna + req.baseUrl + req.url;
+  console.log('piped: '+req.baseUrl + req.url);
+  console.log('URL accesed: ' + url);
+  //req.pipe(request(url)).pipe(res); //Mandar la petición a la api externa; y de la api externa hace una tubería hacia la respuesta.
+  req.pipe(request(url,(error,response,body)=>{
+    if(error){
+      console.error(error);
+      res.sendStatus(503);
+    }
+  })).pipe(res);
+});
+
+/*******************************/
 
 var fs=require("fs");
 var bodyParser=require("body-parser");
