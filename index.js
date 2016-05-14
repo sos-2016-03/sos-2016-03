@@ -46,17 +46,8 @@ var mortSickness = require("./public/api/Patricia/mort-sickness.js");
 var musics = require("./public/api/Patricia/musics.js");
 
 app.use(bodyParser.json());
-
+app.use(cors());
 //----
-
-//Proxy Patri 
-/*var apiPatri=express(); 
-var bodyParserPatri=require("body-parser");
-apiPatri.use(bodyParserPatri.json());
-apiPatri.use(cors());
-
-app.use(bodyParserPatri.json());
-//*/
 
 var passport = require('passport');
 var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
