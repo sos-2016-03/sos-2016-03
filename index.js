@@ -33,6 +33,30 @@ app.use(bodyParser.json());
 
 //----
 
+//Proxy Patri 
+var apiPatri=express(); 
+var bodyParserPatri=require("body-parser");
+apiPatri.use(bodyParserPatri.json());
+apiPatri.use(cors());
+
+var pathsPatri='/api/v1/co2';
+var apiServerHostPatri = 'http://sos-2016-01.herokuapp.com/';
+  
+app.use(pathsPatri, function(req, res) {
+  var url = apiServerHostPatri + pathsPatri + req.url;
+  console.log('piped: '+req.baseUrl + req.url);
+  req.pipe(request(url,(error,response, body)=>{
+    if(error){
+      console.error(error);
+      res.sendStatus(503);
+    }
+  })).pipe(res);
+
+});
+
+app.use(bodyParserPatri.json());
+//
+
 var passport = require('passport');
 var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
 app.use(passport.initialize());
