@@ -40,7 +40,7 @@ apiPatri.use(bodyParserPatri.json());
 apiPatri.use(cors());
 
 var pathsPatri='/api/v1/co2';
-var apiServerHostPatri = 'http://sos-2016-01.herokuapp.com/';
+var apiServerHostPatri = 'http://sos-2016-01.herokuapp.com';
   
 app.use(pathsPatri, function(req, res) {
   var url = apiServerHostPatri + pathsPatri + req.url;
