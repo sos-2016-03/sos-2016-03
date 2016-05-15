@@ -21,6 +21,7 @@
     "body-parser": "^1.15.0",
     "cors": "^2.7.1",
     "express": "^4.13.4",
+    "governify": "0.0.10",
     "jqwidgets-framework": "^4.1.1",
     "passport": "^0.3.2",
     "passport-localapikey": "0.0.3",
