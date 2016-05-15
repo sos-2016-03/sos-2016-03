@@ -1,28 +1,16 @@
 var express=require("express");
 var request = require("request");
-
+var apiOil  = require('./public/api/Alberto/oil.js');
 var app=express();
 
 //PROXY ALBERTO
-var pathAlbrodpul = '/api/v1/oil';
-var apiServerHostAlbrodpul = 'http://sos-2016-01.herokuapp.com';
-app.use(pathAlbrodpul, function(req,res){
-  var url = apiServerHostAlbrodpul + pathAlbrodpul + req.url;
-  console.log("Piped: "+ req.baseUrl + req.url);
-  console.log("URL Accesed: "+ url);
 
-  req.pipe(request(url,(error,response,body)=>{
-    if(error){
-      console.error(error);
-      res.sendStatus(503);
-    }
-  })).pipe(res);
-});
+app.use('/api/v1/oil', apiOil);
 
 //Proxy Patri
 var pathsPatri='/api/v1/co2';
 var apiServerHostPatri = 'http://sos-2016-01.herokuapp.com';
-  
+
 app.use(pathsPatri, function(req, res) {
   var url = apiServerHostPatri + pathsPatri + req.url;
   console.log('piped: '+req.baseUrl + req.url);
