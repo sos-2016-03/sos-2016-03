@@ -7,7 +7,7 @@ function deleteItemAux(j){
   console.log("He llegado hasta aux()",j);
   var request=$.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
+      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=multiPlan_C4_sos-2016-03-albrodpul_ag&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
       data: "{}",
       contentType: "application/json; charset=utf-8",
       dataType: "json",
@@ -48,10 +48,15 @@ function deleteItemAux(j){
                   var statusCodeText = jqXHR.statusText;
                   if (status == "error"){
                     if(statusCode==401){
-                      $("#status6").text("Apikey required");
+                      $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
+                      $("#offsetAux").hide();
                     }
-                    else if(statusCode==403){
-                      $("#status6").text("Invalid apikey");
+                    else if(statusCode==402){
+                      $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+                      $("#offsetAux").hide();
+                    }else if(statusCode==429){
+                      $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
+                      $("#offsetAux").hide();
                     }
                       $("#status3").show();
                       $("#status1").hide();
@@ -70,7 +75,17 @@ function deleteItemAux(j){
       var statusCode = jqXHR.status;
       var statusCodeText = jqXHR.statusText;
       if (status == "error"){
-          $("#status6").text(statusCode +" "+statusCodeText);
+        if(statusCode==401){
+          $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
+          $("#offsetAux").hide();
+        }
+        else if(statusCode==402){
+          $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+          $("#offsetAux").hide();
+        }else if(statusCode==429){
+          $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
+          $("#offsetAux").hide();
+        }
           $("#status3").show();
           $("#status1").hide();
           $("#status2").hide();
@@ -87,7 +102,7 @@ function putAux(j){
   console.log("He llegado hasta aux()");
   var request = $.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
+      url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=multiPlan_C4_sos-2016-03-albrodpul_ag&offset='+$("#offset").val()*$("#limit").val()+'&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
       data: "{}",
       contentType: "application/json; charset=utf-8",
       dataType: "json"
@@ -125,10 +140,12 @@ function putAux(j){
                   var statusCodeText = jqXHR.statusText;
                   if (status == "error"){
                     if(statusCode==401){
-                      $("#status6").text("Apikey required");
+                      $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
                     }
-                    else if(statusCode==403){
-                      $("#status6").text("Invalid apikey");
+                    else if(statusCode==402){
+                      $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+                    }else if(statusCode==429){
+                      $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
                     }
                     else if(statusCode==400){
                       $("#status6").text("Wrong fields: you need to add something in the inputs above!");
@@ -193,10 +210,12 @@ function addBirth(){
     var statusCodeText = jqXHR.statusText;
     if (status == "error"){
       if(statusCode==401){
-        $("#status6").text("Apikey required");
+        $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
       }
-      else if(statusCode==403){
-        $("#status6").text("Invalid apikey");
+      else if(statusCode==402){
+        $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+      }else if(statusCode==429){
+        $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
       }
       else if(statusCode==409){
         $("#status6").text("Data already exists");
@@ -219,7 +238,7 @@ function addBirth(){
 function refresh(){
   var request =$.ajax({
     type: "GET",
-    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&from='+$("#from").val()+'&to='+$("#to").val(),
+    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=multiPlan_C4_sos-2016-03-albrodpul_ag&from='+$("#from").val()+'&to='+$("#to").val(),
     data: "{}",
     data: $("#payload").val(),
     contentType: "application/json"
@@ -253,7 +272,7 @@ function refresh(){
 
   var request =$.ajax({
     type: "GET",
-    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=read&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
+    url: '../../../api/v1/spain-births/'+$("#region").val()+'/'+$("#year").val()+'?apikey=multiPlan_C4_sos-2016-03-albrodpul_ag&limit='+$("#limit").val()+'&from='+$("#from").val()+'&to='+$("#to").val(),
     data: "{}",
     data: $("#payload").val(),
     contentType: "application/json"
@@ -278,11 +297,14 @@ function refresh(){
       var statusCodeText = jqXHR.statusText;
       if (status == "error"){
         if(statusCode==401){
-          $("#status6").text("Apikey required");
+          $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
           $("#offsetAux").hide();
         }
-        else if(statusCode==403){
-          $("#status6").text("Invalid apikey");
+        else if(statusCode==402){
+          $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+          $("#offsetAux").hide();
+        }else if(statusCode==429){
+          $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
           $("#offsetAux").hide();
         }
           $("#data").text("");
@@ -321,11 +343,14 @@ function refresh(){
     var statusCodeText = jqXHR.statusText;
     if (status == "error"){
       if(statusCode==401){
-        $("#status6").text("Apikey required");
+        $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
         $("#offsetAux").hide();
       }
-      else if(statusCode==403){
-        $("#status6").text("Invalid apikey");
+      else if(statusCode==402){
+        $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+        $("#offsetAux").hide();
+      }else if(statusCode==429){
+        $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
         $("#offsetAux").hide();
       }
         $("#data").text("");
@@ -365,7 +390,7 @@ $(document).ready(function(){
   function refresh(){
     var request =$.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births?apikey=read',
+      url: '../../../api/v1/spain-births?apikey=multiPlan_C4_sos-2016-03-albrodpul_ag',
       data: "{}",
       data: $("#payload").val(),
       contentType: "application/json"
@@ -399,7 +424,7 @@ $(document).ready(function(){
 
     var request =$.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births?apikey=read&limit=3',
+      url: '../../../api/v1/spain-births?apikey=multiPlan_C4_sos-2016-03-albrodpul_ag&limit=3',
       data: "{}",
       data: $("#payload").val(),
       contentType: "application/json"
@@ -423,11 +448,14 @@ $(document).ready(function(){
         if (status == "error"){
             $("#status3").show();
             if(statusCode==401){
-              $("#status6").text(statusCode+": Apikey required");
+              $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
               $("#offsetAux").hide();
             }
-            else if(statusCode==403){
-              $("#status6").text(statusCode+": Invalid apikey");
+            else if(statusCode==402){
+              $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+              $("#offsetAux").hide();
+            }else if(statusCode==429){
+              $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
               $("#offsetAux").hide();
             }
             $("#status2").hide();
@@ -470,11 +498,14 @@ $(document).ready(function(){
       if (status == "error"){
           $("#status3").show();
           if(statusCode==401){
-            $("#status6").text("Apikey required");
+            $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
             $("#offsetAux").hide();
           }
-          else if(statusCode==403){
-            $("#status6").text("Invalid apikey");
+          else if(statusCode==402){
+            $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+            $("#offsetAux").hide();
+          }else if(statusCode==429){
+            $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
             $("#offsetAux").hide();
           }
           $("#status2").hide();
@@ -561,11 +592,14 @@ direccion();
         if (status == "error"){
             $("#status3").show();
             if(statusCode==401){
-              $("#status6").text("Apikey required");
+              $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
               $("#offsetAux").hide();
             }
-            else if(statusCode==403){
-              $("#status6").text("Invalid apikey");
+            else if(statusCode==402){
+              $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+              $("#offsetAux").hide();
+            }else if(statusCode==429){
+              $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
               $("#offsetAux").hide();
             }
             $("#status2").hide();
@@ -605,11 +639,14 @@ direccion();
     if (status == "error"){
         $("#status3").show();
         if(statusCode==401){
-          $("#status6").text("Apikey required");
+          $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
           $("#offsetAux").hide();
         }
-        else if(statusCode==403){
-          $("#status6").text("Invalid apikey");
+        else if(statusCode==402){
+          $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+          $("#offsetAux").hide();
+        }else if(statusCode==429){
+          $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
           $("#offsetAux").hide();
         }
         $("#status2").hide();
@@ -685,11 +722,14 @@ direccion();
         if (status == "error"){
             $("#status3").show();
             if(statusCode==401){
-              $("#status6").text("Apikey required");
+              $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
               $("#offsetAux").hide();
             }
-            else if(statusCode==403){
-              $("#status6").text("Invalid apikey");
+            else if(statusCode==402){
+              $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+              $("#offsetAux").hide();
+            }else if(statusCode==429){
+              $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
               $("#offsetAux").hide();
             }
             else if(statusCode==404){
@@ -734,11 +774,14 @@ direccion();
       if (status == "error"){
           $("#status3").show();
           if(statusCode==401){
-            $("#status6").text("Apikey required");
+            $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
             $("#offsetAux").hide();
           }
-          else if(statusCode==403){
-            $("#status6").text("Invalid apikey");
+          else if(statusCode==402){
+            $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+            $("#offsetAux").hide();
+          }else if(statusCode==429){
+            $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
             $("#offsetAux").hide();
           }
           else if(statusCode==404){
@@ -818,16 +861,17 @@ direccion();
         var statusCode = jqXHR.status;
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
-            $("#status3").show();
-            if(statusCode==401){
-              $("#status6").text("Apikey required");
-              $("#offsetAux").show();
-            }
-            if(statusCode==403){
-              $("#status6").text("Invalid apikey");
-              $("#offsetAux").show();
-            }
-            if(statusCode==404){
+          if(statusCode==401){
+            $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
+            $("#offsetAux").hide();
+          }
+          else if(statusCode==402){
+            $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+            $("#offsetAux").hide();
+          }else if(statusCode==429){
+            $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
+            $("#offsetAux").hide();
+          }else if(statusCode==404){
               $("#status6").text("Data not found");
               $("#offsetAux").show();
             }
@@ -869,14 +913,16 @@ direccion();
       if (status == "error"){
           $("#status3").show();
           if(statusCode==401){
-            $("#status6").text("Apikey required");
+            $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
             $("#offsetAux").hide();
           }
-          if(statusCode==403){
-            $("#status6").text("Invalid apikey");
+          else if(statusCode==402){
+            $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
             $("#offsetAux").hide();
-          }
-          if(statusCode==404){
+          }else if(statusCode==429){
+            $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
+            $("#offsetAux").hide();
+          }else if(statusCode==404){
             $("#status6").text("Data not found");
             $("#offsetAux").hide();
           }
@@ -923,11 +969,14 @@ direccion();
         if (status == "error"){
             $("#status3").show();
             if(statusCode==401){
-              $("#status6").text("Apikey required");
+              $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
               $("#offsetAux").hide();
             }
-            else if(statusCode==403){
-              $("#status6").text("Invalid apikey");
+            else if(statusCode==402){
+              $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+              $("#offsetAux").hide();
+            }else if(statusCode==429){
+              $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
               $("#offsetAux").hide();
             }
             else if(statusCode==404){
@@ -967,9 +1016,9 @@ direccion();
     }
 
 //Cambio de URL para Search
-/*$("input[name=apikey]").keyup(function(){
+$("input[name=apikey]").keyup(function(){
     direccion();
-});*/
+});
 
 $("input[name=region]").keyup(function(){
     direccion();
@@ -999,9 +1048,9 @@ $("#year").change(function(){
     direccion();
     search();
 });*/
-$("#apikey").change(function(){
+/*$("#apikey").change(function(){
     direccion();
-});
+});*/
 $("#offset").change(function(){
     direccion();
     pagination();
@@ -1130,11 +1179,14 @@ function direccion() {
         var statusCodeText = jqXHR.statusText;
         if (status == "error"){
           if(statusCode==401){
-            $("#status6").text("Apikey required");
+            $("#status6").html("Apikey required. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get an apikey.");
             $("#offsetAux").hide();
           }
-          if(statusCode==403){
-            $("#status6").text("Invalid apikey");
+          else if(statusCode==402){
+            $("#status6").html("Invalid apikey. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get one.");
+            $("#offsetAux").hide();
+          }else if(statusCode==429){
+            $("#status6").html("Requests exceeded. Click <a href='http://portal.governify.io/app/#/portal?configurl=http:%2F%2Flabs.isa.us.es%2Fir%2Falbrodpul%2FGovernify-API%2FPlans%2Fportal-config.json'>here</a> to get a better plan.");
             $("#offsetAux").hide();
           }
             $("#status3").show();

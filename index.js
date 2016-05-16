@@ -1,8 +1,15 @@
 var express=require("express");
 var request = require("request");
+var governify = require("governify");
 var apiOil  = require('./public/api/Alberto/oil.js');
 var app=express();
 
+
+governify.control(app,{
+  datastore :"http://datastore.governify.io/api/v6.1/",
+  namespace :"sos-2016-03-albrodpul",
+  defaultPath: "/api/v1/spain-births"
+});
 //PROXY ALBERTO
 
 app.use('/api/v1/oil', apiOil);

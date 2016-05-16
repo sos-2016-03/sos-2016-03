@@ -4,18 +4,18 @@ var fs=require("fs");
 var bodyParser=require("body-parser");
 var app=express();
 var router=express.Router();
-var passport = require('passport')
-var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
-var keyWrite ="write";
-var keyRead="read";
+/*var passport = require('passport')
+var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;*/
+/*var keyWrite ="write";
+var keyRead="read";*/
 var births=[];
 
-app.use(passport.initialize());
+//app.use(passport.initialize());
 app.use(bodyParser.json());
 
-passport.use(new LocalAPIKeyStrategy(
-  function(apikey, done) { 
-    done(null,apikey); 
+/*passport.use(new LocalAPIKeyStrategy(
+  function(apikey, done) {
+    done(null,apikey);
   }
 ));
 
@@ -27,7 +27,7 @@ function WriteAccess(req, res, next) {
             return res.sendStatus(403);
         }
         return next();
-    })(req, res, next);   
+    })(req, res, next);
 };
 
 function ReadAccess(req, res, next) {
@@ -38,24 +38,24 @@ function ReadAccess(req, res, next) {
             return res.sendStatus(403);
         }
         return next();
-    })(req, res, next);   
-};
+    })(req, res, next);
+};*/
 
 //API Alberto
 //Métodos GET
 //Devuelve la lista de recursos
-router.get("/",ReadAccess,(req,res) => {
+router.get("/",(req,res) => {
   var limit = req.query.limit;
   var offset = req.query.offset;
   var from = req.query.from;
   var to = req.query.to;
-  var birth=[]; 
+  var birth=[];
   birth=functions.getListaFTLO(births,from,to,limit,offset);
   res.send(birth);
 
 });
 
-router.get("/loadInitialData",WriteAccess,(req,res)=>{
+router.get("/loadInitialData",/*WriteAccess,*/(req,res)=>{
     births=[];
     fs.readFile('./public/api/Alberto/spain-births.json','utf8',(err,content) => {
       aux=JSON.parse(content);
@@ -67,7 +67,7 @@ router.get("/loadInitialData",WriteAccess,(req,res)=>{
 });
 
 //Devuelve una lista del recurso, por región, año + búsqueda, paginación
-router.get("/:region/",ReadAccess,(req,res) => {
+router.get("/:region/",/*ReadAccess,*/(req,res) => {
     var year = req.params.region;
     var region = req.params.region;
     var limit = req.query.limit;
@@ -83,7 +83,7 @@ router.get("/:region/",ReadAccess,(req,res) => {
 });
 
 //Consulta un elemento por región y año
-router.get("/:region/:year",ReadAccess,(req,res) => {
+router.get("/:region/:year",/*ReadAccess,*/(req,res) => {
     var year = req.params.year;
     var region = req.params.region;
     var birth = functions.getRegionAño(births,region,year);
@@ -97,7 +97,7 @@ router.get("/:region/:year",ReadAccess,(req,res) => {
 
 //Métodos POST
 //Método que añade un nuevo equipo; 409 si ya existe el elemento por región y año
-router.post("/",WriteAccess,(req,res) => {
+router.post("/",/*WriteAccess,*/(req,res) => {
   var birth=req.body;
   aux=functions.post(births,birth);
   if(aux==1){
@@ -111,30 +111,30 @@ router.post("/",WriteAccess,(req,res) => {
 });
 
 //Método inválido por región
-router.post("/:region",WriteAccess,(req,res) => {
+router.post("/:region",/*WriteAccess,*/(req,res) => {
   res.sendStatus(405);
 });
 
 //Método inválido por año
 
-router.post("/:year",WriteAccess,(req,res)=>{
+router.post("/:year",/*WriteAccess,*/(req,res)=>{
   res.sendStatus(405);
 })
 
 //Método inválido por región y año
-router.post("/:region/:year",WriteAccess,(req,res) => {
+router.post("/:region/:year",/*WriteAccess,*/(req,res) => {
   res.sendStatus(405);
 });
 
 //Métodos DELETE
 //Borra toda la lista
-router.delete("/",WriteAccess,(req,res) => {
+router.delete("/",/*WriteAccess,*/(req,res) => {
   births=[];
   res.sendStatus(200);
 });
 
 //Borra un recurso individual por región o año; 404 si no está
-router.delete("/:region",WriteAccess,(req,res) => {
+router.delete("/:region",/*WriteAccess,*/(req,res) => {
   var region=req.params.region;
   var year=req.params.region;
 	var cont=0;
@@ -148,7 +148,7 @@ router.delete("/:region",WriteAccess,(req,res) => {
 });
 
 //Borra un recurso individual por región y año; 404 si no está
-router.delete("/:region/:year",WriteAccess,(req,res) => {
+router.delete("/:region/:year",/*WriteAccess,*/(req,res) => {
   var region=req.params.region;
   var year=req.params.year;
   var aux=Object.keys(births).length;
@@ -162,22 +162,22 @@ router.delete("/:region/:year",WriteAccess,(req,res) => {
 
 //Métodos PUT
 //Método inválido
-router.put("/",WriteAccess,(req,res) => {
+router.put("/",/*WriteAccess,*/(req,res) => {
   res.sendStatus(405);
 });
 
 //Método inválido
-router.put("/:region",WriteAccess,(req,res) => {
+router.put("/:region",/*WriteAccess,*/(req,res) => {
   res.sendStatus(405);
 });
 
 //Método inválido
-router.put("/:year",WriteAccess,(req,res)=>{
+router.put("/:year",/*WriteAccess,*/(req,res)=>{
   res.sendStatus(405);
 });
 
 //Actualiza un recurso por región y año; devuelve 404 si no está; devuelve 400 si formato erróneo
-router.put("/:region/:year",WriteAccess,(req,res) => {
+router.put("/:region/:year",/*WriteAccess,*/(req,res) => {
     var region = req.params.region;
     var year = req.params.year;
     var regionUpdated = req.body;
