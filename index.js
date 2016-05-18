@@ -1,8 +1,10 @@
 var express=require("express");
 var request = require("request");
 var governify = require("governify");
+var cors=require("cors");
 var apiOil  = require('./public/api/Alberto/oil.js');
 var app=express();
+app.use(cors());
 
 
 governify.control(app,{
@@ -54,7 +56,6 @@ app.use(pathsAna, function(req, res) {
 
 var fs=require("fs");
 var bodyParser=require("body-parser");
-var cors=require("cors");
 var time=require("./time.js");
 var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
@@ -62,7 +63,6 @@ var mortSickness = require("./public/api/Patricia/mort-sickness.js");
 var musics = require("./public/api/Patricia/musics.js");
 
 app.use(bodyParser.json());
-app.use(cors());
 //----
 
 
