@@ -15,12 +15,12 @@ function drawVisualization(){
 				for(i=0;i<data.length;i++){
 					if(data[i].year==$("#yearF").val()){
 						graf=data[i];
-						var grafForWidget=[graf.region,Number(graf.totalMortality), 
+						var grafForWidget=[graf.region,Number(graf.totalMortality),
 						Number(graf.mortalityInMen), Number(graf.mortalityInWomen)];
 						datos.push(grafForWidget);
 					}else{
 						graf=data[i];
-						var grafForWidget=[graf.region, Number(graf.totalMortality), 
+						var grafForWidget=[graf.region, Number(graf.totalMortality),
 						Number(graf.mortalityInMen), Number(graf.mortalityInWomen)];
 						datos.push(grafForWidget);
 					}
@@ -35,7 +35,7 @@ function drawVisualization(){
 	   			 };
 	   			var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
 	   		    chart.draw(datosRecogidos, options);
-			
+
 		})
 	})
 }
