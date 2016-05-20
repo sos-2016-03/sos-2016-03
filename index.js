@@ -3,7 +3,6 @@ var request = require("request");
 var governify = require("governify");
 var cors=require("cors");
 var apiOil  = require('./public/api/Alberto/oil.js');
-var apiCricket  = require('./public/api/Alberto/cricket.js');
 var app=express();
 app.use(cors());
 
@@ -18,8 +17,6 @@ governify.control(app,{
 //PROXY ALBERTO
 
 app.use('/api/v1/oil', apiOil);
-app.use('/api/match/live/', apiCricket);
-
 
 //Proxy Patri
 var pathsPatri='/api/v1/co2';

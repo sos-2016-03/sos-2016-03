@@ -14,7 +14,7 @@ $(document).ready(function(){
       request.done(function(dataFromServer,status){
         var request=$.ajax({
             type: "GET",
-            url: '../../../api/v1/population-growth?apikey=read',
+            url: 'http://sos-2016-04.herokuapp.com/api/v1/population-labor-force-percentage-by-education?apikey=clave',
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -22,7 +22,7 @@ $(document).ready(function(){
         request.done(function(dataFromServer2,status){
           google.charts.setOnLoadCallback(drawChart);
             function drawChart() {
-              var dataForWidget=[["Year","Total Birth","Total Population"]];
+              var dataForWidget=[["Year","Total Birth","Secondary students"]];
 
             //Tranformación
             for(i=0;i<dataFromServer.length;i++){
@@ -31,8 +31,8 @@ $(document).ready(function(){
               for(j=0;j<dataFromServer2.length;j++){
                 item2=dataFromServer2[j];
                 //console.log(item2);
-                if((item.year == item2.year) /*&& item.year>=2013 && item.year<=2014*/){
-                  var itemForWidget=[item.year,item.totalbirth,item2.total_population];
+                if((item.year == item2.year)){
+                  var itemForWidget=[item.year,item.totalbirth,item2.secondaryEducation*100];
                   console.log(itemForWidget);
                   dataForWidget.push(itemForWidget);
                 }
@@ -43,7 +43,7 @@ $(document).ready(function(){
               console.log("Success!");
 
               var options = {
-                title: 'Company Performance',
+                title: 'Spanish births vs Secondary students',
                 hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
                 vAxis: {minValue: 0}
               };
