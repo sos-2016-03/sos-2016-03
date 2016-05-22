@@ -6,12 +6,14 @@ var apiOil  = require('./public/api/Alberto/oil.js');
 var app=express();
 app.use(cors());
 
-
+//SLA Alberto
 governify.control(app,{
   datastore :"http://datastore.governify.io/api/v6.1/",
-  namespace :"sos-2016-03-albrodpul",
+  namespace :"sos-2016-03-arp",
   defaultPath: "/api/v1/spain-births"
 });
+//Resto SLA
+
 //PROXY ALBERTO
 
 app.use('/api/v1/oil', apiOil);
