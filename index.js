@@ -66,7 +66,7 @@ app.use(bodyParser.json());
 //----
 
 
-
+/*
 
 var passport = require('passport');
 var LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
@@ -99,7 +99,14 @@ function ReadAccess(req, res, next) {
         return next();
     })(req, res, next);
 };
+*/
+governify.control(app,{
+  datastore :"http://datastore.governify.io/api/v6.1/",
+  namespace :"sos-2016-03-asu",
+  defaultPath: "/api/v1/population-growth"
+});
 //---
+
 var passportKey = require('passport');
 var LocalAPIKey = require('passport-localapikey-update').Strategy;
 app.use(passportKey.initialize());
@@ -195,23 +202,23 @@ var populationgrowth = require('./public/api/Ana/population-growth.js');
 
 
 var populationgrowth = require('./public/api/Ana/population-growth.js');
-app.get("/api/v1/population-growth",ReadAccess, populationgrowth.getAllStatistics);
-app.get("/api/v1/population-growth/:id",ReadAccess, populationgrowth.getStatisticsId);
-app.get("/api/v1/population-growth/:region/:year",ReadAccess, populationgrowth.getStatisticsRegionAndYear);
+app.get("/api/v1/population-growth",/*ReadAccess,*/ populationgrowth.getAllStatistics);
+app.get("/api/v1/population-growth/:id",/*ReadAccess,*/ populationgrowth.getStatisticsId);
+app.get("/api/v1/population-growth/:region/:year",/*ReadAccess,*/ populationgrowth.getStatisticsRegionAndYear);
 
-app.post("/api/v1/population-growth",WriteAccess, populationgrowth.postSatitistics);
-app.post("/api/v1/population-growth/:id",WriteAccess, populationgrowth.postStatisticsNotPermitted);
-app.post("/api/v1/population-growth/:region/:year",WriteAccess, populationgrowth.postStatisticsNotPermitted);
+app.post("/api/v1/population-growth",/*WriteAccess,*/ populationgrowth.postSatitistics);
+app.post("/api/v1/population-growth/:id",/*WriteAccess,*/ populationgrowth.postStatisticsNotPermitted);
+app.post("/api/v1/population-growth/:region/:year",/*WriteAccess,*/ populationgrowth.postStatisticsNotPermitted);
 
-app.put("/api/v1/population-growth",WriteAccess, populationgrowth.putStatisticsNotPermitted);
-app.put("/api/v1/population-growth/:id",WriteAccess, populationgrowth.putStatisticsNotPermitted);
-app.put("/api/v1/population-growth/:region/:year",WriteAccess, populationgrowth.putStatistics);
+app.put("/api/v1/population-growth",/*WriteAccess,*/ populationgrowth.putStatisticsNotPermitted);
+app.put("/api/v1/population-growth/:id",/*WriteAccess,*/ populationgrowth.putStatisticsNotPermitted);
+app.put("/api/v1/population-growth/:region/:year",/*WriteAccess,*/ populationgrowth.putStatistics);
 
-app.delete("/api/v1/population-growth",WriteAccess, populationgrowth.deleteAllStatistics);
-app.delete("/api/v1/population-growth/:id",WriteAccess, populationgrowth.deleteStatisticsRegionOYear);
-app.delete("/api/v1/population-growth/:region/:year", WriteAccess,populationgrowth.deleteStatistics);
+app.delete("/api/v1/population-growth",/*WriteAccess,*/ populationgrowth.deleteAllStatistics);
+app.delete("/api/v1/population-growth/:id",/*WriteAccess,*/ populationgrowth.deleteStatisticsRegionOYear);
+app.delete("/api/v1/population-growth/:region/:year", /*WriteAccess,*/ populationgrowth.deleteStatistics);
 
-app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth.getStatisticsId);
+app.get("/api/v1/population-growth/loadInitialData",/*ReadAccess,*/ populationgrowth.getStatisticsId);
 //------------------------------------------------------------------------------------------------
 
 

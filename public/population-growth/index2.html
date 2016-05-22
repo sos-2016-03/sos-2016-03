@@ -28,8 +28,8 @@
       </br>
       </br>
       <label>Key</label><select id="apikey">
-        <option value="read" selected="selected">read</option>
-        <option value="write">write</option>
+        <option value="multiPlan_C4_sos-2016-03-asu_ag" selected="selected">read</option>
+        <option value="multiPlan_C4_sos-2016-03-asu_ag">write</option>
       </select>
 
       </br>
@@ -86,6 +86,16 @@
 
     <!-- la clase form-control es de bootstrap y da estilo -->
 
+    <div class="container" id="formularioEliminar">
+      <label>Delete: </label>
+      <input type="text" class="form-control" id="reg" placeholder="region" required="true">
+      <input type="text" class="form-control" id="yea" placeholder="year" required="true">
+      <form role="form">
+      <input type="button" class="btn btn-info" onclick="eliminardato()" name="Elimdato" value="Delete"></input>
+      </form>
+    </div>
+
+
     <div class="container" id="formularioBusqueda">
       <label>Search: </label>
       <input type="text" class="form-control" id="busqueda_region" placeholder="region">
@@ -129,7 +139,6 @@
           <th>Men</th>
           <th>Women</th>
           <th>Total population</th>
-          <th>Actions</th>
         </tr>
       </thead>
       </table>

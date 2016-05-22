@@ -1,7 +1,7 @@
 var population_growth = [];
 
-//PARA LOS MÉTODOS GET -> keyr
-//PARA LOS MÉTODOS POST, PUT Y DELETE -> keyw
+//PARA LOS MÉTODOS GET -> read
+//PARA LOS MÉTODOS POST, PUT Y DELETE -> write
 
 
 
