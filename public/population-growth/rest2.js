@@ -26,7 +26,8 @@ $(document).ready(function() {
         "bSort" : false
     });
 
-
+    $("#formulario").slideUp();
+    $("#formulario2").slideUp();
 });
 
 function cargaInicial(){
@@ -241,22 +242,25 @@ function eliminardato(){
 
 }
 
-function editardato(){
-    var region = document.getElementById("reg2").value;
-    var year = document.getElementById("yea2").value;
-    nuevoDato = false;
-    console.log("¿Es un nuevo Dato?: "+nuevoDato);
-    
-   
-    
+function botonEditarDato(){
+  $("#formulario2").slideDown();
+}
+
+function editarDato(){
   
- 
-  var metodo = "GET";
+  var region= $("#form2_region").val()
+  var year= $("#form2_year").val()
+  var age= $("#form2_age").val()
+  var men= $("#form2_men").val()
+  var women= $("#form2_women").val()
+  var totalpopulation= $("#form2_totalpopulation").val()
+  var datos='{"region":"'+region+'","year":"'+year+'","age":"'+age+'","men":"'+men+'","women":"'+women+'","total_population":"'+totalpopulation+'"}';
+  var metodo = "PUT";
   var url = '../api/v1/population-growth/'+region+'/'+year+'?apikey='+$("#apikey").val();
-    var request = $.ajax({
+  var request = $.ajax({
     url: url,
     type: metodo,
-    data: '{}',
+    data: datos,
     contentType: "application/json"
   });
 
@@ -289,40 +293,75 @@ function editardato(){
     }
   });
   request.success(function(status,jqXHR,data){
-    
-    $("#tabla").slideUp();
-    $("#formulario2").slideDown();
-    $("#tituloFormulario").text("Editar dato:");
-    //$("#nav li").removeClass("active");
-    //$("#botonEditarDato").addClass("active");
-    $("#region2").val(region);
-    $("#region2").prop('disabled', true);
-    $("#year2").val(year);
-    $("#year2").prop('disabled', true);
-    
+    location.reload();
   });
-  var r= $("#region2").val()
-  var y= $("#year2").val()
-  var a= $("#age2").val()
-  var m= $("#men2").val()
-  var w= $("#women2").val()
-  var t= $("#totalpopulation2").val()
-  var datos='{"region":"'+r+'","year":"'+y+'","age":"'+a+'","men":"'+m+'","women":"'+w+'","total_population":"'+t+'"}';
-  var metodo = "PUT";
-  var url = '../api/v1/population-growth/'+region+'/'+year+'?apikey='+$("#apikey").val();
-    var request2 = $.ajax({
+ 
+
+}
+
+function botonAnadirDato(){
+  $("#formulario").slideDown();
+}
+
+function añadirDato(){
+  
+  var region= $("#form_region").val()
+  var year= $("#form_year").val()
+  var age= $("#form_age").val()
+  var men= $("#form_men").val()
+  var women= $("#form_women").val()
+  var totalpopulation= $("#form_totalpopulation").val()
+  var datos='{"region":"'+region+'","year":"'+year+'","age":"'+age+'","men":"'+men+'","women":"'+women+'","total_population":"'+totalpopulation+'"}';
+  var metodo = "POST";
+  var url = '../api/v1/population-growth?apikey='+$("#apikey").val();
+  var request = $.ajax({
     url: url,
     type: metodo,
-    data: '{}',
+    data: datos,
     contentType: "application/json"
   });
+
+  request.always(function(jqXHR,status) {
+    if(status == "error"){
+    console.log("jqXHR always: "+jqXHR);
+    console.log("jqXHR status always: "+jqXHR.status);
+    if(jqXHR.status == 0){
+      alertify.alert("Data added successfully!");
+
+    }
+    if(jqXHR.status == 401){
+      alertify.alert("Incorrect key");
+    }
+    if(jqXHR.status == 404){
+      alertify.alert("Not found");
+    }
+    
+    if(jqXHR.status == 400){
+      alertify.alert("ERROR: Missing parameter or the type is Incorrect");
+    }
+    if(jqXHR.status == 409){
+      alertify.alert("ERROR: The entry exists");
+    }
+    if(jqXHR.status == 500){
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
+    }
+    console.log("texto codigo always:"+jqXHR.statusText);
+    console.log("status: "+status);
+    }
+  });
+  request.success(function(status,jqXHR,data){
+    location.reload();
+  });
+ 
 
 }
 
 
+
+
 function paginacion() {
      var x = document.getElementById("limit").value;
-     var busqueda= document.getElementById("busqueda").value;
+     var busqueda= document.getElementById("busqueda_region").value;
 
     $.ajax(
     {
@@ -378,7 +417,7 @@ var x2 = document.getElementById("pag").value;
 //si x2=1 -> x3=x1 (pag*limit -1)
 //si x2=2 -> x3=
 var x3= (x*x2);
-var busqueda= document.getElementById("busqueda").value;
+var busqueda= document.getElementById("busqueda_region").value;
     $.ajax(
     {
         type: "GET",
