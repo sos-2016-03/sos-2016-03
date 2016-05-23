@@ -1,3 +1,5 @@
+'use strict';
+
 var express=require("express");
 var request = require("request");
 var governify = require("governify");
@@ -63,6 +65,9 @@ var apif1teams=require("./public/api/Alberto/apif1teams.js");
 var spainBirthsApi=require("./public/api/Alberto/spain-births-api.js");
 var mortSickness = require("./public/api/Patricia/mort-sickness.js");
 var musics = require("./public/api/Patricia/musics.js");
+var http = require('http');
+var swaggerTools = require('swagger-tools');
+var jsyaml = require('js-yaml');
 
 app.use(bodyParser.json());
 //----
@@ -217,6 +222,32 @@ app.get("/api/v1/population-growth/loadInitialData",ReadAccess, populationgrowth
 //------------------------------------------------------------------------------------------------
 
 
+//Swagger Alberto
+var options = {
+  swaggerUi: '/swagger.json',
+  controllers: './controllers',
+  useStubs: process.env.NODE_ENV === 'development' ? true : false // Conditionally turn on stubs (mock mode)
+};
+
+// The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
+var spec = fs.readFileSync('./public/api/Alberto/swagger.yaml', 'utf8');
+var swaggerDoc = jsyaml.safeLoad(spec);
+
+// Initialize the Swagger middleware
+swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
+  // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
+  app.use(middleware.swaggerMetadata());
+
+  // Validate Swagger requests
+  app.use(middleware.swaggerValidator());
+
+  // Route validated requests to appropriate controller
+  app.use(middleware.swaggerRouter(options));
+
+  // Serve the Swagger documents and Swagger UI
+  app.use(middleware.swaggerUi());
+});
+//----------------------------------------------------------
 
 app.use('/',express.static(__dirname + '/public'));
 
