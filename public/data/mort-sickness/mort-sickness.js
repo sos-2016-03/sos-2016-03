@@ -3,7 +3,7 @@ $(document).ready(function(){
 	jQuery.support.cors=true;
 	$.ajax({
 		type:"GET",
-		url:service + 'mort-sickness?apikey=patriR',
+		url:service + 'mort-sickness?apikey=multiPlan_C4_sos-2016-03-pgs_ag',
 		data:"{}",
 		contentType:"application/json; charset=utf-8",
 		dataType:"json",

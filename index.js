@@ -12,6 +12,12 @@ governify.control(app,{
   namespace :"sos-2016-03-arp",
   defaultPath: "/api/v1/spain-births"
 });
+//SLA Patri
+governify.control(app,{
+  datastore: "http://datastore.governify.io/api/v6.1/",
+  namespace:"sos-2016-03-pgs",
+  defaultPath: "/api/v1/mort-sickness"
+})
 //Resto SLA
 
 //PROXY ALBERTO
@@ -112,7 +118,7 @@ passportKey.use(new LocalAPIKey(
   }
 ));
 
-function keyW(req, res, next) {
+/*function keyW(req, res, next) {
     passportKey.authenticate('localapikey', function(err, user, info) {
         if(user==false)
             return res.sendStatus(401);
@@ -132,7 +138,7 @@ function keyR(req, res, next) {
         }
         return next();
     })(req, res, next);
-};
+};*/
 
 
 //Time
@@ -153,27 +159,27 @@ app.put("/api/sandbox/f1teams/:name",apif1teams.getPut);
 app.use("/api/v1/spain-births",spainBirthsApi);
 
 //Código Patri
-app.get("/api/v1/mort-sickness",keyR, mortSickness.getSickness);
-app.get("/api/v1/mort-sickness/loadInitialData",keyW, mortSickness.getLoad);
-app.get("/api/v1/mort-sickness/:region/:year", keyR, mortSickness.getSicknessRegionYear);
-app.get("/api/v1/mort-sickness/:region", keyR, mortSickness.getSicknessRegion);
-app.get("/api/v1/mort-sickness/:year", keyR, mortSickness.getSicknessRegion);
+app.get("/api/v1/mort-sickness", mortSickness.getSickness);
+app.get("/api/v1/mort-sickness/loadInitialData", mortSickness.getLoad);
+app.get("/api/v1/mort-sickness/:region/:year",  mortSickness.getSicknessRegionYear);
+app.get("/api/v1/mort-sickness/:region",  mortSickness.getSicknessRegion);
+app.get("/api/v1/mort-sickness/:year",  mortSickness.getSicknessRegion);
 
 
-app.post("/api/v1/mort-sickness", keyW, mortSickness.postSickness);
-app.post("/api/v1/mort-sickness/:region/:year",keyW, mortSickness.postSicknessRegionYear);
-app.post("/api/v1/mort-sickness/:region", keyW, mortSickness.postSicknessRegion);
-app.post("/api/v1/mort-sickness/:year", keyW, mortSickness.postSicknessRegion);
+app.post("/api/v1/mort-sickness",  mortSickness.postSickness);
+app.post("/api/v1/mort-sickness/:region/:year", mortSickness.postSicknessRegionYear);
+app.post("/api/v1/mort-sickness/:region",  mortSickness.postSicknessRegion);
+app.post("/api/v1/mort-sickness/:year",  mortSickness.postSicknessRegion);
 
-app.put("/api/v1/mort-sickness", keyW,mortSickness.putSickness);
-app.put("/api/v1/mort-sickness/:region/:year",keyW, mortSickness.putSicknessRegionYear);
-app.put("/api/v1/mort-sickness/:region",keyW, mortSickness.putSickness);
-app.put("/api/v1/mort-sickness/:year",keyW, mortSickness.putSickness);
+app.put("/api/v1/mort-sickness", mortSickness.putSickness);
+app.put("/api/v1/mort-sickness/:region/:year", mortSickness.putSicknessRegionYear);
+app.put("/api/v1/mort-sickness/:region", mortSickness.putSickness);
+app.put("/api/v1/mort-sickness/:year", mortSickness.putSickness);
 
-app.delete("/api/v1/mort-sickness", keyW,mortSickness.deleteSickness);
-app.delete("/api/v1/mort-sickness/:region/:year",keyW, mortSickness.deleteSicknessRegionYear);
-app.delete("/api/v1/mort-sickness/:region",keyW, mortSickness.deleteSicknessRegion);
-app.delete("/api/v1/mort-sickness/:year",keyW, mortSickness.deleteSicknessRegion);
+app.delete("/api/v1/mort-sickness", mortSickness.deleteSickness);
+app.delete("/api/v1/mort-sickness/:region/:year", mortSickness.deleteSicknessRegionYear);
+app.delete("/api/v1/mort-sickness/:region", mortSickness.deleteSicknessRegion);
+app.delete("/api/v1/mort-sickness/:year", mortSickness.deleteSicknessRegion);
 //Final código Patri
 
 //Musics API Patri

@@ -1,7 +1,7 @@
 var sickness = [];
 
-var keyR = "patriR";
-var keyW = "patriW";
+/*var keyR = "patriR";
+var keyW = "patriW";*/
 //métodos GET 
 module.exports.getSickness = function(req,res){
 	var buscado = -1;
