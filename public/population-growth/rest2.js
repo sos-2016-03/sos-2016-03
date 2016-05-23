@@ -1,15 +1,13 @@
 
-var service = "../api/v1/population-growth?apikey=read";
 
-// TODO find in doc how to get a DataTable object from
-// an existing one
+
 var table;
 
 
 $(document).ready(function() {
     table = $("#tablaid").DataTable({
         "ajax": {
-            "url": service,
+            "url": "../api/v1/population-growth?apikey=multiPlan_C4_sos-2016-03-asu_ag",
             "dataSrc": ""
         },
         "columns": [
@@ -28,223 +26,445 @@ $(document).ready(function() {
         "bSort" : false
     });
 
-
+    $("#formulario").slideUp();
+    $("#formulario2").slideUp();
 });
 
-
-
-//****************------------------***************----------------********************--------------
-
-/*
-function addActionsToTable() {
-    var table = document.getElementById("population-data-table");
-    addActionColumnToHeader(table);
-    $(table).on("draw.dt", function () {
-        addActionButtonsToEachRow(table);
-    } );
-}
-
-
-// listeners ///////////////////////////////////////////////////////////////////
-function searchButtonListener(event) {
-    event.preventDefault();
-    refreshUrlAndReload();
-}
-
-
-function datumFormListener(event) {
-    event.preventDefault();
-
-    var $form = $("#datum-form");
-    var formJson = JSON.stringify($form.serializeObject());
-
-    // Disable the inputs for the duration of the Ajax request.
-    // Note: we disable elements AFTER the form data has been serialized.
-    // Disabled form elements will not be serialized.
-    var $inputs = $form.find("input, button");
-    $inputs.prop("disabled", true);
-
-    var url, type;
-    var editing = byId("datum-form-button").value == "Update";
-    if (editing) {
-        var year = byId("year-input").value;
-        var province = byId("province-input").value;
-        url = API_POPULATION_URL + "/" + province + "/" + year + makeUrlParams();
-        type = "put";
-    } else {
-        url = API_POPULATION_URL + makeUrlParams();
-        type = "post";
+function cargaInicial(){
+  var apikey = document.getElementById("apikey").value;
+  var urlstring = '/api/v1/population-growth/loadInitialData?apikey=' + apikey
+  var method = "GET";
+  var request = $.ajax({
+    url: urlstring,
+    type: method
+  });
+  request.always(function(jqXHR,status) {
+    if(status == "error"){
+    console.log("jqXHR always: "+jqXHR);
+    console.log("jqXHR status always: "+jqXHR.status);
+    if(jqXHR.status == 401){
+      alertify.alert("Incorrect key");
     }
-    performAjaxRequest({
-        url: url,
-        type: type,
-        data: formJson,
-        doneCallback: () => {dataTable.ajax.reload();},
-        alwaysCallback: () => {$inputs.prop("disabled", false);}
-    });
-    if (editing) { byId("datum-form-button").value = "Create"; }
+    if(jqXHR.status == 500){
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
+    }
+    console.log("texto codigo always:"+jqXHR.statusText);
+    console.log("status: "+status);
+    }
+  });
+  request.success(function(status,jqXHR) {
+    
+    console.log("Datos cargados");
+    alertify.alert("Data loaded", function () {
+      location.reload();
+  });
+  });
+  
 }
 
-function loadInitialDataButtonListener(event) {
-    event.preventDefault();
-    $(event.target).prop("disabled", true);
-
-    var url = API_POPULATION_URL + "/loadInitialData?apikey=" + byId("api-key-input").value;
-
-    performAjaxRequest({
-        url: url,
-        type: "get",
-        doneCallback: () => {dataTable.ajax.reload();},
-        alwaysCallback: () => {$(event.target).prop("disabled", false);}
-    });
-}
-
-var reloadDataButtonListener = refreshUrlAndReload;
-var paginationSelectListener = refreshUrlAndReload;
-
-function paginationPreviousButtonListener(event) {
-    paginationOffset -= paginationLimit;
-    if (paginationOffset < 0) paginationOffset = 0;
-    refreshUrlAndReload();
-}
-
-function paginationNextButtonListener(event) {
-    paginationOffset += paginationLimit;
-    refreshUrlAndReload();
-}
-
-// helpers /////////////////////////////////////////////////////////////////////
-
-function refreshUrlAndReload() {
-    var newUrl = API_POPULATION_URL + makeUrlParams();
-    dataTable.ajax.url(newUrl).load();
-}
-
-function performAjaxRequest({url, type, data, doneCallback, alwaysCallback}) {
+function botonEliminarTodo(){
+ 
+  var x;
+  
+    var urlstring = '/api/v1/population-growth?apikey=' + $("#apikey").val();
+    console.log($("#apikey").val());
+    var method = "DELETE";
     var request = $.ajax({
-        url: url,
-        type: type,
-        data: data,
-				contentType: "application/json"
+      url: urlstring,
+      type: method
     });
-
-    request.done(doneCallback);
-
-    request.fail(function (jqXHR, textStatus, errorThrown){
-        if (jqXHR.status == 409) {
-            window.alert("The datum that you are trying to add already exists(same province and year)");
-        } else if (jqXHR.status == 401) {
-            dataTable.clear().draw(); // don't let data when it's not possible to load it
-            window.alert(ERROR_MESSAGE_WRONG_API_KEY);
-        }
-        console.error(
-            "The following error occurred: "+
-                textStatus, errorThrown
-        );
-    });
-
-    request.always(alwaysCallback);
-}
-
-function addActionColumnToHeader(table) {
-    var header = table.tHead.rows[0];
-    header.innerHTML += "<th>Actions</th>";
-}
-
-function addActionButtonsToEachRow(table) {
-    var tableBody = table.tBodies[0];
-
-    var noData = tableBody.rows[0].cells[0].className == "dataTables_empty";
-    if (noData) return;
-
-    for (var i = 0, row; row = tableBody.rows[i]; i++) {
-        var actionButtonsAlreadyThere = row.cells[5] != undefined;
-        // happens with client side search which redraws the table but don't
-        // destroy the rows. In that case skip the rest of the function
-        if (actionButtonsAlreadyThere) { return; }
-
-        row.innerHTML += '<td class="action-cell"></td>';  // add action column
-        addEditButton(row, i);
-        addDeleteButton(row, i);
+    request.success(function(status,jqXHR) {
+    var table =  $('#tablaid').DataTable();
+    table.rows().remove().draw(/*false*/);
+    });    
+    console.log("Datos borrado");
+    request.always(function(jqXHR,status) {
+    if(status == "error"){
+    console.log("jqXHR always: "+jqXHR);
+    console.log("jqXHR status always: "+jqXHR.status);
+    if(jqXHR.status == 0){
+      alertify.alert("Data added successfully!");
     }
+    if(jqXHR.status == 401){
+      alertify.alert("Incorrect key");
+    }
+    if(jqXHR.status == 404){
+      alertify.alert("Not found");
+    }
+    if(jqXHR.status == 400){
+      alertify.alert("ERROR: Missing parameter or the type is incorrect");
+    }
+    if(jqXHR.status == 409){
+      alertify.alert("ERROR: The entry exists");
+    }
+    if(jqXHR.status == 500){
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
+    }
+    console.log("texto codigo always:"+jqXHR.statusText);
+    console.log("status: "+status);
+    }
+  });
+  
 }
 
-function addEditButton(row, rowIndex) {
-    var buttonId = "edit-button-row-" + rowIndex;
-    $(row.cells[5]).append( "<button id=" + buttonId + ">Edit</button>");
-    $("#" + buttonId).click(row, editDatumListener);
-}
 
-function editDatumListener(event) {
-    var row = event.data;
-    fillDatumFormWithRowData(row);
-    byId("datum-form-button").value = "Update";
-}
+function busqueda(){
 
-function fillDatumFormWithRowData(row) {
-    byId("year-input").value = row.cells[0].innerHTML;
-    byId("province-input").value = row.cells[1].innerHTML;
-    byId("age-input").value = row.cells[2].innerHTML;
-    byId("birthplace-input").value = row.cells[3].innerHTML;
-    byId("number-input").value = row.cells[4].innerHTML;
-}
+    var busqueda_region = document.getElementById("busqueda_region").value;
+    var busqueda_from = document.getElementById("busqueda_from").value;
+    var busqueda_to = document.getElementById("busqueda_to").value;
+    if(busqueda_from=='' && busqueda_to==''){
+        urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val();
+    }else if(busqueda_from=='' && busqueda_to!=''){
+       urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&to=" + busqueda_to;
+    }else if(busqueda_from!='' && busqueda_to==''){
+       urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&from=" + busqueda_from;
+    }else if(busqueda_from!='' && busqueda_to!='' && busqueda_region!=''){
+      urlaux='/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&from=" + busqueda_from + "&to=" + busqueda_to;
+    }else if(busqueda_from!='' && busqueda_to!='' && busqueda_region==''){
+      urlaux='/api/v1/population-growth/?apikey=' + $("#apikey").val() + "&from=" + busqueda_from + "&to=" + busqueda_to;
+    }else if(busqueda_from=='' && busqueda_to!='' && busqueda_region==''){
+      urlaux='/api/v1/population-growth/?apikey=' + $("#apikey").val() +  "&to=" + busqueda_to;
+    }else{
+      urlaux='/api/v1/population-growth/?apikey=' + $("#apikey").val() + "&from=" + busqueda_from ;
+    }
+    $.ajax(
+    {
+        type: "GET",
+        //url: '/api/v1/population-growth/'+busqueda_region+'?apikey=' + $("#apikey").val() + "&from=" + busqueda_from + "&to=" + busqueda_to,
+        url: urlaux,
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
 
-function addDeleteButton(row, rowIndex) {
-    var buttonId = "delete-button-row-" + rowIndex;
-    $(row.cells[5]).append( "<button id=" + buttonId + ">Delete</button>");
-    $("#" + buttonId).click(row, deleteDatumListener);
-}
+        success: function (data) {
+          $("#tablaid tbody tr").remove();
+          var trHTML = '';
+          $.each(data, function (i, item) {
+          console.log(data[i]);
+          trHTML += "<tr class='info'><td>" + data[i].region + '</td><td>' + data[i].year + '</td><td>' + data[i].age + '</td><td>' + data[i].men + '</td><td>' + data[i].women + '</td><td>' + data[i].total_population + '</td></tr>';
+        });
 
-function deleteDatumListener(event) {
-    var row = event.data;
-    var year = row.cells[0].innerHTML;
-    var province = row.cells[1].innerHTML;
-    var url = API_POPULATION_URL + "/" + province + "/" + year + makeUrlParams();
+        $('#tablaid').append(trHTML);  
 
-    $(event.target).prop("disabled", true);
 
-    performAjaxRequest({
-        url: url,
-        type: "delete",
-        doneCallback: () => {dataTable.ajax.reload();},
-        alwaysCallback: () => {$(event.target).prop("disabled", false);}
-    });
-}
 
-function makeUrlParams(additionalParams = "") {
-    paginationLimit = parseInt(byId("pagination-select").value, 10);
-    var yearOrCityQuery = $("#search-year-or-city-input").val();
-    var params =
-            "/" + yearOrCityQuery +
-            "?apikey=" + byId("api-key-input").value +
-            "&limit=" + paginationLimit +
-            "&offset=" + paginationOffset +
-            makeMinPopulationUrlParams() +
-            additionalParams;
-
-    return params;
-}
-
-function makeMinPopulationUrlParams() {
-    var minPopulationQuery = $("#search-min-population-input").val();
-    if(minPopulationQuery === "") return "";
-    return "&minPopulation=" + minPopulationQuery;
-}
-
-// http://stackoverflow.com/a/1186309/3682839
-$.fn.serializeObject = function() {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function() {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
+        },
+        
+        
+        error: function(jqXHR,status){
+          console
+          if(jqXHR.status == 401){
+              alertify.alert("Incorrect key");
+          }
+          if(jqXHR.status == 404){
+              alertify.alert("Not found");
+          }
+          if(jqXHR.status == 500){
+            alertify.alert("ERROR: "+jqXHR.status+"Server error");
+           }
+            console.log("texto codigo always:"+jqXHR.statusText);
+            console.log("status: "+status);
+           
         }
     });
-    return o;
-};
-*/
+}
+
+function eliminardato(){
+  var region = document.getElementById("reg").value;
+  var year = document.getElementById("yea").value;
+
+  if(region!='' && year!=''){
+      var table =  $('#tablaid').DataTable();
+      
+      var urlstring = '../api/v1/population-growth'+'/'+region+'/'+year+'?apikey=' + $("#apikey").val();
+      var method = "DELETE";
+      var request = $.ajax({
+        url: urlstring,
+        type: method
+      });
+  request.success(function(status,jqXHR){
+  var x;
+ 
+    alertify.confirm("Are you sure?", function (e) {
+        if (e) {
+      var table =  $('#tablaid').DataTable();
+      console.log(x);
+      
+      var urlstring = '../api/v1/population-growth'+'/'+region+'/'+year+'?apikey=' + $("#apikey").val();
+      console.log(urlstring);
+      var method = "DELETE";
+      var request = $.ajax({
+        url: urlstring,
+        type: method
+      });
+      seleccionado = false;
+      x = "Se ha aceptado";
+      alertify.alert("Deleted", function(){
+        location.reload();
+      });
+        }else{
+      x = "Cancelled";
+        }});
+ 
+  console.log(x);
+  //console.log("Dato borrado");
+  });
+  request.always(function(jqXHR,status) {
+    if(status == "error"){
+    console.log("jqXHR always: "+jqXHR);
+    console.log("jqXHR status always: "+jqXHR.status);
+    if(jqXHR.status == 0){
+      alertify.alert("Data added successfully!");
+    }
+    if(jqXHR.status == 401){
+      alertify.alert("Incorrect key");
+    }
+    if(jqXHR.status == 404){
+      alertify.alert("Not found");
+    }
+    if(jqXHR.status == 400){
+      alertify.alert("ERROR: Missing parameter or the type is incorrect");
+    }
+    if(jqXHR.status == 409){
+      alertify.alert("ERROR: The entry exists");
+    }
+    if(jqXHR.status == 500){
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
+    }
+    console.log("texto codigo always:"+jqXHR.statusText);
+    console.log("status: "+status);
+    }
+  });
+}else{
+  alertify.alert("Data no selected");
+}
+
+}
+
+function botonEditarDato(){
+  $("#formulario2").slideDown();
+}
+
+function editarDato(){
+  
+  var region= $("#form2_region").val()
+  var year= $("#form2_year").val()
+  var age= $("#form2_age").val()
+  var men= $("#form2_men").val()
+  var women= $("#form2_women").val()
+  var totalpopulation= $("#form2_totalpopulation").val()
+  var datos='{"region":"'+region+'","year":"'+year+'","age":"'+age+'","men":"'+men+'","women":"'+women+'","total_population":"'+totalpopulation+'"}';
+  var metodo = "PUT";
+  var url = '../api/v1/population-growth/'+region+'/'+year+'?apikey='+$("#apikey").val();
+  var request = $.ajax({
+    url: url,
+    type: metodo,
+    data: datos,
+    contentType: "application/json"
+  });
+
+  request.always(function(jqXHR,status) {
+    if(status == "error"){
+    console.log("jqXHR always: "+jqXHR);
+    console.log("jqXHR status always: "+jqXHR.status);
+    if(jqXHR.status == 0){
+      alertify.alert("Data added successfully!");
+
+    }
+    if(jqXHR.status == 401){
+      alertify.alert("Incorrect key");
+    }
+    if(jqXHR.status == 404){
+      alertify.alert("Not found");
+    }
+    
+    if(jqXHR.status == 400){
+      alertify.alert("ERROR: Missing parameter or the type is Incorrect");
+    }
+    if(jqXHR.status == 409){
+      alertify.alert("ERROR: The entry exists");
+    }
+    if(jqXHR.status == 500){
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
+    }
+    console.log("texto codigo always:"+jqXHR.statusText);
+    console.log("status: "+status);
+    }
+  });
+  request.success(function(status,jqXHR,data){
+    location.reload();
+  });
+ 
+
+}
+
+function botonAnadirDato(){
+  $("#formulario").slideDown();
+}
+
+function añadirDato(){
+  
+  var region= $("#form_region").val()
+  var year= $("#form_year").val()
+  var age= $("#form_age").val()
+  var men= $("#form_men").val()
+  var women= $("#form_women").val()
+  var totalpopulation= $("#form_totalpopulation").val()
+  var datos='{"region":"'+region+'","year":"'+year+'","age":"'+age+'","men":"'+men+'","women":"'+women+'","total_population":"'+totalpopulation+'"}';
+  var metodo = "POST";
+  var url = '../api/v1/population-growth?apikey='+$("#apikey").val();
+  var request = $.ajax({
+    url: url,
+    type: metodo,
+    data: datos,
+    contentType: "application/json"
+  });
+
+  request.always(function(jqXHR,status) {
+    if(status == "error"){
+    console.log("jqXHR always: "+jqXHR);
+    console.log("jqXHR status always: "+jqXHR.status);
+    if(jqXHR.status == 0){
+      alertify.alert("Data added successfully!");
+
+    }
+    if(jqXHR.status == 401){
+      alertify.alert("Incorrect key");
+    }
+    if(jqXHR.status == 404){
+      alertify.alert("Not found");
+    }
+    
+    if(jqXHR.status == 400){
+      alertify.alert("ERROR: Missing parameter or the type is Incorrect");
+    }
+    if(jqXHR.status == 409){
+      alertify.alert("ERROR: The entry exists");
+    }
+    if(jqXHR.status == 500){
+      alertify.alert("ERROR: "+jqXHR.status+"Server error");
+    }
+    console.log("texto codigo always:"+jqXHR.statusText);
+    console.log("status: "+status);
+    }
+  });
+  request.success(function(status,jqXHR,data){
+    location.reload();
+  });
+ 
+
+}
+
+
+
+
+function paginacion() {
+     var x = document.getElementById("limit").value;
+     var busqueda= document.getElementById("busqueda_region").value;
+
+    $.ajax(
+    {
+        type: "GET",
+        url: '/api/v1/population-growth'+busqueda+'?apikey=' + $("#apikey").val() + '&limit='+x+'&offset='+'0',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        cache: false,
+
+        success: function (data) {
+          $("#tabla tbody tr").remove();
+          
+          var trHTML = '';
+
+      
+        
+
+      $.each(data, function (i, item) {
+        console.log(data[i]);
+        
+          trHTML += "<tr class='info'><td>" + data[i].region + '</td><td>' + data[i].year + '</td><td>' + data[i].age + '</td><td>' + data[i].men + '</td><td>' + data[i].women + '</td><td>' + data[i].total_population + '</td></tr>';
+      });
+
+      $('#tablaid').append(trHTML);  
+
+
+
+        },
+        
+        error: function(jqXHR,status){
+          console
+          if(jqXHR.status == 401){
+              alertify.alert("Incorrect key");
+          }
+          if(jqXHR.status == 404){
+              alertify.alert("Not found. Not more data.");
+          }
+          if(jqXHR.status == 500){
+            alertify.alert("ERROR: "+jqXHR.status+"Server error");
+           }
+            console.log("texto codigo always:"+jqXHR.statusText);
+            console.log("status: "+status);
+           
+        }
+    });
+}
+
+function paginacion2() {
+var x = document.getElementById("limit").value;
+var x2 = document.getElementById("pag").value;
+//si x2=0 -> x3=0 (x2*x)
+//si x2=1 -> x3=x1 (pag*limit -1)
+//si x2=2 -> x3=
+var x3= (x*x2);
+var busqueda= document.getElementById("busqueda_region").value;
+    $.ajax(
+    {
+        type: "GET",
+        url: '/api/v1/population-growth/'+busqueda+'?apikey=' + $("#apikey").val() + '&limit='+x+'&offset='+x3,
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        cache: false,
+
+        success: function (data) {
+          $("#tabla tbody tr").remove();
+          
+          var trHTML = '';
+
+      
+        
+
+      $.each(data, function (i, item) {
+        console.log(data[i]);
+        
+          trHTML += "<tr class='info'><td>" + data[i].region + '</td><td>' + data[i].year + '</td><td>' + data[i].age + '</td><td>' + data[i].men + '</td><td>' + data[i].women + '</td><td>' + data[i].total_population + '</td></tr>';
+      });
+
+      $('#tablaid').append(trHTML);  
+
+
+
+        },
+        
+        
+        error: function(jqXHR,status){
+          console
+          if(jqXHR.status == 401){
+              alertify.alert("Incorrect key");
+          }
+          if(jqXHR.status == 404){
+              alertify.alert("Not found. Not more data");
+          }
+          if(jqXHR.status == 500){
+            alertify.alert("ERROR: "+jqXHR.status+"Server error");
+           }
+            console.log("texto codigo always:"+jqXHR.statusText);
+            console.log("status: "+status);
+           
+        }
+    });
+    
+
+
+}

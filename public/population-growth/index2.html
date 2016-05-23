@@ -23,20 +23,21 @@
       
    
       <input onclick="botonAnadirDato()" type="button" class="btn btn-primary" value="Add new"></input>
+      <input onclick="botonEditarDato()" type="button" class="btn btn-primary" value="Edit data"></input>
       <input onclick="botonEliminarTodo()" type="button" class="btn btn-warning" value="Delete All"></input>
       <input onclick="cargaInicial()" type="button" class="btn btn-danger" value="Load Initial Data"></input>
       </br>
       </br>
       <label>Key</label><select id="apikey">
-        <option value="read" selected="selected">read</option>
-        <option value="write">write</option>
+        <option value="multiPlan_C4_sos-2016-03-asu_ag" selected="selected">read</option>
+        <option value="multiPlan_C4_sos-2016-03-asu_ag">write</option>
       </select>
 
       </br>
-      </br>
+      
 
-      <div class="container">
-      <form role="form">
+      <div class="container" id="formulario">
+      <form role="form" id="formulario">
         <label for="form_region">Region:</label>
           <input type="text" class="form-control" id="form_region" name="form_region" placeholder="Region" >
         <label for="form_year">Year:</label>
@@ -50,41 +51,53 @@
         <label for="form_totalpopulation">Total population:</label>
           <input type="text" class="form-control" id="form_totalpopulation" name="form_totalpopulation" placeholder="Totalpopulation" >
 
-        <input type="button" onclick="enviarDato()" name="Send" value="Send"></input>
+        <input type="button" onclick="añadirDato()" name="AddData" value="Add"></input>
       </form>
       </div>
+
+      
       </br>
       </br>
 
- 
+      <div class="container" id="formulario2">
+      <form role="form" id="formulario2">
+        <label for="form_region">Region:</label>
+          <input type="text" class="form-control" id="form2_region" name="form_region" placeholder="Region" >
+        <label for="form_year">Year:</label>
+          <input type="text" class="form-control" id="form2_year" name="form_year" placeholder="Year" >
+        <label for="form_age">Age:</label>
+          <input type="text" class="form-control" id="form2_age" name="form_age" placeholder="Age" >
+        <label for="form_men">Men:</label>
+          <input type="text" class="form-control" id="form2_men" name="form_men" placeholder="Men" >
+        <label for="form_women">Women:</label>
+          <input type="text" class="form-control" id="form2_women" name="form_women" placeholder="Women" >
+        <label for="form_totalpopulation">Total population:</label>
+          <input type="text" class="form-control" id="form2_totalpopulation" name="form_totalpopulation" placeholder="Totalpopulation" >
 
-<!--
-    <button id="button-load-initial-data">Load initial Data</button>
-    <label for="api-key-input">API key</label>
-    <input id="api-key-input" type="text" value="correct-key-1" />
-    <button id="button-reload-data">Reload data</button>
+        <input type="button" onclick="editarDato()" name="EditData" value="Edit"></input>
+      </form>
+      </div>
 
-    <form id="datum-form">
-      <label for="year-input">Year</label>
-      <input id="year-input" name="year" type="text" />
+      </br>
+      </br>
 
-      <label for="province-input">Province</label>
-      <input id="province-input" name="province" type="text" />
 
-      <label for="age-input">Age</label>
-      <input id="age-input" name="age" type="text" />
-
-      <label for="birthplace-input">Birthplace</label>
-      <input id="birthplace-input" name="birthplace" type="text" />
-
-      <label for="number-input">Number</label>
-      <input id="number-input" name="number" type="text" />
-      <input id="datum-form-button" type="submit" value="Create" />
-
-    </form>
--->
 
     <!-- la clase form-control es de bootstrap y da estilo -->
+
+    
+
+    <div class="container" id="formularioEliminar">
+      <label>Delete: </label>
+      <input type="text" class="form-control" id="reg" placeholder="region" required="true">
+      <input type="text" class="form-control" id="yea" placeholder="year" required="true">
+      <form role="form">
+      <input type="button" class="btn btn-info" onclick="eliminardato()" name="Elimdato" value="Delete"></input>
+      </form>
+    </div>
+
+    
+    </br>
 
     <div class="container" id="formularioBusqueda">
       <label>Search: </label>
@@ -99,26 +112,7 @@
     </br>
     </br>
 
-    <!--
-    <table id="population-data-table" class="display">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Province</th>
-          <th>Age</th>
-          <th>Birthplace</th>
-          <th>Number</th>
-        </tr>
-      </thead>
-    </table>
-  -->
-  <!-- TABLA DE DATOS -->
-<!--
-    <div id="tabla">
-      <table id="tablaid" class="display" width="100%">
-      </table>
-    </div>
-    -->
+   
     <div id="tabla">
       <table id="tablaid" class="display" width="100%">
       <thead>
@@ -129,7 +123,6 @@
           <th>Men</th>
           <th>Women</th>
           <th>Total population</th>
-          <th>Actions</th>
         </tr>
       </thead>
       </table>
@@ -156,18 +149,7 @@
       <option value="4">4</option>
       </select>
     </div>
-    <!--
-    Show
-    <select id="pagination-select">
-      <option value="5">5</option>
-      <option value="10" selected>10</option>
-      <option value="20">20</option>
-    </select>
-    entries
-    <button id="pagination-button-previous">Previous</button>
-    <button id="pagination-button-next">Next</button>
-
-    -->
+   
   </div>
   </body>
 </html>
