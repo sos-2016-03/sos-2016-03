@@ -45,8 +45,10 @@ app.use(pathsPatri, function(req, res) {
 /*******************************/
 //PROXY ANA
 var pathsAna='/api/v1/population';
+//var pathsAna='/api/1.0/indicators/?page=2&format=json';
 //var apiServerHost = 'http://sos-contacts.herokuapp.com'; //el proxy hacia donde tiene que ir
 var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
+//var apiServerHostAna = 'http://transparenciadecuentaspublicas.es';
 app.use(pathsAna, function(req, res) {
   var url = apiServerHostAna + req.baseUrl + req.url;
   console.log('piped: '+req.baseUrl + req.url);
