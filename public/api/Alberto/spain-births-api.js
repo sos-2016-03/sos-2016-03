@@ -66,6 +66,7 @@ router.get("/loadInitialData",/*WriteAccess,*/(req,res)=>{
     res.sendStatus(200);
 });
 
+
 //Devuelve una lista del recurso, por región, año + búsqueda, paginación
 router.get("/:region/",/*ReadAccess,*/(req,res) => {
     var year = req.params.region;
