@@ -81,9 +81,9 @@ function putAux(j){
                 year=data[i].year;
                 console.log(region, year);
                 var request = $.ajax({
-                  url: "../../../api/v1/spain-births/"+region+"/"+year+"?apikey=write",
+                  url: "../../../api/v1/spain-births/"+region+"/"+year+"?apikey=multiPlan_C4_sos-2016-03-arp_ag",
                   type: "PUT",
-                  data: '{"region":"'+$("#region2").val()+'","year":"'+$("#year2").val()+'","men":"'+$("#men").val()+'","women":"'+$("#women").val()+'","totalbirth":"'+$("#totalbirth").val()+'"}',
+                  data: '{"region":"'+$("#region2").val()+'","year":'+$("#year2").val()+',"men":'+$("#men").val()+',"women":'+$("#women").val()+',"totalbirth":'+$("#totalbirth").val()+'}',
                   contentType: "application/json"
                 });
                 request.done(function(data,status,jqXHR){
@@ -127,9 +127,9 @@ function addBirth(){
   $("#log").text("Sending request...");
 
   var request = $.ajax({
-    url: "../../../api/v1/spain-births?apikey=write",
+    url: "../../../api/v1/spain-births?apikey=multiPlan_C4_sos-2016-03-arp_ag",
     type: "POST",
-    data: '{"region":"'+$("#region2").val()+'","year":"'+$("#year2").val()+'","men":"'+$("#men").val()+'","women":"'+$("#women").val()+'","totalbirth":"'+$("#totalbirth").val()+'"}',
+    data: '{"region":"'+$("#region2").val()+'","year":'+$("#year2").val()+',"men":'+$("#men").val()+',"women":'+$("#women").val()+',"totalbirth":'+$("#totalbirth").val()+'}',
     contentType: "application/json"
   });
   request.done(function(data,status,jqXHR){
@@ -246,7 +246,7 @@ $(document).ready(function(){
   function refresh(){
     var request =$.ajax({
       type: "GET",
-      url: '../../../api/v1/spain-births?apikey=read&limit=3',
+      url: '../../../api/v1/spain-births?apikey=multiPlan_C4_sos-2016-03-arp_ag&limit=3',
       data: "{}",
       data: $("#payload").val(),
       contentType: "application/json"
@@ -314,7 +314,7 @@ direccion();
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: "../../../api/v1/spain-births?apikey=read&limit=3",
+        url: "../../../api/v1/spain-births?apikey=multiPlan_C4_sos-2016-03-arp_ag&limit=3",
         type: "GET",
         data: $("#payload").val(),
         contentType: "application/json"
@@ -610,7 +610,7 @@ function direccion() {
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: "../../../api/v1/spain-births?apikey=write",
+        url: "../../../api/v1/spain-births?apikey=multiPlan_C4_sos-2016-03-arp_ag",
         type: "DELETE",
         data: $("#payload").val(),
         contentType: "application/json"
@@ -654,7 +654,7 @@ function direccion() {
       $("#log").text("Sending request...");
 
       var request = $.ajax({
-        url: "../../../api/v1/spain-births/loadInitialData?apikey=write",
+        url: "../../../api/v1/spain-births/loadInitialData?apikey=multiPlan_C4_sos-2016-03-arp_ag",
         type: "GET",
         contentType: "application/json"
       });
