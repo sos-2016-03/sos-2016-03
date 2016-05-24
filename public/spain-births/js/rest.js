@@ -118,7 +118,7 @@ function putAux(j){
                 var request = $.ajax({
                   url: "../../../api/v1/spain-births/"+region+"/"+year+"?apikey="+$("#apikey").val(),
                   type: "PUT",
-                  data: '{"region":"'+$("#region2").val()+'","year":"'+$("#year2").val()+'","men":"'+$("#men").val()+'","women":"'+$("#women").val()+'","totalbirth":"'+$("#totalbirth").val()+'"}',
+                  data: '{"region":"'+$("#region2").val()+'","year":'+$("#year2").val()+',"men":'+$("#men").val()+',"women":'+$("#women").val()+',"totalbirth":'+$("#totalbirth").val()+'}',
                   contentType: "application/json"
                 });
                 request.done(function(data,status,jqXHR){
@@ -188,7 +188,7 @@ function addBirth(){
   var request = $.ajax({
     url: "../../../api/v1/spain-births?apikey="+$("#apikey").val(),
     type: "POST",
-    data: '{"region":"'+$("#region2").val()+'","year":"'+$("#year2").val()+'","men":"'+$("#men").val()+'","women":"'+$("#women").val()+'","totalbirth":"'+$("#totalbirth").val()+'"}',
+    data: '{"region":"'+$("#region2").val()+'","year":'+$("#year2").val()+',"men":'+$("#men").val()+',"women":'+$("#women").val()+',"totalbirth":'+$("#totalbirth").val()+'}',
     contentType: "application/json"
   });
   request.done(function(data,status,jqXHR){
