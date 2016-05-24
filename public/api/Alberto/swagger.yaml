@@ -8,7 +8,7 @@ info:
     You can try all HTTP operation described in this Swagger spec.
 
     Find source code of this API [here](https://github.com/mohsen1/petstore-api)
-host: ..
+host: sos-2016-03.herokuapp.com
 basePath: /api/v1
 schemes:
   - http
