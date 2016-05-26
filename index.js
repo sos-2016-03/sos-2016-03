@@ -5,6 +5,7 @@ var request = require("request");
 var governify = require("governify");
 var cors=require("cors");
 var apiOil  = require('./public/api/Alberto/oil.js');
+var proxyAna  = require('./public/api/Ana/proxy.js');
 var app=express();
 app.use(cors());
 
@@ -25,6 +26,8 @@ governify.control(app,{
 //PROXY ALBERTO
 
 app.use('/api/v1/oil', apiOil);
+//app.use('/api/v1/population', proxyAna);
+app.use('/api/v2', proxyAna);
 
 //Proxy Patri con co2
 var pathsPatri='/api/v1/co2';
@@ -45,13 +48,17 @@ app.use(pathsPatri, function(req, res) {
 
 
 //
+
+
+
 /*******************************/
+/*
 //PROXY ANA
-var pathsAna='/api/v1/population';
-//var pathsAna='/api/1.0/indicators/?page=2&format=json';
+//var pathsAna='/api/v1/population';
+var pathsAna='/contacts';
 //var apiServerHost = 'http://sos-contacts.herokuapp.com'; //el proxy hacia donde tiene que ir
-var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
-//var apiServerHostAna = 'http://transparenciadecuentaspublicas.es';
+//var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
+var apiServerHostAna = 'http://sos-contacts.herokuapp.com';
 app.use(pathsAna, function(req, res) {
   var url = apiServerHostAna + req.baseUrl + req.url;
   console.log('piped: '+req.baseUrl + req.url);
@@ -64,7 +71,7 @@ app.use(pathsAna, function(req, res) {
     }
   })).pipe(res);
 });
-
+*/
 /*******************************/
 
 

@@ -4,8 +4,10 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
+
+
+
     google.charts.load('current', {'packages':['table']});
-      
      
     $(document).ready(()=>{
         var request = $.ajax({
@@ -20,12 +22,15 @@
         request.done((dataFromServer,status)=>{
           	var request=$.ajax({
             	type: "GET",
-            	url: 'http://api.citybik.es/networks.json',
+            	url: '../../../api/v2/bikes_search',
             	data: "{}",
             	contentType: "application/json; charset=utf-8",
             	dataType: "json",
           	});	
           	request.done((dataFromServer2,status)=>{
+                var bikes = dataFromServer2.bikes;
+                console.log(bikes);
+                
           		google.charts.setOnLoadCallback(drawTable);
                 function drawTable() {
                     
@@ -42,26 +47,32 @@
                     for(i=0;i<years.length;i++){
                         var a = [];
                         a.push(years[i]);
-                        var acum_men = 0;
+                        var acum_totalpopulation = 0;
                         for(j=0;j<dataFromServer.length;j++){
                             var item = dataFromServer[j];
                             if(item.year==years[i]){
-                                var men_int = parseInt(item.men);
-                                acum_men += men_int;
+                                acum_totalpopulation += item.total_population;
                             }
                         }
-                        a.push(acum_men);
+                        a.push(acum_totalpopulation);
                         
 
-                        var acum_number = 0;
-                        for(k=0;k<dataFromServer2.length;k++){
-                            var item = dataFromServer2[k];
+                        
+                        for(k=0;k<bikes.length;k++){
+                            var item = bikes[k];
+                            console.log(item.year);
+                            console.log(years[i]);
+                            console.log(item.year==years[i]);
                             if(item.year==years[i]){
-                                acum_number += item.number;
-                                console.log(acum_number);
+                                console.log(item.title);
+                                a.push(item.title);
+                                break;
                             }
                         }
-                        a.push(acum_number);
+                        if(a.length==2){
+                            a.push("No data");
+                        }
+                        
                         dataForWidget.push(a);
                     }
 
@@ -69,8 +80,8 @@
                     console.log(dataForWidget);
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Year');
-                    data.addColumn('number', 'Men');
-                    data.addColumn('number', 'Number');
+                    data.addColumn('number', 'Total population');
+                    data.addColumn('string', 'Title bike');
                     data.addRows(dataForWidget);
 
                     var table = new google.visualization.Table(document.getElementById('table_div'));
