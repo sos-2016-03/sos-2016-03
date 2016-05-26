@@ -26,7 +26,7 @@ governify.control(app,{
 
 app.use('/api/v1/oil', apiOil);
 
-//Proxy Patri
+//Proxy Patri con co2
 var pathsPatri='/api/v1/co2';
 var apiServerHostPatri = 'http://sos-2016-01.herokuapp.com';
 
@@ -41,6 +41,9 @@ app.use(pathsPatri, function(req, res) {
   })).pipe(res);
 
 });
+
+
+
 //
 /*******************************/
 //PROXY ANA

@@ -182,12 +182,13 @@ module.exports.getSicknessRegionYear = function(req,res){
 
 module.exports.getLoad = function(req,res){
 	buscado=1;
-	    sickness=[{"region": "Andalucia","sickness": "Sifilis", "year": "2009", "mortalityInMen": "60", "mortalityInWomen": "0", "totalMortality": "20"},
-		{"region": "Galicia","sickness": "Clamidia", "year": "2012", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
+	    sickness=[{"region": "Andalucia","sickness": "Sifilis", "year": "2009", "mortalityInMen": "60", "mortalityInWomen": "0", "totalMortality": "60"},
+	    {"region": "Andalucia","sickness": "Sifilis", "year": "2004", "mortalityInMen": "60", "mortalityInWomen": "0", "totalMortality": "20"},
+	    {"region": "Andalucia","sickness": "Sifilis", "year": "2008", "mortalityInMen": "60", "mortalityInWomen": "0", "totalMortality": "20"},
+		{"region": "Galicia","sickness": "Clamidia", "year": "2012", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "10"},
 		{"region": "Pais Vasco","sickness": "VIH", "year": "2013", "mortalityInMen": "239", "mortalityInWomen": "32", "totalMortality": "135"},
-		{"region": "Madrid","sickness": "Gonorrea", "year": "2010", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "0"},
-		{"region": "Cataluña","sickness": "Herpes Simple", "year": "2011", "mortalityInMen": "40", "mortalityInWomen": "20", "totalMortality": "40"},
-		{"region": "Murcia","sickness": "Herpes Simple", "year": "2011", "mortalityInMen": "200", "mortalityInWomen": "300", "totalMortality": "200"}];
+		{"region": "Madrid","sickness": "Gonorrea", "year": "2010", "mortalityInMen": "0", "mortalityInWomen": "0", "totalMortality": "40"},
+		{"region": "Cataluña","sickness": "Herpes Simple", "year": "2011", "mortalityInMen": "40", "mortalityInWomen": "20", "totalMortality": "40"}];
 		//sickness=initial_array;
 		console.log("Load Initial Data");
 		res.sendStatus(200);
