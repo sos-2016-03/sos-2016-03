@@ -45,7 +45,7 @@ $(document).ready(function(){
               console.log("Success!");
 
               var options = {
-                title: 'Spanish births vs People hospitalized',
+                title: 'Spanish births vs People Hospitalized',
                 curveType: 'function',
                 legend: { position: 'bottom' }
               };
@@ -53,6 +53,7 @@ $(document).ready(function(){
               var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
               chart.draw(data, options);
+
             }
     });
 });

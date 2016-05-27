@@ -14,7 +14,7 @@ $(document).ready(function(){
       request.done(function(dataFromServer,status){
         var request=$.ajax({
             type: "GET",
-            url: 'http://api.population.io/1.0/population/Spain/18',
+            url: '../../../1.0/population/Spain/18',
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

@@ -27,7 +27,7 @@ $(document).ready(function(){
             //Tranformación
             for(i=0;i<dataFromServer.length;i++){
               item=dataFromServer[i];
-              console.log(item);
+              //console.log(item);
               for(j=0;j<dataFromServer2.length;j++){
                 item2=dataFromServer2[j];
                 //console.log(item2);
@@ -38,7 +38,7 @@ $(document).ready(function(){
                 }
               }
             }
-              console.log(dataForWidget);
+              //console.log(dataForWidget);
               var data = google.visualization.arrayToDataTable(dataForWidget);
               console.log("Success!");
 
