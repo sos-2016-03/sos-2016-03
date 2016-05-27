@@ -4,10 +4,8 @@ var request = require('request');
 
 module.exports = router;
 
-//var pathAna = '/api/v1/population';
 var pathAna = '/api/v2/';
 
-//var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
 var apiServerHostAna = 'https://bikeindex.org';
 
 router.use("/", function(req,res){
