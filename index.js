@@ -5,6 +5,7 @@ var request = require("request");
 var governify = require("governify");
 var cors=require("cors");
 var apiOil  = require('./public/api/Alberto/oil.js');
+var apiPopulation  = require('./public/api/Alberto/population.js');
 var proxyAna  = require('./public/api/Ana/proxy.js');
 var app=express();
 app.use(cors());
@@ -26,6 +27,7 @@ governify.control(app,{
 //PROXY ALBERTO
 
 app.use('/api/v1/oil', apiOil);
+app.use('/1.0/population/Spain/18',apiPopulation)
 //app.use('/api/v1/population', proxyAna);
 app.use('/api/v2', proxyAna);
 
