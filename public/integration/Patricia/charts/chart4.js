@@ -4,9 +4,10 @@ google.charts.setOnLoadCallback(drawVisualization);
 //Consumo de una api externa 
 
 function drawVisualization(){
-  $(document).ready(function(){
+  $(document).ready(function(d){
+    var p=/^http:/.test(d.location)?'http':'https';
     var request=$.ajax({
-      url:"http://datos.santander.es/api/rest/collections.json"
+      url:p + "://datos.santander.es/api/rest/collections.json"
     })
     request.done(function(data, status){
         var datos = [["Identifier","Size"]];
