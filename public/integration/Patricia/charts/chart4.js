@@ -1,27 +1,31 @@
+google.charts.load("current", {packages: ["table"]});
 google.charts.setOnLoadCallback(drawVisualization);
 
-//Consumo de una api externa 
+//Consumo de una api externa de albumes por ID de los usuarios
 
 function drawVisualization(){
   $(document).ready(function(){
     var request=$.ajax({
-      url:"http://datos.alcobendas.org/dataset/39039ceb-67fe-42f8-bd51-82ed9834945d/resource/efc48843-fc49-49ba-b249-50784e0fbbc6/download/presupuestoconsolidadodegastos.json/"
+      url:"https://jsonplaceholder.typicode.com/albums"
     })
     request.done(function(data, status){
-        var datos = [["Denomination","Total expenses"]];
-        for(i=0;i<data.length;i++){
-            graf=data[i];
-            var grafForWidget=[graf.denominacion, graf.total];
-            datos.push(grafForWidget);
-          
+        var datos = new google.visualization.DataTable();
+        datos.addColumn('number', "ID");
+        datos.addColumn('string', "Title");
+        datos.addRows(data.length);
+        for(i=0; i<data.length;i++){
+
+            var datosRecogidos= data[i];
+            datos.setCell(i,0,parseInt([datosRecogidos.id]));
+            datos.setCell(i,1,[datosRecogidos.title].toString());
         }
-        var datosRecogidos = google.visualization.arrayToDataTable(datos);
-        var options = {
-              title: 'Consume external api of total expenses of Alcobendas in 2013',
+       // var datosRecogidos = google.visualization.arrayToDataTable(datos);
+        /*var options = {
+              title: 'Consume external api of albums of Users ID',
               pieHole: 0.4,
-           };
-          var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-            chart.draw(datosRecogidos, options);
+           };*/
+           var chart = new google.visualization.Table(document.getElementById('chart_div'));
+          chart.draw(datos, {showRowNumber: false, width: '100%', height: '100%'});
 
     })
   })
