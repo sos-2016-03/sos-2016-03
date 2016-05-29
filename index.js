@@ -54,13 +54,13 @@ app.use(pathsPatri, function(req, res) {
 
 
 /*******************************/
-/*
+
 //PROXY ANA
-//var pathsAna='/api/v1/population';
-var pathsAna='/contacts';
+var pathsAna='/api/v1/population';
+//var pathsAna='/contacts';
 //var apiServerHost = 'http://sos-contacts.herokuapp.com'; //el proxy hacia donde tiene que ir
-//var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
-var apiServerHostAna = 'http://sos-contacts.herokuapp.com';
+var apiServerHostAna = 'https://sos-2016-02.herokuapp.com';
+//var apiServerHostAna = 'http://sos-contacts.herokuapp.com';
 app.use(pathsAna, function(req, res) {
   var url = apiServerHostAna + req.baseUrl + req.url;
   console.log('piped: '+req.baseUrl + req.url);
@@ -73,7 +73,7 @@ app.use(pathsAna, function(req, res) {
     }
   })).pipe(res);
 });
-*/
+
 /*******************************/
 
 
