@@ -51,7 +51,8 @@
                         for(j=0;j<dataFromServer.length;j++){
                             var item = dataFromServer[j];
                             if(item.year==years[i]){
-                                acum_totalpopulation += item.total_population;
+                                var population_int = parseInt(item.total_population);
+                                acum_totalpopulation += population_int;
                             }
                         }
                         a.push(acum_totalpopulation);
