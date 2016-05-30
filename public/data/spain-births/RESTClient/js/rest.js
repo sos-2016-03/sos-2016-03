@@ -21,7 +21,7 @@ function deleteItemAux(j){
                 year=data[i].year;
                 console.log(region, year);
                 var request = $.ajax({
-                  url: "../../../api/v1/spain-births/"+region+"/"+year+"?apikey=write",
+                  url: "../../../api/v1/spain-births/"+region+"/"+year+"?apikey=multiPlan_C4_sos-2016-03-arp_ag",
                   type: "DELETE",
                   data: $("#payload").val(),
                   contentType: "application/json"
