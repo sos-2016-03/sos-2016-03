@@ -14,7 +14,7 @@ $(document).ready(function(){
       request.done(function(dataFromServer,status){
         var request=$.ajax({
             type: "GET",
-            url: 'http://sos-2016-04.herokuapp.com/api/v1/population-labor-force-percentage-by-education?apikey=clave',
+            url: 'http://sos-2016-04.herokuapp.com/api/v1/population-labor-force-percentage-by-education?apikey=multiPlan_C4_sos-2016-04-arc_ag',
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
