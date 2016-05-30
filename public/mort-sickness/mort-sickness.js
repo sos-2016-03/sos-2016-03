@@ -25,8 +25,8 @@ function verTodos(){
         if (status == "error"){
         	if(statusCode == 401){
             	$("#status").text( "Insert a correct apikey");
-        	}else if(statusCode == 403){
-        		$("#status").text("Incorrect apikey");
+        	}else if(statusCode == 402){
+        		$("#status").text("Buy a plan");
             }
         }else{
             $("#status").text("OK");

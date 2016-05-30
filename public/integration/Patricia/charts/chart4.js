@@ -19,11 +19,6 @@ function drawVisualization(){
             datos.setCell(i,0,parseInt([datosRecogidos.id]));
             datos.setCell(i,1,[datosRecogidos.title].toString());
         }
-       // var datosRecogidos = google.visualization.arrayToDataTable(datos);
-        /*var options = {
-              title: 'Consume external api of albums of Users ID',
-              pieHole: 0.4,
-           };*/
            var chart = new google.visualization.Table(document.getElementById('chart_div'));
           chart.draw(datos, {showRowNumber: false, width: '100%', height: '100%'});
 
