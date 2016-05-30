@@ -26,7 +26,7 @@ function verTodos(){
         	if(statusCode == 401){
             	$("#status").text( "Insert a correct apikey");
         	}else if(statusCode == 402){
-        		$("#status").text("Buy a plan");
+        		$("#status").text("Insert a correct apikey");
             }
         }else{
             $("#status").text("OK");
@@ -67,8 +67,8 @@ function cargaInicial(){
         if (status == "error"){
         	if(statusCode == 401){
             	$("#status").text("Insert a correct apikey");
-        	}else if(statusCode == 403){
-        		$("#status").text("Incorrect apikey");
+        	}else if(statusCode == 402){
+        		$("#status").text("Insert a correct apikey");
             }
         }else{
             $("#status").text("OK");
@@ -94,8 +94,8 @@ function nuevo(){
         if (status == "error"){
         	if(statusCode == 401){
             	$("#status").text("Insert a correct apikey");
-        	}else if(statusCode == 403){
-        		$("#status").text("Incorrect apikey");
+        	}else if(statusCode == 402){
+        		$("#status").text("Insert a correct apikey");
             }else if(statusCode == 400){
             	$("#status").text("Missing parameters");
             }else if(statusCode == 409){
@@ -125,8 +125,8 @@ function actualizar(){
         if (status == "error"){
         	if(statusCode == 401){
             	$("#status").text("Insert a correct apikey");
-        	}else if(statusCode == 403){
-        		$("#status").text("Incorrect apikey");
+        	}else if(statusCode == 402){
+        		$("#status").text("Insert a correct apikey");
             }else if(statusCode == 400){
             	$("#status").text("Missing parameters");
             }else if(statusCode == 404){
@@ -153,8 +153,8 @@ function eliminarDato(){
         if (status == "error"){
         	if(statusCode == 401){
             	$("#status").text("Insert a correct apikey");
-        	}else if(statusCode == 403){
-        		$("#status").text("Incorrect apikey");
+        	}else if(statusCode == 402){
+        		$("#status").text("Insert a correct apikey");
             }else if(statusCode == 404){
             	$("#status").text("Data not exist");
             }
@@ -182,8 +182,8 @@ function eliminarTodo(){
         if (status == "error"){
         	if(statusCode == 401){
             	$("#status").text("Insert a correct apikey");
-        	}else if(statusCode == 403){
-        		$("#status").text("Incorrect apikey");
+        	}else if(statusCode == 402){
+        		$("#status").text("Insert a correct apikey");
             }
         }else{
             $("#status").text("OK");
@@ -231,8 +231,8 @@ function buscar(){
         if (status == "error"){
           if(statusCode == 401){
               $("#status").text("Insert a correct apikey");
-          }else if(statusCode == 403){
-            $("#status").text("Incorrect apikey");
+          }else if(statusCode == 402){
+            $("#status").text("Insert a correct apikey");
             }else if(statusCode==404){
               $("#status").text("Data not exist");
               $("#sickness").empty();
@@ -277,7 +277,7 @@ function pagination(){
           if(error){
             if(jqXHR.status == 401){
                 $("#status").text("Insert an apikey");
-            }else if(jqXHR.status == 403){
+            }else if(jqXHR.status == 402){
                 $("#status").text("Incorrect apikey");
             }else if(jqXHR.status == 404){
                $("#status").text("Data not found");
