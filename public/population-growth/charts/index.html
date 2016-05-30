@@ -19,12 +19,12 @@
 
           request.done((dataFromServer,status)=>{
               google.charts.setOnLoadCallback(drawChart);
-              Array.prototype.unique=function(a){
-                return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
-              });
+              
 
               function drawChart() {
-
+                Array.prototype.unique=function(a){
+                return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+                });
 
                 /* dataForWidget = dataFromServer*/
 
